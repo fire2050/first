@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专业服务 - 智慧解决方案事业部</title>
+    <style>
+        /* CSS变量 */
+        :root {
+            --deep-space: #0A1628;
+            --tech-blue: #0066FF;
+            --neon-cyan: #00D4FF;
+            --purple: #7B61FF;
+            --dark-gray: #1E2A3A;
+            --light-gray: #E8ECF4;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8B8D8;
+        }
+
+
+        * { margin:0; padding:0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background-color: var(--deep-space);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .nav-links > li > a.has-dropdown::after {
+            content: '▾';
+            display: inline-block;
+            font-size: 10px;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links > li:hover > a.has-dropdown::after {
+            transform: rotate(180deg);
+        }
+
+        /* 二级下拉菜单 */
+        .nav-links > li {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            min-width: 220px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            padding: 8px 0;
+            margin-top: 10px;
+        }
+
+        .nav-links > li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 5px;
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: rgba(10, 22, 40, 0.95);
+            border-left: 1px solid rgba(0, 212, 255, 0.2);
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-item:hover {
+            color: var(--neon-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            padding-left: 28px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(0, 212, 255, 0.1);
+            margin: 4px 0;
+        }
+
+        .dropdown-category {
+            padding: 8px 20px 4px;
+            font-size: 12px;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        
+        /* Hero */
+        .hero { padding: 150px 5% 100px; background: linear-gradient(135deg, #0a1628 0%, rgba(0, 102, 255, 0.1) 100%); text-align: center; }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; background: linear-gradient(135deg, #00d4ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 20px; color: #a0a0a0; margin-bottom: 40px; }
+        .btn { padding: 15px 40px; border-radius: 8px; text-decoration: none; font-size: 16px; font-weight: 600; transition: all 0.3s ease; display: inline-block; }
+        .btn-primary { background: linear-gradient(135deg, #00d4ff, #0066ff); color: #0a1628; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3); }
+        .btn-outline { background: transparent; color: #00d4ff; border: 1px solid #00d4ff; }
+        .btn-outline:hover { background: rgba(0, 212, 255, 0.1); }
+
+        /* 内容区域 */
+        .section { padding: 80px 5%; }
+        .section-title { text-align: center; font-size: 36px; margin-bottom: 20px; background: linear-gradient(135deg, #00d4ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-subtitle { text-align: center; color: #a0a0a0; margin-bottom: 60px; font-size: 18px; }
+
+        /* 服务卡片 */
+        .service-detail { margin-bottom: 100px; }
+        .service-header { display: flex; gap: 60px; align-items: center; margin-bottom: 60px; flex-wrap: wrap; }
+        .service-header.reverse { flex-direction: row-reverse; }
+        .service-header-text { flex: 1; min-width: 300px; }
+        .service-header-text h2 { font-size: 32px; margin-bottom: 20px; background: linear-gradient(135deg, #00d4ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .service-header-text p { color: #a0a0a0; line-height: 2; font-size: 16px; }
+        .service-header-icon { flex: 0 0 200px; text-align: center; }
+        .service-header-icon .icon-large { font-size: 120px; }
+
+        .service-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        .service-card { padding: 30px; background: rgba(30, 42, 58, 0.5); border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2); transition: all 0.3s ease; }
+        .service-card:hover { transform: translateY(-5px); border-color: rgba(0, 212, 255, 0.5); box-shadow: 0 8px 30px rgba(0, 212, 255, 0.2); }
+        .service-card .card-icon { font-size: 48px; margin-bottom: 20px; }
+        .service-card h3 { font-size: 20px; margin-bottom: 15px; color: #00d4ff; }
+        .service-card p { color: #a0a0a0; line-height: 1.8; font-size: 14px; }
+        .service-card ul { color: #a0a0a0; padding-left: 20px; margin-top: 10px; }
+        .service-card ul li { margin-bottom: 8px; line-height: 1.6; }
+
+        .process-steps { display: flex; gap: 30px; margin-top: 40px; flex-wrap: wrap; }
+        .process-step { flex: 1; min-width: 150px; text-align: center; position: relative; }
+        .process-step:not(:last-child)::after { content: '→'; position: absolute; right: -15px; top: 40px; font-size: 24px; color: #00d4ff; }
+        .step-num { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 102, 255, 0.2)); border: 1px solid rgba(0, 212, 255, 0.3); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #00d4ff; margin: 0 auto 20px; }
+        .process-step h4 { font-size: 16px; color: #e0e0e0; margin-bottom: 8px; }
+        .process-step p { font-size: 13px; color: #a0a0a0; }
+
+        /* 分隔线 */
+        .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent); margin: 80px 0; }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 22, 40, 0.95);
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer-title {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }/* 响应式 */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 16px; }
+            .section-title { font-size: 28px; }
+            .service-header { flex-direction: column !important; }
+            .process-step:not(:last-child)::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+        <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">智慧解决方案</div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li>
+                <a href="#products" class="has-dropdown">生态产品</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-category">无影系列</div>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
+                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">亿联网络</div>
+                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
+                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
+                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
+                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">钉钉系列</div>
+                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
+                    <a href="product-wukong.html" class="dropdown-item">钉钉悟空</a>
+                    <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
+                </div>
+            </li>
+            <li>
+                <a href="#solutions" class="has-dropdown">解决方案</a>
+                <div class="dropdown-menu">
+                    <a href="solution-ai.html" class="dropdown-item">AI 应用解决方案</a>
+                    <a href="solution-communication.html" class="dropdown-item">融合通信解决方案</a>
+                    <a href="solution-avintegration.html" class="dropdown-item">音视频集成解决方案</a>
+                    <a href="solution-smartoffice.html" class="dropdown-item">智慧办公解决方案</a>
+                </div>
+            </li>
+            <li>
+                <a href="service.html" class="has-dropdown">专业服务</a>
+                <div class="dropdown-menu">
+                    <a href="service.html#ai-landing" class="dropdown-item">AI 应用落地</a>
+                    <a href="service.html#system-integration" class="dropdown-item">系统集成</a>
+                    <a href="service.html#maintenance" class="dropdown-item">专业维护</a>
+                    <a href="service.html#expert" class="dropdown-item">专家服务</a>
+                </div>
+            </li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>专业服务</h1>
+        <p>端到端专业服务，助力企业AI转型与数字化升级</p>
+        <a href="contact.html" class="btn btn-primary">咨询服务</a>
+    </section>
+
+    <!-- ===== AI 应用落地 ===== -->
+    <section class="section service-detail" id="ai-landing">
+        <h2 class="section-title">AI 应用落地服务</h2>
+        <p class="section-subtitle">从业务诊断到场景落地，全流程护航企业AI转型</p>
+
+        <div class="service-header">
+            <div class="service-header-text">
+                <h2>让AI真正赋能业务</h2>
+                <p>我们提供从业务诊断、场景设计、模型训练、系统集成到持续运营的全流程AI应用落地服务。帮助客户将AI技术真正转化为业务价值，而非停留在概念层面。</p>
+            </div>
+            <div class="service-header-icon">
+                <div class="icon-large">🤖</div>
+            </div>
+        </div>
+
+        <div class="service-cards">
+            <div class="service-card">
+                <div class="card-icon">📋</div>
+                <h3>业务诊断</h3>
+                <p>深入调研业务流程，识别AI适用场景，评估数据基础与实施可行性，输出转型路线图。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🎨</div>
+                <h3>场景设计</h3>
+                <p>基于诊断结果，设计AI应用场景方案，明确预期效果、所需资源与实施路径。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🔧</div>
+                <h3>模型训练</h3>
+                <p>根据场景需求，进行数据清洗、模型选型、微调训练与效果评估，确保模型适配业务。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🔗</div>
+                <h3>系统集成</h3>
+                <p>将AI能力集成到现有业务系统，确保数据互通、流程连贯、用户无感切换。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">📈</div>
+                <h3>持续运营</h3>
+                <p>模型上线后持续优化，监控效果数据，迭代模型版本，确保AI能力持续进化。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🎓</div>
+                <h3>培训赋能</h3>
+                <p>为企业提供AI工具使用培训、提示词工程培训，提升全员AI应用能力。</p>
+            </div>
+        </div>
+
+        <h3 style="text-align:center; margin-top:60px; color:#00d4ff; font-size:24px;">服务流程</h3>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <h4>需求调研</h4>
+                <p>业务现状与痛点分析</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <h4>方案设计</h4>
+                <p>AI场景方案与实施计划</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <h4>开发实施</h4>
+                <p>模型训练与系统集成</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">4</div>
+                <h4>上线验收</h4>
+                <p>用户培训与效果验收</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">5</div>
+                <h4>持续运营</h4>
+                <p>效果监控与模型迭代</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== 系统集成 ===== -->
+    <section class="section service-detail" id="system-integration">
+        <h2 class="section-title">系统集成服务</h2>
+        <p class="section-subtitle">打通系统孤岛，构建统一数字化平台</p>
+
+        <div class="service-header reverse">
+            <div class="service-header-text">
+                <h2>消除系统孤岛</h2>
+                <p>企业往往拥有多个独立系统，数据割裂、流程断裂。我们提供专业的系统集成服务，基于API网关、消息队列、数据同步引擎等技术，实现系统互联互通，构建统一数字化平台。</p>
+            </div>
+            <div class="service-header-icon">
+                <div class="icon-large">🔗</div>
+            </div>
+        </div>
+
+        <div class="service-cards">
+            <div class="service-card">
+                <div class="card-icon">🔌</div>
+                <h3>API集成</h3>
+                <p>基于RESTful API、GraphQL、gRPC等标准协议，实现系统间接口对接与数据互通。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">📡</div>
+                <h3>数据同步</h3>
+                <p>构建实时/定时数据同步管道，确保各系统数据一致性，消除数据孤岛。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🖥️</div>
+                <h3>统一门户</h3>
+                <p>打造企业统一工作入口，集成所有系统功能，实现单点登录与消息聚合。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">📊</div>
+                <h3>数据可视化</h3>
+                <p>整合多系统数据，构建企业数据驾驶舱，关键指标一屏掌控。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🛡️</div>
+                <h3>安全管控</h3>
+                <p>统一身份认证、权限管理、审计日志，确保集成后系统安全合规。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🔄</div>
+                <h3>流程编排</h3>
+                <p>跨系统业务流程编排，实现端到端自动化，提升运营效率。</p>
+            </div>
+        </div>
+
+        <h3 style="text-align:center; margin-top:60px; color:#00d4ff; font-size:24px;">服务流程</h3>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <h4>系统盘点</h4>
+                <p>现有系统清单与接口评估</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <h4>集成方案</h4>
+                <p>集成架构与接口规范设计</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <h4>开发实施</h4>
+                <p>接口开发与数据同步实施</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">4</div>
+                <h4>联调测试</h4>
+                <p>端到端流程测试与性能压测</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">5</div>
+                <h4>上线运维</h4>
+                <p>生产发布与运行保障</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== 专业维护 ===== -->
+    <section class="section service-detail" id="maintenance">
+        <h2 class="section-title">专业维护服务</h2>
+        <p class="section-subtitle">7×24小时专业运维，保障系统稳定高效运行</p>
+
+        <div class="service-header">
+            <div class="service-header-text">
+                <h2>让系统运行无忧</h2>
+                <p>我们提供7×24小时专业运维服务，涵盖系统监控、故障处理、性能优化、安全加固、备份恢复等全方位维护内容。让客户专注于业务发展，无需担忧系统稳定性。</p>
+            </div>
+            <div class="service-header-icon">
+                <div class="icon-large">🛠️</div>
+            </div>
+        </div>
+
+        <div class="service-cards">
+            <div class="service-card">
+                <div class="card-icon">📡</div>
+                <h3>系统监控</h3>
+                <p>7×24小时实时监控，覆盖服务器、网络、数据库、应用全链路，异常秒级告警。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🔧</div>
+                <h3>故障处理</h3>
+                <p>专业运维团队快速响应，远程/现场故障排查与修复，平均恢复时间＜2小时。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">⚡</div>
+                <h3>性能优化</h3>
+                <p>定期性能评估，数据库调优、缓存策略优化、代码性能分析，确保系统高效运行。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🛡️</div>
+                <h3>安全加固</h3>
+                <p>定期安全扫描、漏洞修复、安全策略优化，抵御外部攻击与内部泄露。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">💾</div>
+                <h3>备份恢复</h3>
+                <p>自动备份策略，多地容灾，定期恢复演练，确保数据可恢复、业务可连续。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">📊</div>
+                <h3>运维报告</h3>
+                <p>月度运维报告，包含系统健康状况、故障统计、优化建议，透明化运维工作。</p>
+            </div>
+        </div>
+
+        <h3 style="text-align:center; margin-top:60px; color:#00d4ff; font-size:24px;">服务流程</h3>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <h4>交接评估</h4>
+                <p>系统现状评估与维护方案制定</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <h4>监控部署</h4>
+                <p>监控系统部署与告警规则配置</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <h4>日常运维</h4>
+                <p>7×24小时监控与故障处理</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">4</div>
+                <h4>定期优化</h4>
+                <p>月度性能评估与优化实施</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">5</div>
+                <h4>持续改善</h4>
+                <p>基于运维数据的持续改进</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== 专家服务 ===== -->
+    <section class="section service-detail" id="expert">
+        <h2 class="section-title">专家服务</h2>
+        <p class="section-subtitle">资深技术专家团队，为企业提供高端技术咨询与攻关服务</p>
+
+        <div class="service-header reverse">
+            <div class="service-header-text">
+                <h2>顶级专家智力支持</h2>
+                <p>我们汇聚了一批在云计算、AI、大数据、网络安全等领域拥有10年以上经验的资深技术专家。为客户提供技术咨询、架构评审、难题攻关、团队培训等高端专家服务，帮助企业少走弯路、快速突破技术瓶颈。</p>
+            </div>
+            <div class="service-header-icon">
+                <div class="icon-large">🎓</div>
+            </div>
+        </div>
+
+        <div class="service-cards">
+            <div class="service-card">
+                <div class="card-icon">💡</div>
+                <h3>技术咨询</h3>
+                <p>资深架构师一对一咨询，涵盖技术选型、架构设计、性能优化、安全合规等方向。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🏗️</div>
+                <h3>架构评审</h3>
+                <p>对现有系统架构进行全面评审，识别风险点与优化空间，输出架构改进方案。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🔬</div>
+                <h3>难题攻关</h3>
+                <p>针对长期未能解决的技术难题，专家团队集中攻关，提供突破性解决方案。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🎓</div>
+                <h3>团队培训</h3>
+                <p>为企业技术团队提供定制化培训，涵盖前沿技术、架构设计、工程实践等。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">📋</div>
+                <h3>代码审查</h3>
+                <p>资深工程师深度代码审查，发现潜在缺陷与安全漏洞，提升代码质量。</p>
+            </div>
+            <div class="service-card">
+                <div class="card-icon">🚀</div>
+                <h3>性能调优</h3>
+                <p>全链路性能分析，定位性能瓶颈，提供调优方案并协助实施，显著提升系统性能。</p>
+            </div>
+        </div>
+
+        <h3 style="text-align:center; margin-top:60px; color:#00d4ff; font-size:24px;">服务流程</h3>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <h4>需求沟通</h4>
+                <p>明确问题边界与目标期望</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <h4>专家匹配</h4>
+                <p>根据需求匹配最合适专家</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <h4>方案输出</h4>
+                <p>专家诊断并输出解决方案</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">4</div>
+                <h4>协助实施</h4>
+                <p>专家现场/远程协助落地</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">5</div>
+                <h4>效果评估</h4>
+                <p>验收效果与持续跟进</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(0,102,255,0.1) 0%, rgba(0,212,255,0.1) 100%); text-align: center;">
+        <h2 class="section-title">需要专业服务支持？</h2>
+        <p class="section-subtitle">联系我们，获取专属服务方案</p>
+        <a href="contact.html" class="btn btn-primary" style="margin-right: 20px;">立即咨询</a>
+        <a href="contact.html" class="btn btn-outline">预约专家</a>
+    </section>
+
+        <!-- 底部 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">智慧解决方案</div>
+                <p class="footer-desc">智慧解决方案事业部致力于为企业客户提供一站式数字化转型服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">生态产品</h4>
+                <ul class="footer-links">
+                    <li><a href="product-wuying.html">无影云电脑商业版</a></li>
+                    <li><a href="product-wuying-hardware.html">无影终端</a></li>
+                    <li><a href="product-jvs.html">无影Agent管理中心</a></li>
+                    <li><a href="product-agentbay.html">AgentBay 开发套件</a></li>
+                    <li><a href="product-meetingboard.html">音视频会议平板</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">解决方案</h4>
+                <ul class="footer-links">
+                    <li><a href="solution-ai.html">AI 应用解决方案</a></li>
+                    <li><a href="solution-communication.html">融合通信解决方案</a></li>
+                    <li><a href="solution-avintegration.html">音视频集成解决方案</a></li>
+                    <li><a href="solution-smartoffice.html">智慧办公解决方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">专业服务</h4>
+                <ul class="footer-links">
+                    <li><a href="service.html#ai-landing">AI 应用落地</a></li>
+                    <li><a href="service.html#system-integration">系统集成</a></li>
+                    <li><a href="service.html#maintenance">专业维护</a></li>
+                    <li><a href="service.html#expert">专家服务</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">联系我们</h4>
+                <ul class="footer-links">
+                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="contact.html">在线咨询</a></li>
+                    <li><a href="contact.html">服务网点</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 智慧解决方案事业部 版权所有 | 备案号：XX-XXXXX</p>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 粒子背景动画
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 100;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 212, 255, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // 绘制连线
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-title, .section-subtitle, .vm-card, .transform-card, .framework-item, .matrix-solution, .advantage-card, .product-card, .matrix-product-category, .positioning-highlight').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 表单提交（仅当表单存在时执行）
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('感谢您的咨询！我们将尽快与您联系。');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>

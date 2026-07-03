@@ -635,6 +635,33 @@
             color: var(--neon-cyan);
         }
 
+        /* 服务能力矩阵 - 链接样式 */
+        a.matrix-solution-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        a.matrix-solution-link:hover .matrix-solution {
+            transform: translateY(-5px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.15);
+        }
+        a.matrix-product-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        a.matrix-product-link:hover .matrix-product-item {
+            color: var(--neon-cyan);
+            padding-left: 5px;
+        }
+        a.matrix-product-link:hover .matrix-product-item::before {
+            color: var(--neon-cyan);
+        }
+
         /* 差异化优势 */
         .advantages {
             background: var(--deep-space);
@@ -1014,8 +1041,8 @@
                 <div class="dropdown-menu">
                     <div class="dropdown-category">无影系列</div>
                     <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
-                    <a href="product-wuying-hardware.html" class="dropdown-item">无影硬件</a>
-                    <a href="product-jvs.html" class="dropdown-item">JVS Computer</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
                     <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-category">亿联网络</div>
@@ -1184,53 +1211,61 @@
 
         <!-- 解决方案能力 -->
         <div class="matrix-solutions">
-            <div class="matrix-solution">
-                <h4>🤖 AI 应用解决方案</h4>
-                <p>将 AI 能力深度融入业务场景，实现智能化升级与效率跃升</p>
-                <div class="label">核心能力</div>
-                <p style="font-size: 13px;">AI建模 · 智能分析 · 决策引擎 · 场景落地</p>
-            </div>
-            <div class="matrix-solution">
-                <h4>📞 融合通信解决方案</h4>
-                <p>统一通信平台，实现语音、视频、消息、会议的深度融合</p>
-                <div class="label">核心能力</div>
-                <p style="font-size: 13px;">统一通信 · 音视频融合 · 云端管理 · 跨终端协同</p>
-            </div>
-            <div class="matrix-solution">
-                <h4>🎥 音视频集成解决方案</h4>
-                <p>专业音视频系统集成，打造沉浸式远程协作体验</p>
-                <div class="label">核心能力</div>
-                <p style="font-size: 13px;">会议系统 · 音视频集成 · 智能控制 · 远程协作</p>
-            </div>
-            <div class="matrix-solution">
-                <h4>💼 智慧办公解决方案</h4>
-                <p>重塑办公体验，释放组织创造力，提升运营效率</p>
-                <div class="label">核心能力</div>
-                <p style="font-size: 13px;">智能协同 · 远程会议 · 流程自动化 · 数据分析</p>
-            </div>
+            <a href="solution-ai.html" class="matrix-solution-link">
+                <div class="matrix-solution">
+                    <h4>🤖 AI 应用解决方案</h4>
+                    <p>将 AI 能力深度融入业务场景，实现智能化升级与效率跃升</p>
+                    <div class="label">核心能力</div>
+                    <p style="font-size: 13px;">AI建模 · 智能分析 · 决策引擎 · 场景落地</p>
+                </div>
+            </a>
+            <a href="solution-communication.html" class="matrix-solution-link">
+                <div class="matrix-solution">
+                    <h4>📞 融合通信解决方案</h4>
+                    <p>统一通信平台，实现语音、视频、消息、会议的深度融合</p>
+                    <div class="label">核心能力</div>
+                    <p style="font-size: 13px;">统一通信 · 音视频融合 · 云端管理 · 跨终端协同</p>
+                </div>
+            </a>
+            <a href="solution-avintegration.html" class="matrix-solution-link">
+                <div class="matrix-solution">
+                    <h4>🎥 音视频集成解决方案</h4>
+                    <p>专业音视频系统集成，打造沉浸式远程协作体验</p>
+                    <div class="label">核心能力</div>
+                    <p style="font-size: 13px;">会议系统 · 音视频集成 · 智能控制 · 远程协作</p>
+                </div>
+            </a>
+            <a href="solution-smartoffice.html" class="matrix-solution-link">
+                <div class="matrix-solution">
+                    <h4>💼 智慧办公解决方案</h4>
+                    <p>重塑办公体验，释放组织创造力，提升运营效率</p>
+                    <div class="label">核心能力</div>
+                    <p style="font-size: 13px;">智能协同 · 远程会议 · 流程自动化 · 数据分析</p>
+                </div>
+            </a>
         </div>
 
         <!-- 产品生态能力 -->
         <div class="matrix-products">
             <div class="matrix-product-category">
                 <h4>☁️ 无影系列</h4>
-                <div class="matrix-product-item">无影云电脑商业版</div>
-                <div class="matrix-product-item">无影硬件</div>
-                <div class="matrix-product-item">JVS Computer</div>
-                <div class="matrix-product-item">AgentBay 开发套件</div>
+                <a href="product-wuying.html" class="matrix-product-link"><div class="matrix-product-item">无影云电脑商业版</div></a>
+                <a href="product-wuying-hardware.html" class="matrix-product-link"><div class="matrix-product-item">无影终端</div></a>
+                <a href="product-jvs.html" class="matrix-product-link"><div class="matrix-product-item">无影Agent管理中心</div></a>
+                <a href="product-agentbay.html" class="matrix-product-link"><div class="matrix-product-item">AgentBay 开发套件</div></a>
             </div>
             <div class="matrix-product-category">
                 <h4>📹 亿联网络系列</h4>
-                <div class="matrix-product-item">音视频会议平板</div>
-                <div class="matrix-product-item">会议室音视频</div>
-                <div class="matrix-product-item">会议室智能</div>
-                <div class="matrix-product-item">IP话机</div>
+                <a href="product-meetingboard.html" class="matrix-product-link"><div class="matrix-product-item">音视频会议平板</div></a>
+                <a href="product-audiovideo.html" class="matrix-product-link"><div class="matrix-product-item">会议室音视频</div></a>
+                <a href="product-meetingsmart.html" class="matrix-product-link"><div class="matrix-product-item">会议室智能</div></a>
+                <a href="product-iphone.html" class="matrix-product-link"><div class="matrix-product-item">IP话机</div></a>
             </div>
             <div class="matrix-product-category">
                 <h4>📱 钉钉系列</h4>
-                <div class="matrix-product-item">钉钉底座</div>
-                <div class="matrix-product-item">钉钉悟空</div>
-                <div class="matrix-product-item">AI 硬件</div>
+                <a href="product-dingtalk.html" class="matrix-product-link"><div class="matrix-product-item">钉钉底座</div></a>
+                <a href="product-wukong.html" class="matrix-product-link"><div class="matrix-product-item">钉钉悟空</div></a>
+                <a href="product-aihardware.html" class="matrix-product-link"><div class="matrix-product-item">AI 硬件</div></a>
             </div>
         </div>
     </section>
@@ -1284,7 +1319,7 @@
                     <span class="feature-tag">场景落地</span>
                 </div>
             </a>
-            <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+            <a href="solution-communication.html" class="product-card" style="text-decoration: none; color: inherit;">
                 <div class="product-logo">📞</div>
                 <h4>融合通信解决方案</h4>
                 <p>统一通信平台，实现语音、视频、消息、会议的深度融合</p>
@@ -1295,7 +1330,7 @@
                     <span class="feature-tag">跨终端协同</span>
                 </div>
             </a>
-            <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+            <a href="solution-avintegration.html" class="product-card" style="text-decoration: none; color: inherit;">
                 <div class="product-logo">🎥</div>
                 <h4>音视频集成解决方案</h4>
                 <p>专业音视频系统集成，打造沉浸式远程协作体验</p>
@@ -1306,7 +1341,7 @@
                     <span class="feature-tag">远程协作</span>
                 </div>
             </a>
-            <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+            <a href="solution-smartoffice.html" class="product-card" style="text-decoration: none; color: inherit;">
                 <div class="product-logo">💼</div>
                 <h4>智慧办公解决方案</h4>
                 <p>重塑办公体验，释放组织创造力，提升运营效率</p>
@@ -1341,7 +1376,7 @@
                 </a>
                 <a href="product-wuying-hardware.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">🖥️</div>
-                    <h4>无影硬件</h4>
+                    <h4>无影终端</h4>
                     <p>专为云电脑设计的瘦客户端设备，即插即用，安全高效</p>
                     <div class="product-features">
                         <span class="feature-tag">即插即用</span>
@@ -1349,9 +1384,9 @@
                         <span class="feature-tag">纤薄设计</span>
                     </div>
                 </a>
-                <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+                <a href="product-jvs.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">💻</div>
-                    <h4>JVS Computer</h4>
+                    <h4>无影Agent管理中心</h4>
                     <p>云桌面解决方案，灵活部署，高效运维</p>
                     <div class="product-features">
                         <span class="feature-tag">弹性扩展</span>
@@ -1359,7 +1394,7 @@
                         <span class="feature-tag">安全合规</span>
                     </div>
                 </a>
-                <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+                <a href="product-agentbay.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">🛠️</div>
                     <h4>AgentBay 开发套件</h4>
                     <p>AI Agent 开发平台，快速构建智能应用</p>
@@ -1376,7 +1411,7 @@
         <div class="product-category">
             <h3 class="category-title">亿联网络系列</h3>
             <div class="product-grid">
-                <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+                <a href="product-meetingboard.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">📺</div>
                     <h4>音视频会议平板</h4>
                     <p>智能会议平板，一体化协作体验</p>
@@ -1386,7 +1421,7 @@
                         <span class="feature-tag">无线投屏</span>
                     </div>
                 </a>
-                <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+                <a href="product-audiovideo.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">🎥</div>
                     <h4>会议室音视频</h4>
                     <p>专业会议室音视频设备，极致视听体验</p>
@@ -1396,7 +1431,7 @@
                         <span class="feature-tag">云端管理</span>
                     </div>
                 </a>
-                <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+                <a href="product-meetingsmart.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">🤖</div>
                     <h4>会议室智能</h4>
                     <p>AI 驱动的会议室智能化解决方案</p>
@@ -1406,7 +1441,7 @@
                         <span class="feature-tag">设备联动</span>
                     </div>
                 </a>
-                <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+                <a href="product-iphone.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">📞</div>
                     <h4>IP话机</h4>
                     <p>企业级 IP 话机，清晰通话体验</p>
@@ -1423,7 +1458,7 @@
         <div class="product-category">
             <h3 class="category-title">钉钉系列</h3>
             <div class="product-grid">
-                <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+                <a href="product-dingtalk.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">📱</div>
                     <h4>钉钉底座</h4>
                     <p>智能协同办公平台基础能力</p>
@@ -1433,7 +1468,7 @@
                         <span class="feature-tag">日程共享</span>
                     </div>
                 </a>
-                <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+                <a href="product-wukong.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">🐒</div>
                     <h4>钉钉悟空</h4>
                     <p>企业级 AI 助手，工作更高效</p>
@@ -1443,7 +1478,7 @@
                         <span class="feature-tag">知识管理</span>
                     </div>
                 </a>
-                <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+                <a href="product-aihardware.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">🤖</div>
                     <h4>AI 硬件</h4>
                     <p>钉钉生态 AI 硬件设备</p>
@@ -1473,7 +1508,7 @@
                     <span class="feature-tag">培训赋能</span>
                 </div>
             </a>
-            <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+            <a href="service.html#system-integration" class="product-card" style="text-decoration: none; color: inherit;">
                 <div class="product-logo">🔗</div>
                 <h4>系统集成</h4>
                 <p>打通数据孤岛，实现系统互联互通</p>
@@ -1484,7 +1519,7 @@
                     <span class="feature-tag">联调测试</span>
                 </div>
             </a>
-            <a href="#" class="product-card" style="text-decoration: none; color: inherit;">
+            <a href="service.html#maintenance" class="product-card" style="text-decoration: none; color: inherit;">
                 <div class="product-logo">🛠️</div>
                 <h4>专业维护</h4>
                 <p>7×24 专业运维，保障业务连续性</p>
@@ -1595,8 +1630,8 @@
                 <h4 class="footer-title">生态产品</h4>
                 <ul class="footer-links">
                     <li><a href="product-wuying.html">无影云电脑商业版</a></li>
-                    <li><a href="product-wuying-hardware.html">无影硬件</a></li>
-                    <li><a href="product-jvs.html">JVS Computer</a></li>
+                    <li><a href="product-wuying-hardware.html">无影终端</a></li>
+                    <li><a href="product-jvs.html">无影Agent管理中心</a></li>
                     <li><a href="product-agentbay.html">AgentBay 开发套件</a></li>
                     <li><a href="product-meetingboard.html">音视频会议平板</a></li>
                 </ul>

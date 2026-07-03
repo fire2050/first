@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>钉钉底座 - 智慧解决方案事业部</title>
+    <style>
+        /* CSS变量 */
+        :root {
+            --deep-space: #0A1628;
+            --tech-blue: #0066FF;
+            --neon-cyan: #00D4FF;
+            --purple: #7B61FF;
+            --ding-blue: #1677FF;
+            --ding-light: #E8F3FF;
+            --dark-gray: #1E2A3A;
+            --light-gray: #E8ECF4;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8B8D8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background-color: var(--deep-space);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .navbar { position: fixed; top: 0; width: 100%; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; }
+        .navbar.scrolled {
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .logo { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #00d4ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
+        .nav-links a { color: #a0a0a0; text-decoration: none; transition: color 0.3s; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+        .nav-links a:hover { color: #00d4ff; }
+        .nav-links > li { position: relative; }
+        .dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); min-width: 220px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; padding: 8px 0; margin-top: 10px; }
+        .nav-links > li:hover .dropdown-menu { opacity: 1; visibility: visible; margin-top: 5px; }
+        .dropdown-item { display: block; padding: 12px 20px; color: #a0a0a0; text-decoration: none; font-size: 14px; transition: all 0.3s ease; white-space: nowrap; }
+        .dropdown-item:hover { color: #00d4ff; background: rgba(0, 212, 255, 0.1); padding-left: 28px; }
+        .dropdown-divider { height: 1px; background: rgba(0, 212, 255, 0.1); margin: 4px 0; }
+        .dropdown-category { padding: 8px 20px 4px; font-size: 12px; color: #7b61ff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* 页面标题区 */
+        .page-header {
+            padding: 120px 5% 60px;
+            background: linear-gradient(135deg, #0a1628 0%, rgba(22, 119, 255, 0.08) 100%);
+        }
+        .page-header h1 {
+            font-size: 42px;
+            background: linear-gradient(135deg, #1677FF, #36CFC9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 17px;
+        }
+
+        /* 主内容区 */
+        .ding-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 80px 5%;
+        }
+
+        /* 产品概述 */
+        .product-overview {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        .product-overview h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        .product-overview p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* 三版本卡片 */
+        .version-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 90px;
+        }
+        .version-card {
+            background: rgba(22, 119, 255, 0.04);
+            border: 1px solid rgba(22, 119, 255, 0.18);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+        .version-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(22, 119, 255, 0.5);
+            box-shadow: 0 16px 48px rgba(22, 119, 255, 0.15);
+        }
+        .version-card-img {
+            height: 180px;
+            background: linear-gradient(135deg, #E8F3FF 0%, #D6EBFB 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .version-card-img img {
+            max-width: 85%;
+            max-height: 75%;
+            object-fit: contain;
+        }
+        .version-card-body {
+            padding: 28px 26px 30px;
+        }
+        .version-tag {
+            display: inline-block;
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+        }
+        .tag-pro { background: rgba(22, 119, 255, 0.15); color: #5CB8FF; border: 1px solid rgba(22, 119, 255, 0.25); }
+        .tag-exclusive { background: rgba(123, 97, 255, 0.15); color: #B78BFF; border: 1px solid rgba(123, 97, 255, 0.25); }
+        .tag-hybrid { background: rgba(54, 207, 201, 0.15); color: #5EDDD6; border: 1px solid rgba(54, 207, 201, 0.25); }
+
+        .version-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .version-subtitle {
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .version-features {
+            list-style: none;
+        }
+        .version-features li {
+            padding: 9px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .version-features li:last-child {
+            border-bottom: none;
+        }
+        .version-features li::before {
+            content: '✓';
+            color: #1677FF;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* AI算粒区块 */
+        .ai-grain-section {
+            margin-bottom: 80px;
+            background: linear-gradient(135deg, rgba(123, 97, 255, 0.06) 0%, rgba(22, 119, 255, 0.04) 100%);
+            border: 1px solid rgba(123, 97, 255, 0.18);
+            border-radius: 20px;
+            padding: 50px;
+        }
+        .ai-section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .ai-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #7B61FF, #A78BFA);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+        .ai-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .ai-desc {
+            color: var(--text-secondary);
+            font-size: 15.5px;
+            line-height: 1.8;
+            margin-bottom: 35px;
+        }
+
+        /* AI套餐表格 */
+        .ai-plans-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .ai-plans-table th {
+            background: rgba(123, 97, 255, 0.15);
+            color: #B78BFF;
+            padding: 16px 14px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .ai-plans-table td {
+            padding: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13.5px;
+            color: var(--text-secondary);
+        }
+        .ai-plans-table tr:last-child td {
+            border-bottom: none;
+        }
+        .ai-plans-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .plan-free { color: #5EDDD6; font-weight: 600; }
+        .plan-lite { color: #5CB8FF; font-weight: 600; }
+        .plan-basic { color: #5CB8FF; font-weight: 600; }
+        .plan-plus { color: #FFD666; font-weight: 700; }
+        .plan-pro { color: #FF85C0; font-weight: 700; }
+        .hot-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        /* 核心能力 */
+        .capabilities-section {
+            margin-bottom: 60px;
+        }
+        .section-title-main {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 45px;
+            color: var(--text-primary);
+        }
+        .section-title-main::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--ding-blue);
+            margin: 14px auto 0;
+            border-radius: 2px;
+        }
+        .cap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .cap-item {
+            background: rgba(30, 42, 58, 0.5);
+            border: 1px solid rgba(22, 119, 255, 0.12);
+            border-radius: 14px;
+            padding: 28px 24px;
+            transition: all 0.3s ease;
+        }
+        .cap-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(22, 119, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(22, 119, 255, 0.1);
+        }
+        .cap-icon {
+            font-size: 34px;
+            margin-bottom: 14px;
+        }
+        .cap-item h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .cap-item p {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 22, 40, 0.97);
+            padding: 60px 5% 30px;
+            margin-top: 0;
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .footer-column {}
+        .footer-title {
+            font-size: 17px;
+            margin-bottom: 18px;
+            color: var(--neon-cyan);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 9px;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+        }
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        @media (max-width: 1024px) {
+            .version-cards { grid-template-columns: 1fr; gap: 24px; }
+            .ai-plans-table { font-size: 12px; }
+            .ai-plans-table th, .ai-plans-table td { padding: 10px 8px; }
+        }
+        @media (max-width: 900px) {
+            .cap-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 30px; }
+            .page-header { padding: 100px 5% 40px; }
+            .footer-content { grid-template-columns: 1fr; }
+            .ai-grain-section { padding: 30px 20px; }
+            .ai-plans-table-wrapper { overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="logo">智慧解决方案</div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li>
+                <a href="#products" class="has-dropdown">生态产品</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-category">无影系列</div>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
+                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">亿联网络</div>
+                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
+                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
+                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
+                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">钉钉系列</div>
+                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
+                    <a href="product-wukong.html" class="dropdown-item">钉钉悟空</a>
+                    <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
+                </div>
+            </li>
+            <li>
+                <a href="#solutions" class="has-dropdown">解决方案</a>
+                <div class="dropdown-menu">
+                    <a href="solution-ai.html" class="dropdown-item">AI 应用解决方案</a>
+                    <a href="solution-communication.html" class="dropdown-item">融合通信解决方案</a>
+                    <a href="solution-avintegration.html" class="dropdown-item">音视频集成解决方案</a>
+                    <a href="solution-smartoffice.html" class="dropdown-item">智慧办公解决方案</a>
+                </div>
+            </li>
+            <li>
+                <a href="service.html" class="has-dropdown">专业服务</a>
+                <div class="dropdown-menu">
+                    <a href="service.html#ai-landing" class="dropdown-item">AI 应用落地</a>
+                    <a href="service.html#system-integration" class="dropdown-item">系统集成</a>
+                    <a href="service.html#maintenance" class="dropdown-item">专业维护</a>
+                    <a href="service.html#expert" class="dropdown-item">专家服务</a>
+                </div>
+            </li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <h1>🔷 钉钉底座</h1>
+        <p>企业级智能协同办公平台，覆盖专业版 / 专属版 / 混合版三大版本，满足不同规模企业的数字化协同与AI赋能需求</p>
+    </section>
+
+    <!-- 主内容 -->
+    <div class="ding-container">
+
+        <!-- 产品概述 -->
+        <div class="product-overview">
+            <h2>钉钉数智化底座，一站式企业协同平台</h2>
+            <p>
+                钉钉底座是阿里巴巴集团打造的企业级智能协同平台，覆盖IM即时通讯、考勤审批、智能会议、文档协作、项目管理、AI智能体等全场景能力。<br>
+                通过专业版、专属版、混合版三大版本体系，配合AI算粒能力，为从初创团队到大型集团的企业客户提供灵活、安全、可定制的数字化协同解决方案。
+            </p>
+        </div>
+
+        <!-- 三版本卡片 -->
+        <div class="version-cards">
+
+            <!-- 专业版 -->
+            <div class="version-card">
+                <div class="version-card-img">
+                    <img src="images/dingtalk-versions.png" alt="钉钉专业版">
+                </div>
+                <div class="version-card-body">
+                    <span class="version-tag tag-pro">PROFESSIONAL</span>
+                    <h3 class="version-name">专业版</h3>
+                    <p class="version-subtitle">深度协同、资产安全、灵活开放</p>
+                    <ul class="version-features">
+                        <li>深度协同：IM沟通、文档协作、智能会议、审批流程一体化</li>
+                        <li>资产安全：企业数据加密存储、访问权限精细管控</li>
+                        <li>灵活开放：开放API支持第三方应用集成与低代码开发</li>
+                        <li>应用市场权益：55款热门应用专享9折优惠</li>
+                        <li>适合中小型企业快速实现数字化办公升级</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 专属版 -->
+            <div class="version-card">
+                <div class="version-card-img">
+                    <img src="images/dingtalk-versions.png" alt="钉钉专属版">
+                </div>
+                <div class="version-card-body">
+                    <span class="version-tag tag-exclusive">EXCLUSIVE</span>
+                    <h3 class="version-name">专属版</h3>
+                    <p class="version-subtitle">安全合规、自主可控、专属AI</p>
+                    <ul class="version-features">
+                        <li>全链路安全防护：终端/账号/应用/数据全方位安全能力</li>
+                        <li>企业专属定制：UI界面、品牌标识、功能入口按需配置</li>
+                        <li>自主可控开发：专享开放接口，支持自有IT系统深度集成</li>
+                        <li>混合云部署：支持私有化部署，满足数据不出域要求</li>
+                        <li>信创适配：支持Linux端，适配国产操作系统环境</li>
+                        <li>32项专属权益（总价值38万），含AI专家服务</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 混合版 -->
+            <div class="version-card">
+                <div class="version-card-img">
+                    <img src="images/dingtalk-versions.png" alt="钉钉混合版">
+                </div>
+                <div class="version-card-body">
+                    <span class="version-tag tag-hybrid">HYBRID</span>
+                    <h3 class="version-name">混合版</h3>
+                    <p class="version-subtitle">公私结合、本地运行、一致体验</p>
+                    <ul class="version-features">
+                        <li>核心服务本地化：登录/通讯录/IM消息/文件等可本地部署</li>
+                        <li>敏感数据不出域：金融/政务/医疗等强监管行业首选</li>
+                        <li>多云架构适配：已完成阿里云/华为云等多云底座适配</li>
+                        <li>敏捷极速交付：无需重构现有IT架构即可上线</li>
+                        <li>一致产品体验：紧跟钉钉版本更新节奏，持续获得新功能</li>
+                        <li>降低运维成本：云+本地两端部署，减少基础设施投入</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div><!-- end version-cards -->
+
+        <!-- AI算粒 -->
+        <div class="ai-grain-section">
+            <div class="ai-section-header">
+                <div class="ai-icon">🧠</div>
+                <h2 class="ai-title">AI 算粒 · 全栈AI能力引擎</h2>
+            </div>
+            <p class="ai-desc">
+                AI算粒是钉钉AI能力的核心计量单位。一套算粒即可使用钉钉全系列AI功能——从悟空AI工作平台、AI搜问、DEAP智能体构建，到AI听记、AI文档、AI表格、AI招聘等数十种场景化AI工具。
+                支持学习企业自有知识库，生成内容贴合业务实际；所有套餐不限制使用人数，全员可用。
+            </p>
+            <div class="ai-plans-table-wrapper">
+                <table class="ai-plans-table">
+                    <thead>
+                        <tr>
+                            <th>套餐</th>
+                            <th>价格</th>
+                            <th>年算粒额度</th>
+                            <th>知识学习范围</th>
+                            <th>自有模型接入</th>
+                            <th>工单支持</th>
+                            <th>适用场景</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="plan-free">Free</td>
+                            <td>免费</td>
+                            <td>300/周（认证企业）</td>
+                            <td>近3个月</td>
+                            <td>不支持</td>
+                            <td>普通</td>
+                            <td>基础体验</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-lite">Lite</td>
+                            <td>¥980/年</td>
+                            <td>2万/年</td>
+                            <td>近3个月</td>
+                            <td>不支持</td>
+                            <td>普通</td>
+                            <td>小型团队入门</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-basic">Basic</td>
+                            <td>¥9,800/年</td>
+                            <td>20万/年</td>
+                            <td>近6个月</td>
+                            <td>不支持</td>
+                            <td>普通</td>
+                            <td>中型企业常规使用</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-plus">Plus <span class="hot-badge">HOT</span></td>
+                            <td>¥98,000/年</td>
+                            <td>200万/年</td>
+                            <td>近1年</td>
+                            <td>不支持</td>
+                            <td>优先</td>
+                            <td>大型企业高频使用</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-pro">Pro</td>
+                            <td>¥980,000/年</td>
+                            <td>2000万/年</td>
+                            <td>全部</td>
+                            <td>支持20个模型</td>
+                            <td>专属</td>
+                            <td>超大型企业定制</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div><!-- end ai-grain-section -->
+
+        <!-- 核心能力 -->
+        <div class="capabilities-section">
+            <h2 class="section-title-main">钉钉底座核心能力矩阵</h2>
+            <div class="cap-grid">
+
+                <div class="cap-item">
+                    <div class="cap-icon">💬</div>
+                    <h3>智能沟通</h3>
+                    <p>已读未读、DING消息、语音转文字、群聊管理，高效组织内外部沟通</p>
+                </div>
+
+                <div class="cap-item">
+                    <div class="cap-icon">📅</div>
+                    <h3>智能日程与考勤</h3>
+                    <p>日历协同、智能排班、GPS/WiFi打卡、假期管理，人事行政自动化</p>
+                </div>
+
+                <div class="cap-item">
+                    <div class="cap-icon">✅</div>
+                    <h3>流程审批</h3>
+                    <p>自定义审批流、移动审批、电子签章、合同管理，流程透明可控</p>
+                </div>
+
+                <div class="cap-item">
+                    <div class="cap-icon">🎥</div>
+                    <h3>智能会议</h3>
+                    <p>一键发起视频会议、屏幕共享、AI听记自动生成纪要、远程协作零距离</p>
+                </div>
+
+                <div class="cap-item">
+                    <div class="cap-icon">📝</div>
+                    <h3>文档协作</h3>
+                    <p>在线文档/表格/幻灯片多人实时编辑，AI速读/创作/翻译，知识沉淀与管理</p>
+                </div>
+
+                <div class="cap-item">
+                    <div class="cap-icon">📊</div>
+                    <h3>项目管理</h3>
+                    <p>任务分配、进度追踪、甘特图视图、资源管理，项目执行全程可视化</p>
+                </div>
+
+                <div class="cap-item">
+                    <div class="cap-icon">🤖</div>
+                    <h3>AI智能体</h3>
+                    <p>悟空AI工作平台、DEAP自定义智能体、AI助理市场，AI深度赋能每个岗位</p>
+                </div>
+
+                <div class="cap-item">
+                    <div class="cap-icon">🔌</div>
+                    <h3>开放集成</h3>
+                    <p>丰富的Open API，低代码平台宜搭，无缝对接企业现有IT系统</p>
+                </div>
+
+                <div class="cap-item">
+                    <div class="cap-icon">🛡️</div>
+                    <h3>安全合规</h3>
+                    <p>数据加密、权限管控、审计日志、混合云部署，满足金融/政务等行业合规要求</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div><!-- end ding-container -->
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">智慧解决方案</div>
+                <p class="footer-desc">智慧解决方案事业部致力于为企业客户提供一站式数字化转型服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">生态产品</h4>
+                <ul class="footer-links">
+                    <li><a href="product-wuying.html">无影云电脑商业版</a></li>
+                    <li><a href="product-wuying-hardware.html">无影终端</a></li>
+                    <li><a href="product-jvs.html">无影Agent管理中心</a></li>
+                    <li><a href="product-agentbay.html">AgentBay 开发套件</a></li>
+                    <li><a href="product-meetingboard.html">音视频会议平板</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">解决方案</h4>
+                <ul class="footer-links">
+                    <li><a href="solution-ai.html">AI 应用解决方案</a></li>
+                    <li><a href="solution-communication.html">融合通信解决方案</a></li>
+                    <li><a href="solution-avintegration.html">音视频集成解决方案</a></li>
+                    <li><a href="solution-smartoffice.html">智慧办公解决方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">专业服务</h4>
+                <ul class="footer-links">
+                    <li><a href="service.html#ai-landing">AI 应用落地</a></li>
+                    <li><a href="service.html#system-integration">系统集成</a></li>
+                    <li><a href="service.html#maintenance">专业维护</a></li>
+                    <li><a href="service.html#expert">专家服务</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">联系我们</h4>
+                <ul class="footer-links">
+                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="contact.html">在线咨询</a></li>
+                    <li><a href="contact.html">服务网点</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 智慧解决方案事业部 版权所有 | 备案号：XX-XXXXX</p>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

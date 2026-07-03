@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>无影终端 - 智慧解决方案事业部</title>
+    <title>AI 应用解决方案 - 智慧解决方案事业部</title>
     <style>
         * {
-            margin:0;
-            padding:0;
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
@@ -167,14 +167,88 @@
         }
 
         
+        /* 二级下拉菜单 */
+        .nav-links > li {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            min-width: 220px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            padding: 8px 0;
+            margin-top: 10px;
+        }
+
+        .nav-links > li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 5px;
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: rgba(10, 22, 40, 0.95);
+            border-left: 1px solid rgba(0, 212, 255, 0.2);
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-item:hover {
+            color: var(--neon-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            padding-left: 28px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(0, 212, 255, 0.1);
+            margin: 4px 0;
+        }
+
+        .dropdown-category {
+            padding: 8px 20px 4px;
+            font-size: 12px;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* Hero区域 */
-        .product-hero {
+        .solution-hero {
             padding: 150px 5% 100px;
             background: linear-gradient(135deg, var(--deep-space) 0%, rgba(0, 102, 255, 0.1) 100%);
             text-align: center;
         }
 
-        .product-hero h1 {
+        .solution-hero h1 {
             font-size: 48px;
             margin-bottom: 20px;
             background: linear-gradient(135deg, var(--neon-cyan), var(--tech-blue));
@@ -182,59 +256,11 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .product-hero p {
+        .solution-hero p {
             font-size: 20px;
             color: var(--text-secondary);
             max-width: 800px;
-            margin: 0 auto 30px;
-        }
-
-        .hero-advantages {
-            display: flex;
-            flex-wrap: nowrap;
-            justify-content: center;
-            align-items: stretch;
-            gap: 14px;
             margin: 0 auto 40px;
-            max-width: 1200px;
-        }
-
-        .hero-advantage-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            background: rgba(0, 212, 255, 0.08);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 12px;
-            padding: 12px 16px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            flex-shrink: 0;
-            min-width: 0;
-        }
-
-        .hero-advantage-item .adv-icon {
-            font-size: 20px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .hero-advantage-item .adv-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .hero-advantage-item .adv-title {
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--neon-cyan);
-        }
-
-        .hero-advantage-item .adv-desc {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.4;
         }
 
         .btn {
@@ -274,142 +300,136 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .feature-grid {
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+        }
+
+        /* 能力卡片 */
+        .capability-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin: 60px 0;
         }
 
-        .feature-card {
+        .capability-card {
             background: rgba(30, 42, 58, 0.5);
             border-radius: 12px;
-            padding: 30px;
+            padding: 40px 30px;
             border: 1px solid rgba(0, 212, 255, 0.2);
             transition: all 0.3s ease;
         }
 
-        .feature-card:hover {
+        .capability-card:hover {
             transform: translateY(-8px);
             border-color: var(--neon-cyan);
             box-shadow: 0 8px 30px rgba(0, 212, 255, 0.2);
         }
 
-        .feature-icon {
-            width: 50px;
-            height: 50px;
+        .capability-icon {
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, var(--tech-blue), var(--neon-cyan));
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 28px;
+            margin-bottom: 20px;
         }
 
-        .feature-card h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
+        .capability-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
             color: var(--text-primary);
         }
 
-        .feature-card p {
+        .capability-card p {
             color: var(--text-secondary);
-            font-size: 14px;
             line-height: 1.8;
         }
 
-        /* 产品优势 */
-        .advantage-grid {
+        /* 应用场景 */
+        .scenario-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
-            margin: 60px 0;
+            margin: 40px 0;
         }
 
-        .advantage-block {
-            background: rgba(30, 42, 58, 0.5);
+        .scenario-card {
+            background: rgba(30, 42, 58, 0.3);
             border-radius: 12px;
-            padding: 35px;
-            border: 1px solid rgba(0, 212, 255, 0.15);
-            transition: all 0.3s ease;
+            padding: 30px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
         }
 
-        .advantage-block:hover {
-            transform: translateY(-4px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15);
-        }
-
-        .advantage-block h3 {
-            font-size: 22px;
-            margin-bottom: 8px;
+        .scenario-card h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
             color: var(--neon-cyan);
         }
 
-        .advantage-block .adv-subtitle {
-            font-size: 14px;
-            color: var(--purple);
-            margin-bottom: 16px;
-            font-weight: 600;
-        }
-
-        .advantage-block p {
+        .scenario-card p {
             color: var(--text-secondary);
-            font-size: 15px;
-            line-height: 1.9;
         }
 
-        /* 产品功能 */
-        .function-grid {
+        /* 实施路径 */
+        .process-timeline {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
             margin: 60px 0;
         }
 
-        .function-card {
-            background: rgba(30, 42, 58, 0.5);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 212, 255, 0.15);
-            overflow: hidden;
-            transition: all 0.3s ease;
+        .process-step {
+            text-align: center;
+            position: relative;
         }
 
-        .function-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.2);
+        .process-step::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 60%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), transparent);
         }
 
-        .function-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            display: block;
+        .process-step:last-child::before {
+            display: none;
         }
 
-        .function-card-body {
-            padding: 28px;
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--tech-blue), var(--purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 auto 20px;
         }
 
-        .function-card-body h3 {
-            font-size: 20px;
-            margin-bottom: 14px;
-            color: var(--text-primary);
+        .process-step h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
         }
 
-        .function-card-body p {
-            color: var(--text-secondary);
+        .process-step p {
             font-size: 14px;
-            line-height: 1.9;
+            color: var(--text-secondary);
         }
 
         /* Footer */
         .footer {
             background: rgba(10, 22, 40, 0.95);
             padding: 60px 5% 30px;
-            margin-top: 100px;
         }
 
         .footer-content {
@@ -474,8 +494,7 @@
         .footer-bottom p {
             color: var(--text-secondary);
             font-size: 14px;
-        }
-
+        }/* 响应式 */
         @media (max-width: 768px) {
             .navbar {
                 padding: 15px 3%;
@@ -485,12 +504,20 @@
                 display: none;
             }
 
-            .product-hero h1 {
+            .solution-hero h1 {
                 font-size: 32px;
+            }
+
+            .solution-hero p {
+                font-size: 16px;
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
+            }
+
+            .process-step::before {
+                display: none;
             }
         }
     </style>
@@ -545,125 +572,109 @@
     </nav>
 
     <!-- Hero区域 -->
-    <section class="product-hero">
-        <h1>🖥️ 无影终端</h1>
-        <p>云上办公的全能入口——全系硬件、多端客户端与智能管控平台一体协同，让高效、安全、灵活的云办公触手可及。</p>
-        <div class="hero-advantages">
-            <div class="hero-advantage-item">
-                <span class="adv-icon">🎯</span>
-                <div class="adv-text">
-                    <span class="adv-title">全场景适配</span>
-                    <span class="adv-desc">软硬终端全覆盖，满足多样需求</span>
-                </div>
-            </div>
-            <div class="hero-advantage-item">
-                <span class="adv-icon">⚡</span>
-                <div class="adv-text">
-                    <span class="adv-title">高效办公</span>
-                    <span class="adv-desc">云算力加持，应用秒开更流畅</span>
-                </div>
-            </div>
-            <div class="hero-advantage-item">
-                <span class="adv-icon">🛡️</span>
-                <div class="adv-text">
-                    <span class="adv-title">安全可信</span>
-                    <span class="adv-desc">数据不落地，满足高安全合规</span>
-                </div>
-            </div>
-            <div class="hero-advantage-item">
-                <span class="adv-icon">📦</span>
-                <div class="adv-text">
-                    <span class="adv-title">开箱即用</span>
-                    <span class="adv-desc">零配置秒级接入，部署提效90%</span>
-                </div>
-            </div>
-            <div class="hero-advantage-item">
-                <span class="adv-icon">🤖</span>
-                <div class="adv-text">
-                    <span class="adv-title">集中智管</span>
-                    <span class="adv-desc">一人管理千台，运维降本增效</span>
-                </div>
-            </div>
-        </div>
-        <a href="contact.html" class="btn btn-primary">立即购买</a>
+    <section class="solution-hero">
+        <h1>🤖 AI 应用解决方案</h1>
+        <p>将 AI 能力深度融入业务场景，实现智能化升级与效率跃升</p>
+        <a href="contact.html" class="btn btn-primary">咨询 AI 解决方案</a>
     </section>
 
-    <!-- 产品概述 -->
+    <!-- 方案概述 -->
     <section class="section">
-        <h2 class="section-title">产品概述</h2>
-        <div style="display:flex; gap:40px; align-items:center; margin-top:30px;">
-            <img src="images/wuying-terminal-overview.png" alt="无影终端全家桶" style="width:60%; border-radius:12px; border:1px solid rgba(0,212,255,0.2);">
-            <p style="color: var(--text-secondary); line-height: 2; font-size: 16px; flex:1;">
-                无影终端是用户使用无影云上服务的媒介，是无影云上办公空间的必备要素，为用户提供便利、高效的无影使用体验。无影终端提供全系列、多样化的产品形态，包括硬件终端与软件客户端，来匹配各种业务场景。无论是固定办公、还是跨地区的移动办公，甚至是现有设备利旧升级，无影终端都能提供契合便利的解决方案。
-            </p>
+        <h2 class="section-title">方案概述</h2>
+        <p class="section-subtitle">我们提供从 AI 建模、智能分析到决策引擎的全链路解决方案，帮助企业实现数据驱动决策与业务智能化升级。</p>
+        
+        <div class="capability-grid">
+            <div class="capability-card">
+                <div class="capability-icon">🧠</div>
+                <h3>AI 建模与训练</h3>
+                <p>基于通义大模型，为企业定制 AI 模型，支持自然语言处理、计算机视觉、预测分析等能力。</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">📊</div>
+                <h3>智能数据分析</h3>
+                <p>通过 AI 算法自动发现数据规律，生成可视化报告，辅助管理层决策。</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">🤖</div>
+                <h3>智能客服与助手</h3>
+                <p>基于钉钉悟空和企业知识库，构建 7×24 小时智能客服和问题解答系统。</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">🔄</div>
+                <h3>业务流程自动化</h3>
+                <p>利用 AI 和 RPA 技术，实现审批、报表、客服等重复性工作的自动化处理。</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">🎯</div>
+                <h3>个性化推荐</h3>
+                <p>基于用户行为和偏好数据，构建智能推荐系统，提升转化率和用户满意度。</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">🔍</div>
+                <h3>智能风控</h3>
+                <p>利用机器学习算法，实时监测和预警业务风险，保障企业安全运营。</p>
+            </div>
         </div>
     </section>
 
-    <!-- 产品优势 -->
+    <!-- 应用场景 -->
     <section class="section" style="background: rgba(30, 42, 58, 0.3);">
-        <h2 class="section-title">产品优势</h2>
-        <div class="advantage-grid">
-            <div class="advantage-block">
-                <h3>全系覆盖，灵活接入</h3>
-                <div class="adv-subtitle">解决企业办公场景多样、终端需求碎片化的问题</div>
-                <p>无影终端提供魔方、一体机、笔记本等多形态硬件，同时支持电脑、手机等软件客户端，满足固定工位、移动差旅、老旧设备利旧等全场景接入需求。用户无论身处办公室、家中或出差途中，都能获得一致的云电脑体验。一套方案，无缝适配各类角色与业务环境。</p>
+        <h2 class="section-title">应用场景</h2>
+        <div class="scenario-grid">
+            <div class="scenario-card">
+                <h4>🏢 智能办公</h4>
+                <p>会议纪要自动生成、文档智能摘要、邮件智能回复、日程智能安排。</p>
             </div>
-            <div class="advantage-block">
-                <h3>开箱即用，极速上线</h3>
-                <div class="adv-subtitle">解决传统电脑部署周期长、IT配置繁琐的问题</div>
-                <p>无影硬件终端预装无影OS，支持通电联网登录后直接接入云电脑，无需安装客户端或调试驱动。从拆箱到进入工作环境仅需几分钟，大幅缩短交付周期，让新员工或分支机构快速投入生产。</p>
+            <div class="scenario-card">
+                <h4>📞 智能客服</h4>
+                <p>多渠道智能客服、问题自动分类、工单智能派单、满意度分析。</p>
             </div>
-            <div class="advantage-block">
-                <h3>统一管控，智能运维</h3>
-                <div class="adv-subtitle">解决大规模终端管理分散、运维成本高的问题</div>
-                <p>通过无影终端管理平台，IT管理员可远程完成千台设备的策略下发、系统升级、状态监控与故障诊断。支持Web控制台、移动App及开放API，实现"一人管千端"，显著降低人力投入，提升资产运营效率。</p>
+            <div class="scenario-card">
+                <h4>📈 智能营销</h4>
+                <p>用户画像构建、精准营销推荐、广告投放优化、转化率提升。</p>
             </div>
-            <div class="advantage-block">
-                <h3>云端闭环，安全可信</h3>
-                <div class="adv-subtitle">解决传统终端数据分散、合规风险高的问题</div>
-                <p>产品核心的计算与存储均在云端完成，终端不留存任何敏感数据；配合外设管控、网络隔离、国密标准密钥等加密方式，实现端到端安全防护，可为各类企业客户提供可信赖的高安全办公底座。</p>
+            <div class="scenario-card">
+                <h4>📦 智能供应链</h4>
+                <p>需求预测、库存优化、物流路径规划、供应商智能评估。</p>
             </div>
         </div>
     </section>
 
-    <!-- 产品功能 -->
+    <!-- 实施路径 -->
     <section class="section">
-        <h2 class="section-title">产品功能</h2>
-        <div class="function-grid">
-            <div class="function-card">
-                <img src="images/wuying-hardware-terminal.png" alt="无影硬件终端">
-                <div class="function-card-body">
-                    <h3>无影硬件终端</h3>
-                    <p>无影硬件终端是阿里云自主研发的云电脑接入终端，涵盖魔方、一体机、笔记本等全形态产品矩阵，深度融合无影OS与云原生架构。全系产品支持通电即连、自动注册、零配置交付，结合低功耗设计、安全启动机制与丰富外设接口，为企业提供稳定、高效、合规的本地接入体验。作为云办公的专属入口，无影硬件终端重新定义了终端与云的协同边界。</p>
-                </div>
+        <h2 class="section-title">实施路径</h2>
+        <div class="process-timeline">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h4>需求调研</h4>
+                <p>深入了解业务场景和痛点，明确 AI 应用目标</p>
             </div>
-            <div class="function-card">
-                <img src="images/wuying-software-client.png" alt="无影软件客户端">
-                <div class="function-card-body">
-                    <h3>无影软件客户端</h3>
-                    <p>无影软件客户端全面覆盖Windows、macOS、iOS、Android等主流操作系统，助力用户通过现有设备灵活、安全地访问云电脑。基于自研流化协议 ASP，客户端实现了高清画质、低延迟交互、多外设重定向及网络自适应优化，确保跨端体验一致流畅。无论固定办公、远程协作或临时应急，用户均可在任意终端上获得完整、高性能的云上工作空间。</p>
-                </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h4>方案设计</h4>
+                <p>定制 AI 解决方案，选择合适的技术架构和产品组合</p>
             </div>
-            <div class="function-card">
-                <img src="images/wuying-terminal-platform.png" alt="无影终端管理平台">
-                <div class="function-card-body">
-                    <h3>无影终端管理平台</h3>
-                    <p>无影终端管理平台提供专门的Web控制台入口，全面覆盖硬件终端与软件客户端的全生命周期管理。IT管理员可远程执行批量部署、策略下发、系统升级、实时监控与安全审计，实现"一人管千端"。平台深度集成资产、安全与服务流程，助力企业降本增效，构建可扩展、可治理、可信赖的云终端管理体系。</p>
-                </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h4>模型训练</h4>
+                <p>基于企业数据，训练和调优 AI 模型，确保效果达标</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h4>部署上线</h4>
+                <p>系统集成、用户培训、试运行优化，确保稳定上线</p>
             </div>
         </div>
     </section>
 
     <!-- CTA区域 -->
-    <section class="product-hero" style="padding: 80px 5%;">
-        <h2 style="font-size: 36px; margin-bottom: 20px;">准备体验无影终端？</h2>
-        <p style="font-size: 18px; margin-bottom: 40px;">立即购买，感受云上办公的全新体验</p>
-        <a href="contact.html" class="btn btn-primary">立即购买</a>
+    <section class="solution-hero" style="padding: 80px 5%;">
+        <h2 style="font-size: 36px; margin-bottom: 20px;">准备开启 AI 转型之旅？</h2>
+        <p style="font-size: 18px; margin-bottom: 40px;">我们的专家团队将为您提供一对一咨询，制定专属 AI 应用落地方案</p>
+        <a href="contact.html" class="btn btn-primary">预约专家咨询</a>
     </section>
 
         <!-- 底部 -->
-    
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-column">
@@ -712,5 +723,131 @@
         </div>
     </footer>
 
-    </body>
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 粒子背景动画
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 100;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 212, 255, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // 绘制连线
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-title, .section-subtitle, .vm-card, .transform-card, .framework-item, .matrix-solution, .advantage-card, .product-card, .matrix-product-category, .positioning-highlight').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 表单提交（仅当表单存在时执行）
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('感谢您的咨询！我们将尽快与您联系。');
+                this.reset();
+            });
+        }
+    </script>
+</body>
 </html>
