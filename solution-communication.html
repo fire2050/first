@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>融合通信解决方案 - 智慧解决方案事业部</title>
+    <style>
+        * { margin:0; padding:0; box-sizing: border-box; }
+        :root {
+            --deep-space: #0A1628;
+            --tech-blue: #0066FF;
+            --neon-cyan: #00D4FF;
+            --purple: #7B61FF;
+            --dark-gray: #1E2A3A;
+            --light-gray: #E8ECF4;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8B8D8;
+        }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background-color: var(--deep-space);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .navbar { position: fixed; top:0; left:0; right:0; z-index:1000; padding:20px 5%; display:flex; justify-content:space-between; align-items:center; transition: all 0.3s ease; background: transparent; }
+        .navbar.scrolled {
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .logo { font-size:24px; font-weight:bold; background: linear-gradient(135deg, var(--neon-cyan), var(--tech-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size:14px; display:flex; align-items:center; gap:5px; }
+        .nav-links a:hover { color: var(--neon-cyan); }
+        .nav-links > li > a.has-dropdown::after { content: '▾'; display:inline-block; font-size:10px; margin-left:5px; transition: transform 0.3s ease; }
+        .nav-links > li:hover > a.has-dropdown::after { transform: rotate(180deg); }
+        .nav-links > li { position: relative; }
+        .dropdown-menu { position:absolute; top:100%; left:50%; transform:translateX(-50%); background: rgba(10,22,40,0.95); backdrop-filter: blur(10px); min-width:220px; border-radius:8px; border:1px solid rgba(0,212,255,0.2); box-shadow: 0 8px 30px rgba(0,0,0,0.3); opacity:0; visibility:hidden; transition: all 0.3s ease; z-index:1001; padding:8px 0; margin-top:10px; }
+        .nav-links > li:hover .dropdown-menu { opacity:1; visibility:visible; margin-top:5px; }
+        .dropdown-menu::before { content:''; position:absolute; top:-6px; left:50%; transform:translateX(-50%); width:12px; height:12px; background: rgba(10,22,40,0.95); border-left:1px solid rgba(0,212,255,0.2); border-top:1px solid rgba(0,212,255,0.2); transform:translateX(-50%) rotate(45deg); }
+        .dropdown-item { display:block; padding:12px 20px; color:var(--text-secondary); text-decoration:none; font-size:14px; transition: all 0.3s ease; white-space:nowrap; }
+        .dropdown-item:hover { color:var(--neon-cyan); background:rgba(0,212,255,0.1); padding-left:28px; }
+        .dropdown-divider { height:1px; background:rgba(0,212,255,0.1); margin:4px 0; }
+        .dropdown-category { padding:8px 20px 4px; font-size:12px; color:var(--purple); text-transform:uppercase; letter-spacing:1px; }
+        .solution-hero { padding:150px 5% 100px; background:linear-gradient(135deg, var(--deep-space) 0%, rgba(0,102,255,0.1) 100%); text-align:center; }
+        .solution-hero h1 { font-size:48px; margin-bottom:20px; background:linear-gradient(135deg, var(--neon-cyan), var(--tech-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .solution-hero p { font-size:20px; color:var(--text-secondary); max-width:800px; margin:0 auto 40px; }
+        .btn { padding:15px 40px; border-radius:8px; text-decoration:none; font-size:16px; font-weight:600; transition:all 0.3s ease; display:inline-block; cursor:pointer; }
+        .btn-primary { background:linear-gradient(135deg, var(--tech-blue), var(--neon-cyan)); color:white; border:none; }
+        .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,212,255,0.3); }
+        .section { padding:80px 5%; max-width:1400px; margin:0 auto; }
+        .section-title { font-size:36px; margin-bottom:40px; background:linear-gradient(135deg, var(--neon-cyan), var(--tech-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .capability-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px; margin:60px 0; }
+        .capability-card { background:rgba(30,42,58,0.5); border-radius:12px; padding:40px 30px; border:1px solid rgba(0,212,255,0.2); transition:all 0.3s ease; }
+        .capability-card:hover { transform:translateY(-8px); border-color:var(--neon-cyan); box-shadow:0 8px 30px rgba(0,212,255,0.2); }
+        .capability-icon { width:60px; height:60px; background:linear-gradient(135deg, var(--tech-blue), var(--neon-cyan)); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:20px; }
+        .capability-card h3 { font-size:22px; margin-bottom:15px; }
+        .scenario-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:30px; margin:40px 0; }
+        .scenario-card { background:rgba(30,42,58,0.3); border-radius:12px; padding:30px; border:1px solid rgba(0,212,255,0.1); }
+        .scenario-card h4 { font-size:20px; margin-bottom:15px; color:var(--neon-cyan); }
+        .scenario-card p { color:var(--text-secondary); }
+        footer { background:rgba(10,22,40,0.95); padding:60px 5% 30px; margin-top:100px; }
+        .footer-content { max-width:1400px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; }
+        .footer-section h4 { font-size:18px; margin-bottom:20px; color:var(--neon-cyan); }
+        .footer-section ul { list-style:none; }
+        .footer-section ul li { margin-bottom:10px; }
+        .footer-section ul li a { color:var(--text-secondary); text-decoration:none; transition:color 0.3s; font-size:14px; }
+        .footer-bottom { max-width:1400px; margin:40px auto 0; padding-top:30px; border-top:1px solid rgba(0,212,255,0.1); text-align:center; color:var(--text-secondary); font-size:14px; }
+        @media (max-width:768px) { .nav-links { display:none; } .solution-hero h1 { font-size:32px; } .footer-content { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="logo">智慧解决方案</div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li>
+                <a href="#products" class="has-dropdown">生态产品</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-category">无影系列</div>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
+                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">亿联网络</div>
+                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
+                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
+                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
+                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">钉钉系列</div>
+                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
+                    <a href="product-wukong.html" class="dropdown-item">钉钉悟空</a>
+                    <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
+                </div>
+            </li>
+            <li>
+                <a href="#solutions" class="has-dropdown">解决方案</a>
+                <div class="dropdown-menu">
+                    <a href="solution-ai.html" class="dropdown-item">AI 应用解决方案</a>
+                    <a href="solution-communication.html" class="dropdown-item">融合通信解决方案</a>
+                    <a href="solution-avintegration.html" class="dropdown-item">音视频集成解决方案</a>
+                    <a href="solution-smartoffice.html" class="dropdown-item">智慧办公解决方案</a>
+                </div>
+            </li>
+            <li>
+                <a href="service.html" class="has-dropdown">专业服务</a>
+                <div class="dropdown-menu">
+                    <a href="service.html#ai-landing" class="dropdown-item">AI 应用落地</a>
+                    <a href="service.html#system-integration" class="dropdown-item">系统集成</a>
+                    <a href="service.html#maintenance" class="dropdown-item">专业维护</a>
+                    <a href="service.html#expert" class="dropdown-item">专家服务</a>
+                </div>
+            </li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <section class="solution-hero">
+        <h1>📞 融合通信解决方案</h1>
+        <p>统一通信平台，实现语音、视频、消息、会议的深度融合</p>
+        <a href="contact.html" class="btn btn-primary">咨询融合通信方案</a>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">方案概述</h2>
+        <p style="color:var(--text-secondary); line-height:2; font-size:16px; max-width:900px;">
+            我们提供基于亿联网络和钉钉的融合通信解决方案，实现语音、视频、消息、会议的深度融合，打破沟通壁垒，提升协作效率。支持跨终端、跨平台、跨地域的无缝通信体验。
+        </p>
+        
+        <div class="capability-grid">
+            <div class="capability-card">
+                <div class="capability-icon">📞</div>
+                <h3>统一通信</h3>
+                <p>语音、视频、消息、会议统一平台，一个应用搞定所有沟通需求。</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">📹</div>
+                <h3>高清音视频</h3>
+                <p>基于亿联专业音视频技术，提供高清、低延迟的会议体验。</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">☁️</div>
+                <h3>云端管理</h3>
+                <p>统一云端管理后台，设备管控、权限分配、日志审计一站式完成。</p>
+            </div>
+            <div class="capability-card">
+                <div class="capability-icon">📱</div>
+                <h3>跨终端协同</h3>
+                <p>支持PC、移动端、会议室终端多端协同，随时随地高效沟通。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background:rgba(30,42,58,0.3);">
+        <h2 class="section-title">应用场景</h2>
+        <div class="scenario-grid">
+            <div class="scenario-card">
+                <h4>🏢 企业日常沟通</h4>
+                <p>内部语音通话、视频会议、即时消息，统一平台提升沟通效率。</p>
+            </div>
+            <div class="scenario-card">
+                <h4>🌐 远程协作</h4>
+                <p>跨地域团队协作，高清视频会议+屏幕共享+在线文档协同。</p>
+            </div>
+            <div class="scenario-card">
+                <h4>📊 客户沟通</h4>
+                <p>客户拜访、远程演示、方案讲解，专业音视频提升客户体验。</p>
+            </div>
+            <div class="scenario-card">
+                <h4>🎓 培训赋能</h4>
+                <p>在线培训、远程教学、知识分享，大规模实时互动。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="solution-hero" style="padding:80px 5%;">
+        <h2 style="font-size:36px; margin-bottom:20px;">准备升级通信系统？</h2>
+        <p style="font-size:18px; margin-bottom:40px;">我们的专家将为您提供融合通信咨询和方案设计</p>
+        <a href="contact.html" class="btn btn-primary">预约专家咨询</a>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">智慧解决方案</div>
+                <p class="footer-desc">智慧解决方案事业部致力于为企业客户提供一站式数字化转型服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">生态产品</h4>
+                <ul class="footer-links">
+                    <li><a href="product-wuying.html">无影云电脑商业版</a></li>
+                    <li><a href="product-wuying-hardware.html">无影终端</a></li>
+                    <li><a href="product-jvs.html">无影Agent管理中心</a></li>
+                    <li><a href="product-agentbay.html">AgentBay 开发套件</a></li>
+                    <li><a href="product-meetingboard.html">音视频会议平板</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">解决方案</h4>
+                <ul class="footer-links">
+                    <li><a href="solution-ai.html">AI 应用解决方案</a></li>
+                    <li><a href="solution-communication.html">融合通信解决方案</a></li>
+                    <li><a href="solution-avintegration.html">音视频集成解决方案</a></li>
+                    <li><a href="solution-smartoffice.html">智慧办公解决方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">专业服务</h4>
+                <ul class="footer-links">
+                    <li><a href="service.html#ai-landing">AI 应用落地</a></li>
+                    <li><a href="service.html#system-integration">系统集成</a></li>
+                    <li><a href="service.html#maintenance">专业维护</a></li>
+                    <li><a href="service.html#expert">专家服务</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">联系我们</h4>
+                <ul class="footer-links">
+                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="contact.html">在线咨询</a></li>
+                    <li><a href="contact.html">服务网点</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 智慧解决方案事业部 版权所有 | 备案号：XX-XXXXX</p>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 粒子背景动画
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 100;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 212, 255, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // 绘制连线
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-title, .section-subtitle, .vm-card, .transform-card, .framework-item, .matrix-solution, .advantage-card, .product-card, .matrix-product-category, .positioning-highlight').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 表单提交（仅当表单存在时执行）
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('感谢您的咨询！我们将尽快与您联系。');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>

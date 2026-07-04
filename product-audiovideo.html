@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会议室音视频 - 智慧解决方案事业部</title>
+    <style>
+        /* CSS变量 */
+        :root {
+            --deep-space: #0A1628;
+            --tech-blue: #0066FF;
+            --neon-cyan: #00D4FF;
+            --purple: #7B61FF;
+            --dark-gray: #1E2A3A;
+            --light-gray: #E8ECF4;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8B8D8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background-color: var(--deep-space);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .navbar { position: fixed; top: 0; width: 100%; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; }
+        .navbar.scrolled {
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .logo { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #00d4ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
+        .nav-links a { color: #a0a0a0; text-decoration: none; transition: color 0.3s; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+        .nav-links a:hover { color: #00d4ff; }
+        .nav-links > li { position: relative; }
+        .dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); min-width: 220px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; padding: 8px 0; margin-top: 10px; }
+        .nav-links > li:hover .dropdown-menu { opacity: 1; visibility: visible; margin-top: 5px; }
+        .dropdown-item { display: block; padding: 12px 20px; color: #a0a0a0; text-decoration: none; font-size: 14px; transition: all 0.3s ease; white-space: nowrap; }
+        .dropdown-item:hover { color: #00d4ff; background: rgba(0, 212, 255, 0.1); padding-left: 28px; }
+        .dropdown-divider { height: 1px; background: rgba(0, 212, 255, 0.1); margin: 4px 0; }
+        .dropdown-category { padding: 8px 20px 4px; font-size: 12px; color: #7b61ff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* 页面标题区（替代Hero） */
+        .page-header {
+            padding: 120px 5% 60px;
+            background: linear-gradient(135deg, #0a1628 0%, rgba(0, 102, 255, 0.08) 100%);
+        }
+        .page-header h1 {
+            font-size: 42px;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 17px;
+        }
+
+        /* 产品类别侧边栏 */
+        .product-layout {
+            display: flex;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 5% 80px;
+        }
+        .category-sidebar {
+            width: 220px;
+            min-width: 220px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+        }
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+        }
+        .category-title-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .category-arrow {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .category-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .category-item {
+            display: block;
+            padding: 14px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 15px;
+            color: var(--text-secondary);
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+        .category-item:hover {
+            background: rgba(0, 212, 255, 0.08);
+            color: var(--neon-cyan);
+            border-color: rgba(0, 212, 255, 0.15);
+        }
+        .category-item.active {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 180, 216, 0.10));
+            color: #00D4FF;
+            font-weight: 600;
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        /* 右侧内容区 */
+        .product-content-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* 产品分类区块 */
+        .product-category {
+            margin-bottom: 70px;
+        }
+        .category-section-title {
+            font-size: 26px;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
+            position: relative;
+        }
+        .category-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: var(--neon-cyan);
+        }
+
+        /* 产品卡片网格 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .av-product-card {
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 14px;
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .av-product-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 255, 0.45);
+            box-shadow: 0 12px 35px rgba(0, 212, 255, 0.15);
+        }
+        .av-card-img-wrap {
+            position: relative;
+            background: rgba(240, 245, 250, 0.96);
+            aspect-ratio: 16/11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .av-card-img-wrap img {
+            max-width: 90%;
+            max-height: 85%;
+            object-fit: contain;
+        }
+        .av-card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #00D4AA, #00B89C);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+        .av-card-body {
+            padding: 18px 20px 20px;
+        }
+        .av-card-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .av-card-desc {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Footer 标准样式 */
+        footer {
+            background: rgba(10, 22, 40, 0.97);
+            padding: 60px 5% 30px;
+            margin-top: 0;
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .footer-column {}
+        .footer-title {
+            font-size: 17px;
+            margin-bottom: 18px;
+            color: var(--neon-cyan);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 9px;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+        }
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .product-layout { flex-direction: column; padding: 40px 5% 60px; }
+            .category-sidebar {
+                width: 100%;
+                position: static;
+                margin-bottom: 24px;
+            }
+            .category-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .category-item {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 30px; }
+            .page-header { padding: 100px 5% 40px; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="logo">智慧解决方案</div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li>
+                <a href="#products" class="has-dropdown">生态产品</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-category">无影系列</div>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
+                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">亿联网络</div>
+                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
+                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
+                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
+                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">钉钉系列</div>
+                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
+                    <a href="product-wukong.html" class="dropdown-item">钉钉悟空</a>
+                    <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
+                </div>
+            </li>
+            <li>
+                <a href="#solutions" class="has-dropdown">解决方案</a>
+                <div class="dropdown-menu">
+                    <a href="solution-ai.html" class="dropdown-item">AI 应用解决方案</a>
+                    <a href="solution-communication.html" class="dropdown-item">融合通信解决方案</a>
+                    <a href="solution-avintegration.html" class="dropdown-item">音视频集成解决方案</a>
+                    <a href="solution-smartoffice.html" class="dropdown-item">智慧办公解决方案</a>
+                </div>
+            </li>
+            <li>
+                <a href="service.html" class="has-dropdown">专业服务</a>
+                <div class="dropdown-menu">
+                    <a href="service.html#ai-landing" class="dropdown-item">AI 应用落地</a>
+                    <a href="service.html#system-integration" class="dropdown-item">系统集成</a>
+                    <a href="service.html#maintenance" class="dropdown-item">专业维护</a>
+                    <a href="service.html#expert" class="dropdown-item">专家服务</a>
+                </div>
+            </li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <h1>🎥 会议室音视频</h1>
+        <p>亿联网络专业会议室音视频产品矩阵，覆盖会议终端、音频设备、摄像机、USB外设全场景</p>
+    </section>
+
+    <!-- 产品类别侧边栏 + 内容 -->
+    <div class="product-layout">
+        <aside class="category-sidebar">
+            <div class="category-header">
+                <span class="category-title-text">类别</span>
+                <span class="category-arrow">▼</span>
+            </div>
+            <nav class="category-nav" id="categoryNav">
+                <a href="product-meetingboard.html" class="category-item">📺 音视频会议平板</a>
+                <a href="product-audiovideo.html" class="category-item active">🎥 会议室音视频</a>
+                <a href="product-meetingsmart.html" class="category-item">🤖 会议室智能</a>
+                <a href="product-iphone.html" class="category-item">📞 IP话机</a>
+            </nav>
+        </aside>
+        <main class="product-content-main">
+
+            <!-- ========== 会议终端 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">🖥️ 会议终端</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/audiovideo/meetingbar-a40.png" alt="MeetingBar A40">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">MeetingBar A40</div>
+                            <div class="av-card-desc">智能视讯一体机，集成摄像头与麦克风，适用于中小型会议室</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/meetingbar-a10.png" alt="MeetingBar A10系列">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">MeetingBar A10系列</div>
+                            <div class="av-card-desc">适用于小型会议、个人居家办公的轻量级视讯一体机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/meetingeye-900.png" alt="MeetingEye 900">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">MeetingEye 900</div>
+                            <div class="av-card-desc">双4K大型会议室分体式视频会议终端，旗舰级性能</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/meetingeye-500pro.png" alt="MeetingEye 500 Pro">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">MeetingEye 500 Pro</div>
+                            <div class="av-card-desc">双4K超清中大型会议室分体式视频会议终端</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/meetingeye-500.png" alt="MeetingEye 500系列">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">MeetingEye 500系列</div>
+                            <div class="av-card-desc">4K超清中大型会议室分体式视频会议终端</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/audiovideo/meetingbar-a50.png" alt="MeetingBar A50">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">MeetingBar A50</div>
+                            <div class="av-card-desc">智能视讯一体机，适用于中型微软Teams会议室</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========== 音频设备 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">🎤 音频设备</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cp50.png" alt="CP50">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">CP50</div>
+                            <div class="av-card-desc">专业级视频会议全向麦克风</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cpe40.png" alt="CPE40">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">CPE40</div>
+                            <div class="av-card-desc">专业级视频会议全向麦克风</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cs10.png" alt="CS10/CS10-D">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">CS10 / CS10-D</div>
+                            <div class="av-card-desc">低腔体双向同轴吸顶式扬声器</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cm20-vcm.png" alt="CM20">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">CM20</div>
+                            <div class="av-card-desc">智能吸顶麦克风风</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cm20-vcm.png" alt="VCM36-W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">VCM36-W</div>
+                            <div class="av-card-desc">无线视频会议麦克风阵列</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cm20-vcm.png" alt="VCM35">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">VCM35</div>
+                            <div class="av-card-desc">视频会议麦克风阵列</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========== 摄像机 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">📹 摄像机</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/audiovideo/cp50.png" alt="UVC86">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">UVC86</div>
+                            <div class="av-card-desc">双镜头4K智能追踪摄像机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/audiovideo/cpe40.png" alt="SmartVision 80">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SmartVision 80</div>
+                            <div class="av-card-desc">智能云台摄像机，4K四摄</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/audiovideo/cs10.png" alt="MTower">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">MTower</div>
+                            <div class="av-card-desc">微软会议室桌面智能摄像机</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========== USB设备 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">🔌 USB设备</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cm20-vcm.png" alt="AP08">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">AP08</div>
+                            <div class="av-card-desc">数字音频处理器</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cm20-vcm.png" alt="EN300">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">EN300</div>
+                            <div class="av-card-desc">AVoIP编码器</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cm20-vcm.png" alt="DE300">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">DE300</div>
+                            <div class="av-card-desc">AVoIP解码器</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cp50.png" alt="SmartVision 40">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SmartVision 40</div>
+                            <div class="av-card-desc">超清智能摄像机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cpe40.png" alt="UVC40 E2">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">UVC40 E2</div>
+                            <div class="av-card-desc">超清智能USB会议一体机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/audiovideo/cs10.png" alt="UVC34">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">UVC34</div>
+                            <div class="av-card-desc">智能USB会议一体机</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">智慧解决方案</div>
+                <p class="footer-desc">智慧解决方案事业部致力于为企业客户提供一站式数字化转型服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">生态产品</h4>
+                <ul class="footer-links">
+                    <li><a href="product-wuying.html">无影云电脑商业版</a></li>
+                    <li><a href="product-wuying-hardware.html">无影终端</a></li>
+                    <li><a href="product-jvs.html">无影Agent管理中心</a></li>
+                    <li><a href="product-agentbay.html">AgentBay 开发套件</a></li>
+                    <li><a href="product-meetingboard.html">音视频会议平板</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">解决方案</h4>
+                <ul class="footer-links">
+                    <li><a href="solution-ai.html">AI 应用解决方案</a></li>
+                    <li><a href="solution-communication.html">融合通信解决方案</a></li>
+                    <li><a href="solution-avintegration.html">音视频集成解决方案</a></li>
+                    <li><a href="solution-smartoffice.html">智慧办公解决方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">专业服务</h4>
+                <ul class="footer-links">
+                    <li><a href="service.html#ai-landing">AI 应用落地</a></li>
+                    <li><a href="service.html#system-integration">系统集成</a></li>
+                    <li><a href="service.html#maintenance">专业维护</a></li>
+                    <li><a href="service.html#expert">专家服务</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">联系我们</h4>
+                <ul class="footer-links">
+                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="contact.html">在线咨询</a></li>
+                    <li><a href="contact.html">服务网点</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 智慧解决方案事业部 版权所有 | 备案号：XX-XXXXX</p>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP话机 - 智慧解决方案事业部</title>
+    <style>
+        /* CSS变量 */
+        :root {
+            --deep-space: #0A1628;
+            --tech-blue: #0066FF;
+            --neon-cyan: #00D4FF;
+            --purple: #7B61FF;
+            --dark-gray: #1E2A3A;
+            --light-gray: #E8ECF4;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8B8D8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background-color: var(--deep-space);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .navbar { position: fixed; top: 0; width: 100%; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; }
+        .navbar.scrolled {
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .logo { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #00d4ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
+        .nav-links a { color: #a0a0a0; text-decoration: none; transition: color 0.3s; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+        .nav-links a:hover { color: #00d4ff; }
+        .nav-links > li { position: relative; }
+        .dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); min-width: 220px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; padding: 8px 0; margin-top: 10px; }
+        .nav-links > li:hover .dropdown-menu { opacity: 1; visibility: visible; margin-top: 5px; }
+        .dropdown-item { display: block; padding: 12px 20px; color: #a0a0a0; text-decoration: none; font-size: 14px; transition: all 0.3s ease; white-space: nowrap; }
+        .dropdown-item:hover { color: #00d4ff; background: rgba(0, 212, 255, 0.1); padding-left: 28px; }
+        .dropdown-divider { height: 1px; background: rgba(0, 212, 255, 0.1); margin: 4px 0; }
+        .dropdown-category { padding: 8px 20px 4px; font-size: 12px; color: #7b61ff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* 页面标题区（替代Hero） */
+        .page-header {
+            padding: 120px 5% 60px;
+            background: linear-gradient(135deg, #0a1628 0%, rgba(0, 102, 255, 0.08) 100%);
+        }
+        .page-header h1 {
+            font-size: 42px;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 17px;
+        }
+
+        /* 产品类别侧边栏 */
+        .product-layout {
+            display: flex;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 5% 80px;
+        }
+        .category-sidebar {
+            width: 220px;
+            min-width: 220px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+        }
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+        }
+        .category-title-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .category-arrow {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .category-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .category-item {
+            display: block;
+            padding: 14px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 15px;
+            color: var(--text-secondary);
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+        .category-item:hover {
+            background: rgba(0, 212, 255, 0.08);
+            color: var(--neon-cyan);
+            border-color: rgba(0, 212, 255, 0.15);
+        }
+        .category-item.active {
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 150, 255, 0.10));
+            color: #5CB8FF;
+            font-weight: 600;
+            border-color: rgba(0, 102, 255, 0.3);
+        }
+
+        /* 右侧内容区 */
+        .product-content-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* 产品分类区块 */
+        .product-category {
+            margin-bottom: 70px;
+        }
+        .category-section-title {
+            font-size: 26px;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid rgba(0, 102, 255, 0.2);
+            position: relative;
+        }
+        .category-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: var(--tech-blue);
+        }
+
+        /* 产品卡片网格 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .av-product-card {
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 14px;
+            border: 1px solid rgba(0, 102, 255, 0.15);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .av-product-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 102, 255, 0.45);
+            box-shadow: 0 12px 35px rgba(0, 102, 255, 0.15);
+        }
+        .av-card-img-wrap {
+            position: relative;
+            background: rgba(240, 245, 250, 0.96);
+            aspect-ratio: 16/11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .av-card-img-wrap img {
+            max-width: 90%;
+            max-height: 85%;
+            object-fit: contain;
+        }
+        .av-card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #00D4AA, #00B89C);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+        .av-card-body {
+            padding: 18px 20px 20px;
+        }
+        .av-card-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .av-card-desc {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Footer 标准样式 */
+        footer {
+            background: rgba(10, 22, 40, 0.97);
+            padding: 60px 5% 30px;
+            margin-top: 0;
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .footer-column {}
+        .footer-title {
+            font-size: 17px;
+            margin-bottom: 18px;
+            color: var(--neon-cyan);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 9px;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+        }
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .product-layout { flex-direction: column; padding: 40px 5% 60px; }
+            .category-sidebar {
+                width: 100%;
+                position: static;
+                margin-bottom: 24px;
+            }
+            .category-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .category-item {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 30px; }
+            .page-header { padding: 100px 5% 40px; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="logo">智慧解决方案</div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li>
+                <a href="#products" class="has-dropdown">生态产品</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-category">无影系列</div>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
+                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">亿联网络</div>
+                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
+                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
+                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
+                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">钉钉系列</div>
+                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
+                    <a href="product-wukong.html" class="dropdown-item">钉钉悟空</a>
+                    <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
+                </div>
+            </li>
+            <li>
+                <a href="#solutions" class="has-dropdown">解决方案</a>
+                <div class="dropdown-menu">
+                    <a href="solution-ai.html" class="dropdown-item">AI 应用解决方案</a>
+                    <a href="solution-communication.html" class="dropdown-item">融合通信解决方案</a>
+                    <a href="solution-avintegration.html" class="dropdown-item">音视频集成解决方案</a>
+                    <a href="solution-smartoffice.html" class="dropdown-item">智慧办公解决方案</a>
+                </div>
+            </li>
+            <li>
+                <a href="service.html" class="has-dropdown">专业服务</a>
+                <div class="dropdown-menu">
+                    <a href="service.html#ai-landing" class="dropdown-item">AI 应用落地</a>
+                    <a href="service.html#system-integration" class="dropdown-item">系统集成</a>
+                    <a href="service.html#maintenance" class="dropdown-item">专业维护</a>
+                    <a href="service.html#expert" class="dropdown-item">专家服务</a>
+                </div>
+            </li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <h1>📞 IP话机</h1>
+        <p>亿联网络全系列IP话机产品矩阵，覆盖高端商务、视频通话、会议电话及无线办公全场景</p>
+    </section>
+
+    <!-- 产品类别侧边栏 + 内容 -->
+    <div class="product-layout">
+        <aside class="category-sidebar">
+            <div class="category-header">
+                <span class="category-title-text">类别</span>
+                <span class="category-arrow">▼</span>
+            </div>
+            <nav class="category-nav" id="categoryNav">
+                <a href="product-meetingboard.html" class="category-item">📺 音视频会议平板</a>
+                <a href="product-audiovideo.html" class="category-item">🎥 会议室音视频</a>
+                <a href="product-meetingsmart.html" class="category-item">🤖 会议室智能</a>
+                <a href="product-iphone.html" class="category-item active">📞 IP话机</a>
+            </nav>
+        </aside>
+        <main class="product-content-main">
+
+            <!-- ========== T8系列（旗舰级） ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">T8系列 · 旗舰级智能商务话机</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/t8-series.png" alt="SIP-T88">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T88</div>
+                            <div class="av-card-desc">高端智能商务话机，适用于高管办公室</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/t8-series.png" alt="SIP-T87W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T87W</div>
+                            <div class="av-card-desc">高端智能话机，适用于高管办公室、前台接待处</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/t8-series.png" alt="SIP-T85W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T85W</div>
+                            <div class="av-card-desc">高端商务话机，适用于呼叫中心/前台/员工工位/公共区域</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========== T7系列 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">T7系列 · 高端智能话机</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/t7-series.png" alt="SIP-T77U">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T77U</div>
+                            <div class="av-card-desc">智能商务话机，专为高管及专业人士设计</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/t7-series.png" alt="SIP-T74W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T74W</div>
+                            <div class="av-card-desc">专为管理者及专业人士设计</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/t7-series.png" alt="SIP-T74U">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T74U</div>
+                            <div class="av-card-desc">专为管理者和专业人士设计</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/t7-series.png" alt="SIP-T73W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T73W</div>
+                            <div class="av-card-desc">多功能桌面话机，适用于商超零售、工厂等场景</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========== T5系列 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">T5系列 · 视频与高端商务话机</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t5-series-a.png" alt="亿联VP59">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联VP59</div>
+                            <div class="av-card-desc">旗舰级视频话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t5-series-a.png" alt="亿联T57W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T57W</div>
+                            <div class="av-card-desc">高端商务话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t5-series-a.png" alt="亿联T54W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T54W</div>
+                            <div class="av-card-desc">可视电话机/SIP话机/VOip商务办公座机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t5-series-a.png" alt="亿联T53W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T53W</div>
+                            <div class="av-card-desc">高端商务话机/IP话机/SIP话机/VOip商务座机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t5-series-b.png" alt="亿联T58W Pro Camera">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T58W (Pro) with Camera</div>
+                            <div class="av-card-desc">可视化高端商务话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t5-series-b.png" alt="SIP-T58W Pro">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T58W (Pro)</div>
+                            <div class="av-card-desc">高端商务话机/IP话机/SIP话机/VOip商务座机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t5-series-b.png" alt="亿联T53">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T53</div>
+                            <div class="av-card-desc">高端商务话机/IP话机/SIP话机/VOip商务座机</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========== T4系列 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">T4系列 · 中高端彩屏话机</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t4-series.png" alt="亿联T48U">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T48U</div>
+                            <div class="av-card-desc">高端大屏触控IP话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t4-series.png" alt="亿联T46U">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T46U</div>
+                            <div class="av-card-desc">高端彩屏无纸化IP话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t4-series.png" alt="亿联T43U">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T43U</div>
+                            <div class="av-card-desc">多功能无纸化IP话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t4-series.png" alt="亿联T42U">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T42U</div>
+                            <div class="av-card-desc">多功能无纸化IP话机</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========== T3系列 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">T3系列 · 入门级基础话机</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/t3-series-a.png" alt="SIP-T31W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T31W</div>
+                            <div class="av-card-desc">入门级WiFi话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/t3-series-a.png" alt="SIP-T34W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T34W</div>
+                            <div class="av-card-desc">高性价比WiFi话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t3-series-a.png" alt="亿联T33G">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">亿联T33G</div>
+                            <div class="av-card-desc">高性价比彩屏IP话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t3-series-a.png" alt="SIP-T31G">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T31G</div>
+                            <div class="av-card-desc">双线路入门级IP话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t3-series-b.png" alt="SIP-T31P">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T31P</div>
+                            <div class="av-card-desc">双线路入门级IP话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t3-series-b.png" alt="SIP-T31">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T31</div>
+                            <div class="av-card-desc">双线路入门级IP话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t3-series-b.png" alt="SIP-T30P">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T30P</div>
+                            <div class="av-card-desc">单线路入门级IP话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/t3-series-b.png" alt="SIP-T30">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">SIP-T30</div>
+                            <div class="av-card-desc">单线路入门级IP话机</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========== CP系列话机 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">CP系列 · 会议电话</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/cp-series.png" alt="CP935W">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">CP935W</div>
+                            <div class="av-card-desc">亿联无线Wi-Fi触控会议电话</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/cp-series.png" alt="CP925">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">CP925</div>
+                            <div class="av-card-desc">亿联高清音质触控会议电话</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <img src="images/iphone/cp-series.png" alt="CP965">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">CP965</div>
+                            <div class="av-card-desc">全新旗舰级会议电话</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========== Wi-Fi无线话机 ========== -->
+            <div class="product-category">
+                <h2 class="category-section-title">Wi-Fi无线话机</h2>
+                <div class="product-grid">
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/wifi-series.png" alt="AX86R">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">AX86R</div>
+                            <div class="av-card-desc">坚固款Wi-Fi商务话机</div>
+                        </div>
+                    </div>
+
+                    <div class="av-product-card">
+                        <div class="av-card-img-wrap">
+                            <span class="av-card-badge">NEW</span>
+                            <img src="images/iphone/wifi-series.png" alt="AX83H">
+                        </div>
+                        <div class="av-card-body">
+                            <div class="av-card-name">AX83H</div>
+                            <div class="av-card-desc">Wi-Fi彩屏无绳电话</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">智慧解决方案</div>
+                <p class="footer-desc">智慧解决方案事业部致力于为企业客户提供一站式数字化转型服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">生态产品</h4>
+                <ul class="footer-links">
+                    <li><a href="product-wuying.html">无影云电脑商业版</a></li>
+                    <li><a href="product-wuying-hardware.html">无影终端</a></li>
+                    <li><a href="product-jvs.html">无影Agent管理中心</a></li>
+                    <li><a href="product-agentbay.html">AgentBay 开发套件</a></li>
+                    <li><a href="product-meetingboard.html">音视频会议平板</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">解决方案</h4>
+                <ul class="footer-links">
+                    <li><a href="solution-ai.html">AI 应用解决方案</a></li>
+                    <li><a href="solution-communication.html">融合通信解决方案</a></li>
+                    <li><a href="solution-avintegration.html">音视频集成解决方案</a></li>
+                    <li><a href="solution-smartoffice.html">智慧办公解决方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">专业服务</h4>
+                <ul class="footer-links">
+                    <li><a href="service.html#ai-landing">AI 应用落地</a></li>
+                    <li><a href="service.html#system-integration">系统集成</a></li>
+                    <li><a href="service.html#maintenance">专业维护</a></li>
+                    <li><a href="service.html#expert">专家服务</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">联系我们</h4>
+                <ul class="footer-links">
+                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="contact.html">在线咨询</a></li>
+                    <li><a href="contact.html">服务网点</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 智慧解决方案事业部 版权所有 | 备案号：XX-XXXXX</p>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

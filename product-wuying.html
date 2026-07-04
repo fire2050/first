@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无影云电脑商业版 - 智慧解决方案事业部</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --deep-space: #0a0e1a;
+            --tech-blue: #1a2a4a;
+            --neon-cyan: #00d4ff;
+            --electric-purple: #8b5cf6;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --light-gray: #3c4043;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--deep-space);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ========== 导航栏 ========== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 5%;
+            background: rgba(10, 14, 26, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            transition: background 0.3s;
+        }
+        .navbar.scrolled { background: rgba(10, 14, 26, 0.97); }
+        .logo { font-size: 20px; font-weight: 700; background: linear-gradient(135deg, var(--neon-cyan), var(--electric-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--neon-cyan); }
+
+        /* 下拉菜单 */
+        .nav-links > li { position: relative; }
+        .dropdown-menu {
+            display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 14, 26, 0.97); border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 12px; padding: 10px 0; min-width: 200px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4); margin-top: 8px;
+        }
+        .nav-links > li:hover .dropdown-menu { display: block; }
+        .dropdown-item { display: block; padding: 8px 20px; color: var(--text-secondary); text-decoration: none; font-size: 13px; white-space: nowrap; }
+        .dropdown-item:hover { color: var(--neon-cyan); background: rgba(0,212,255,0.05); }
+        .dropdown-category { padding: 6px 20px 2px; font-size: 11px; color: var(--electric-purple); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .dropdown-divider { height: 1px; background: rgba(0,212,255,0.1); margin: 4px 12px; }
+        .has-dropdown::after { content: ' ▾'; font-size: 9px; }
+
+        /* ========== Hero ========== */
+        .product-hero {
+            padding: 160px 5% 80px; text-align: center;
+            background: linear-gradient(180deg, rgba(0,212,255,0.05) 0%, var(--deep-space) 100%);
+        }
+        .product-hero h1 { font-size: 42px; margin-bottom: 16px; }
+        .product-hero p { color: var(--text-secondary); font-size: 18px; margin-bottom: 30px; }
+        .btn { display: inline-block; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-size: 15px; cursor: pointer; transition: all 0.3s; }
+        .btn-primary { background: linear-gradient(135deg, var(--tech-blue), var(--neon-cyan)); color: #fff; border: none; }
+
+        /* ========== 通用段落 ========== */
+        .section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 32px; margin-bottom: 16px; }
+        .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 50px; font-size: 16px; }
+        .section:nth-child(odd) { background: rgba(30, 42, 58, 0.2); }
+
+        /* ========== 产品优势 3×2 ========== */
+        .advantage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .advantage-card {
+            background: rgba(30,42,58,0.5); border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 12px; padding: 30px; text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .advantage-card:hover { transform: translateY(-6px); box-shadow: 0 8px 30px rgba(0,212,255,0.15); }
+        .advantage-icon { font-size: 36px; margin-bottom: 16px; }
+        .advantage-card h3 { font-size: 18px; margin-bottom: 10px; color: var(--neon-cyan); }
+        .advantage-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
+
+        /* ========== 应用场景 标签切换 ========== */
+        .scenario-tabs {
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px;
+            margin-bottom: 30px;
+        }
+        .scenario-tab {
+            padding: 10px 6px; border: 1px solid rgba(0,212,255,0.3); border-radius: 8px;
+            background: transparent; color: var(--text-secondary); font-size: 13px;
+            cursor: pointer; transition: all 0.3s; text-align: center;
+        }
+        .scenario-tab:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+        .scenario-tab.active {
+            background: linear-gradient(135deg, var(--tech-blue), var(--neon-cyan));
+            border-color: transparent; color: #fff; font-weight: 600;
+        }
+        .scenario-panels { position: relative; }
+        .scenario-panel {
+            display: none; background: rgba(30,42,58,0.5);
+            border: 1px solid rgba(0,212,255,0.2); border-radius: 16px;
+            padding: 50px; text-align: left;
+        }
+        .scenario-panel.active { display: block; animation: fadeIn 0.35s ease; }
+        .scenario-panel .scenario-icon { font-size: 48px; margin-bottom: 16px; text-align: center; }
+        .scenario-panel h3 { font-size: 26px; margin-bottom: 16px; text-align: center; }
+        .scenario-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; justify-content: center; }
+        .scenario-header .scenario-icon { font-size: 36px; margin-bottom: 0; text-align: center; }
+        .scenario-header h3 { font-size: 26px; margin-bottom: 0; text-align: center; }
+        .scenario-panel p { color: var(--text-secondary); font-size: 15px; line-height: 2; }
+        .scenario-overview {
+            font-size: 15px !important;
+            line-height: 2 !important;
+            margin-bottom: 30px;
+            padding: 20px 24px;
+            background: rgba(0,212,255,0.05);
+            border-left: 3px solid var(--neon-cyan);
+            border-radius: 6px;
+            color: var(--text-secondary) !important;
+        }
+
+        /* 场景详情两栏布局 - 图片:文字 = 6:4 */
+        .scenario-detail {
+            display: grid;
+            grid-template-columns: 6fr 4fr;
+            gap: 40px;
+            align-items: start;
+            margin-top: 10px;
+        }
+        .scenario-image {
+            position: sticky;
+            top: 20px;
+        }
+        .scenario-image img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid rgba(0,212,255,0.2);
+            background: #fff;
+        }
+        .scenario-features {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .scenario-feature-item {
+            background: rgba(26,42,74,0.5);
+            border: 1px solid rgba(0,212,255,0.12);
+            border-radius: 12px;
+            padding: 20px 24px;
+            transition: all 0.3s ease;
+        }
+        .scenario-feature-item:hover {
+            border-color: rgba(0,212,255,0.35);
+            box-shadow: 0 4px 16px rgba(0,212,255,0.08);
+            transform: translateX(4px);
+        }
+        .feature-item-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--neon-cyan);
+            margin-bottom: 8px;
+        }
+        .scenario-feature-item p {
+            font-size: 14px !important;
+            line-height: 1.8 !important;
+            margin: 0 !important;
+            color: var(--text-secondary) !important;
+        }
+
+        /* 行业挑战网格 */
+        .challenge-section {
+            margin-top: 30px;
+        }
+        .challenge-section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .challenge-item {
+            background: rgba(26,42,74,0.5);
+            border: 1px solid rgba(0,212,255,0.12);
+            border-radius: 12px;
+            padding: 20px 24px;
+            transition: all 0.3s ease;
+        }
+        .challenge-item:hover {
+            border-color: rgba(0,212,255,0.35);
+            box-shadow: 0 4px 16px rgba(0,212,255,0.08);
+        }
+        .challenge-item-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f87171;
+            margin-bottom: 10px;
+        }
+        .challenge-item ul {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .challenge-item li { margin-bottom: 6px; }
+
+        /* 产品价值网格 */
+        .value-section {
+            margin-top: 30px;
+        }
+        .value-section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .value-item {
+            background: rgba(26,42,74,0.5);
+            border: 1px solid rgba(0,212,255,0.12);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        .value-item:hover {
+            border-color: rgba(0,212,255,0.35);
+            box-shadow: 0 4px 16px rgba(0,212,255,0.08);
+            transform: translateY(-3px);
+        }
+        .value-item-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin-bottom: 12px;
+        }
+        .value-item p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ========== CTA ========== */
+        .cta-section {
+            padding: 80px 5%; text-align: center;
+            background: linear-gradient(180deg, var(--deep-space) 0%, rgba(0,212,255,0.05) 100%);
+        }
+        .cta-section h2 { font-size: 32px; margin-bottom: 16px; }
+        .cta-section p { color: var(--text-secondary); font-size: 17px; margin-bottom: 30px; }
+
+        /* ========== Footer ========== */
+        .footer {
+            background: linear-gradient(180deg, rgba(30,42,58,0.3) 0%, var(--deep-space) 100%);
+            border-top: 1px solid rgba(0,212,255,0.1); padding: 60px 5% 30px;
+        }
+        .footer-content {
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px;
+        }
+        .footer-column { min-width: 0; }
+        .footer-logo { font-size: 18px; font-weight: 700; margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--electric-purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .footer-desc { color: var(--text-secondary); font-size: 13px; line-height: 1.8; }
+        .footer-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); }
+        .footer-links { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 8px; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--neon-cyan); }
+        .footer-bottom { max-width: 1400px; margin: 40px auto 0; padding-top: 20px; border-top: 1px solid rgba(0,212,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { color: var(--text-secondary); font-size: 12px; }/* ========== 响应式 ========== */
+        @media (max-width: 900px) {
+            .advantage-grid { grid-template-columns: 1fr; }
+            .scenario-tabs { grid-template-columns: repeat(3, 1fr); }
+            .footer-content { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 12px; }
+            .product-hero h1 { font-size: 28px; }
+            .scenario-detail { grid-template-columns: 1fr; gap: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">智慧解决方案</div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li>
+                <a href="#products" class="has-dropdown">生态产品</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-category">无影系列</div>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
+                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">亿联网络</div>
+                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
+                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
+                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
+                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">钉钉系列</div>
+                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
+                    <a href="product-wukong.html" class="dropdown-item">钉钉悟空</a>
+                    <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
+                </div>
+            </li>
+            <li>
+                <a href="#solutions" class="has-dropdown">解决方案</a>
+                <div class="dropdown-menu">
+                    <a href="solution-ai.html" class="dropdown-item">AI 应用解决方案</a>
+                    <a href="solution-communication.html" class="dropdown-item">融合通信解决方案</a>
+                    <a href="solution-avintegration.html" class="dropdown-item">音视频集成解决方案</a>
+                    <a href="solution-smartoffice.html" class="dropdown-item">智慧办公解决方案</a>
+                </div>
+            </li>
+            <li>
+                <a href="service.html" class="has-dropdown">专业服务</a>
+                <div class="dropdown-menu">
+                    <a href="service.html#ai-landing" class="dropdown-item">AI 应用落地</a>
+                    <a href="service.html#system-integration" class="dropdown-item">系统集成</a>
+                    <a href="service.html#maintenance" class="dropdown-item">专业维护</a>
+                    <a href="service.html#expert" class="dropdown-item">专家服务</a>
+                </div>
+            </li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="product-hero">
+        <h1>☁️ 无影云电脑商业版</h1>
+        <p>下一代云上工作站，让高性能算力触手可及</p>
+        <a href="contact.html" class="btn btn-primary">预约演示</a>
+    </section>
+
+    <!-- 产品概述 -->
+    <section class="section">
+        <h2 class="section-title">产品概述</h2>
+        <p style="color:var(--text-secondary);line-height:2;font-size:16px;max-width:900px;margin:0 auto;text-align:center;">
+            无影商业版产品是阿里云面向商务办公场景推出的云上电脑，采用盒式终端无影魔方、笔记本电脑等多种硬件形态，灵活搭配不同规格和时长，高效替换传统商务PC，让中大型企业降本增效，提升数字化能力，加速新质生产力释放的效果。
+        </p>
+    </section>
+
+    <!-- 产品优势 -->
+    <section class="section" style="background:rgba(30,42,58,0.3);">
+        <h2 class="section-title">产品优势</h2>
+        <div class="advantage-grid">
+            <div class="advantage-card">
+                <div class="advantage-icon">⚡</div>
+                <h3>极致体验</h3>
+                <p>从登录到传输，从部署到开机，从画质到兼容，云电脑实现了端到端的体验优化，实现了更快、更省、更优。</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">🚀</div>
+                <h3>敏捷高效</h3>
+                <p>云电脑持续迭代，丰富的场景规格，灵活的付费方式，模版化的镜像能力让部署与运维从天变为分钟级。</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">🔒</div>
+                <h3>原生安全</h3>
+                <p>基于阿里云的安全和合规底层架构，云电脑实现了云网端全链路的"终端数据不落地"的安全防护体系。</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">🛠️</div>
+                <h3>统一运维</h3>
+                <p>用户管理员可对云电脑进行镜像分发、统一配置、分组管理、自动升级等操作，提升云电脑运维效率。</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">🌿</div>
+                <h3>绿色节能</h3>
+                <p>由于计算任务在云端完成，本地设备极致低功耗，无影魔方仅为2W，有效减少电力成本。</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">🤖</div>
+                <h3>AI智能</h3>
+                <p>云原生大模型AI助手"晓颖"，基于用户需求洞察与云端大模型深度结合的云电脑原生Copilot，支持知识问答、信息检索、翻译、写作、改写、AI绘图等多种能力，并实时更新。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 应用场景 -->
+    <section class="section">
+        <h2 class="section-title">应用场景</h2>
+        <div class="scenario-tabs" id="scenarioTabs">
+            <button class="scenario-tab active" data-target="panel-1">🔒 安全办公</button>
+            <button class="scenario-tab" data-target="panel-2">🏢 分支机构办公</button>
+            <button class="scenario-tab" data-target="panel-3">🎨 设计渲染</button>
+            <button class="scenario-tab" data-target="panel-4">🤖 具身研发</button>
+            <button class="scenario-tab" data-target="panel-5">📊 数据采集处理</button>
+            <button class="scenario-tab" data-target="panel-6">🛡️ 安全研发</button>
+            <button class="scenario-tab" data-target="panel-7">💬 智能客服</button>
+            <button class="scenario-tab" data-target="panel-8">🤖 RPA社群运营</button>
+            <button class="scenario-tab" data-target="panel-9">🧑 数字人直播</button>
+            <button class="scenario-tab" data-target="panel-10">🎮 云游戏</button>
+            <button class="scenario-tab" data-target="panel-11">🎓 教育培训</button>
+            <button class="scenario-tab" data-target="panel-12">🎓 AI云教育</button>
+        </div>
+        <div class="scenario-panels">
+            <div class="scenario-panel active" id="panel-1">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🔒</div>
+                    <h3>安全办公</h3>
+                </div>
+                <p class="scenario-overview">企业关键数字资产（如核心代码、业务数据、设计图纸）面临多样化的泄密风险。传统的DLP软件结合杀毒软件和上网行为管理的方案，存在终端资源消耗大、多管理平台复杂度高、成本高且相互割裂导致效果不佳的问题。</p>
+                <div class="scenario-detail">
+                    <div class="scenario-image">
+                        <img src="images/security-architecture.png" alt="安全办公架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🛡️ 云网端安全防控</div>
+                            <p>无影提供企业级安全防护，通过隐藏业务系统和开发环境的互联网暴露面，减少被攻击风险。同时支持用户操作行为和录屏审计、USB拷贝审计，确保数据安全并便于责任追踪。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🔗 灵活接入与数据保护</div>
+                            <p>无影提供多种接入和互联业务系统方式，实现接入、传输、管控等层面的安全防护。多终端灵活接入兼顾安全与便捷性，保护数据资产。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">💻 多产品形态满足业务需求</div>
+                            <p>提供云电脑、安全浏览器和云应用等多种产品形态，满足不同业务诉求，确保灵活而安全的工作环境。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-2">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🏢</div>
+                    <h3>分支机构办公</h3>
+                </div>
+                <p class="scenario-overview">在分支机构场景下，用户终端分散且物理位置跨度大，导致日常的终端运维工作费时费力。运维人员难以快速处理故障终端，IT运维管理者也无法对所有终端进行有效的安全管控。此外，终端资产信息难以全面掌控，而3-5年后，老旧的终端设备无法满足业务发展需求，设备更替将进一步增加运维成本。</p>
+                <div class="scenario-detail">
+                    <div class="scenario-image">
+                        <img src="images/branch-office.png" alt="分支机构办公架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🚀 统一部署简运维</div>
+                            <p>云电脑即开即用，分钟级即可完成一个分支机构的终端与桌面上线，管理平台终端信息全掌控。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🌐 广泛地域全接入</div>
+                            <p>无影支持海内外多个地域，可以支持分支机构就近创建云电脑，快速满足分支机构的资源创建需求，秒级创建，按需使用。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🛡️ 数据外设强管控</div>
+                            <p>云电脑管理平台配置安全管控策略，保障分支机构桌面数据不落本地，安全策略保障核心数据无法外泄。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">💡 终端节能省成本</div>
+                            <p>将传统的电脑替换为无影云终端，终端能耗大幅减少，门店终端每年的电费消耗显著降低，有效降低TCO运营成本。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-3">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🎨</div>
+                    <h3>设计渲染</h3>
+                </div>
+                <p class="scenario-overview">传统设计渲染业务多采用配置较高的本地工作站，部署专业设计软件、渲染引擎及图形处理工具等，为支撑高清渲染、多项目并行及复杂设计任务，往往需要使用多台高性能工作站。传统模式存在一次性资产投入大、资源利用率低、数据安全风险高的问题，消耗大量资金和管理资源。</p>
+
+                <!-- 行业挑战 -->
+                <div class="challenge-section">
+                    <div class="challenge-section-title">⚠️ 行业挑战</div>
+                    <div class="challenge-grid">
+                        <div class="challenge-item">
+                            <div class="challenge-item-title">💰 投入成本高</div>
+                            <ul>
+                                <li>高性能GPU工作站一次性采购成本高，显卡更新快，老旧设备难以升级，频繁卡顿甚至崩溃，严重影响设计效率与项目进度。</li>
+                                <li>远程协作依赖本地设备，异地访问延迟高、体验差，临时资源调配困难，缺乏灵活应对多项目并行的能力。</li>
+                                <li>专业软件License按设备或用户授权，费用昂贵，非全天候使用场景下存在大量闲置许可，既不经济也难合规。</li>
+                            </ul>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-item-title">🔓 安全隐患大</div>
+                            <ul>
+                                <li>设计图纸、源文件等核心资产存储于本地硬盘，员工可随意拷贝外传，缺乏有效审计与防泄漏机制，泄密风险极高。</li>
+                                <li>强制安装多种终端管控软件，严重占用系统资源，导致专业软件运行卡顿、蓝屏频发，创作体验大打折扣。</li>
+                            </ul>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-item-title">🔄 灵活性不足</div>
+                            <ul>
+                                <li>工作站配置固定，随着业务发展对性能要求越来越高，无法快速升配响应业务诉求。</li>
+                                <li>移动远程接入场景逐渐增多，工作站无法随时随地灵活接入，传统VPN方式远程体验差、不稳定，数据易泄密。</li>
+                            </ul>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-item-title">📉 资源闲置多</div>
+                            <ul>
+                                <li>高端工作站多用于阶段性高强度任务（如最终渲染），其余时间长期闲置，造成大量算力与资金浪费，投资回报率低下。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 架构图 + 核心优势 两栏 -->
+                <div class="scenario-detail" style="margin-top:30px;">
+                    <div class="scenario-image">
+                        <img src="images/design-render.png" alt="设计渲染架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">⚡ 弹性算力调度</div>
+                            <p>基于无影弹性桌面服务，企业可按项目需求动态调整云电脑的GPU、CPU和内存配置，秒级生效且不中断工作。管理员通过镜像模板批量发放预装专业软件的云电脑，员工登录即用。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">♻️ 资源高效复用</div>
+                            <p>支持按量付费模式，非全天候使用场景仅对实际使用时长计费；同时支持一机多用户，通过合理方案配置降低专业软件许可采购费用，提升资源利用率。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🔒 云端数据闭环</div>
+                            <p>所有设计数据全程驻留云端，本地终端仅显示画面，不落盘、不缓存。支持录屏审计、USB管控、水印等安全策略，可和客户IDC业务系统打通，所有数据内网闭环。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 产品价值 -->
+                <div class="value-section">
+                    <div class="value-section-title">💎 产品价值</div>
+                    <div class="value-grid">
+                        <div class="value-item">
+                            <div class="value-item-title">📐 管理视角：核心资产归云，成本精细优控</div>
+                            <p>1. 所有设计数据与工程文件强制上云，本地终端实现"零留存"，从源头杜绝资产流失。支持录屏审计、外设管控（USB）及水印等精细化安全策略，全方位防止敏感数据外发。</p>
+                            <p style="margin-top:10px;">2. 采用按量计费模式，精准适配非全天候办公场景，避免资源闲置浪费。依托云端算力优势，大幅降低整机电力消耗，有效节省显卡License费用，实现高性价比运营。</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-item-title">🔧 运维视角：资源集中统管，运维敏捷高效</div>
+                            <p>1. 通过预装软件与统一镜像技术，实现设计工作环境的极速构建与批量发放。新员工即开即用，99%的日常故障通过远程即可即时解决，无需现场跑腿。</p>
+                            <p style="margin-top:10px;">2. 支持系统补丁与故障修复的批量化操作，将繁琐的单机维护转化为高效的集中管理，确保企业终端环境始终稳定、合规。</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-item-title">💻 设计师视角：办公无界接入，算力按需随动</div>
+                            <p>1. 支持多终端设备接入，设计师可随时随地连接云上工作站。无论身处何地，都能获得一致的流畅体验，保障灵感不掉线。</p>
+                            <p style="margin-top:10px;">2. 设计师可根据当前项目需求灵活调整工作站配置。无论是基础绘图还是高负载渲染，都能获得最匹配的算力支持，拒绝卡顿等待。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-4">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🤖</div>
+                    <h3>具身研发</h3>
+                </div>
+                <p class="scenario-overview">在具身研发场景中，无影为Isaac Sim、Lab、Gym等核心软件提供GPU工作站，实现多软件多版本统一高效运维，加速研发效率；云上算力按需使用按需付费，有效提升资源利用率。</p>
+                <div class="scenario-detail">
+                    <div class="scenario-image">
+                        <img src="images/embodied-research.png" alt="具身研发架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🎮 丰富的算力规格</div>
+                            <p>提供RTX 5880、L20等整卡及vGPU切分规格，满足不同规模和复杂度的具身智能仿真训练需求，灵活适配从轻量级测试到大规模训练的各类场景。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">📦 应用中心 & 镜像中心</div>
+                            <p>集中管控软件版本，统一分发批量复制。预装Isaac Sim、Lab、Gym等核心研发环境，镜像模板一键部署，新成员接入即可开始工作，大幅缩短环境搭建时间。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">⚙️ 算力灵活变配</div>
+                            <p>根据实际使用情况，灵活变更云上算力规格。项目高峰期一键升配获取更强GPU性能，空闲期降配降低成本，资源调度秒级生效且不中断当前任务。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">💰 按需使用按需付费</div>
+                            <p>提供时长包、包月、按量等多种付费方式，精准匹配研发项目的阶段性特征。非持续性训练任务无需长期占用资源，显著降低整体研发投入成本。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-5">
+                <div class="scenario-header">
+                    <div class="scenario-icon">📊</div>
+                    <h3>数据采集处理</h3>
+                </div>
+                <p class="scenario-overview">数据采集及处理是具身智能实现"感知-决策-执行"闭环的关键环节，无影提供GPU工作站，帮助企业快速构建具身智能数据处理平台，实现数据采集、处理、流转全域云上闭环，安全高效。</p>
+                <div class="scenario-detail">
+                    <div class="scenario-image">
+                        <img src="images/data-collection.png" alt="数据采集处理架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">⚡ 算力弹性扩展</div>
+                            <p>按项目节奏灵活扩容，无需负担固有资产。数据采集高峰期一键提升GPU算力规格，低谷期自动降配释放资源，真正实现算力随业务需求动态伸缩。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🚀 极速数据传输</div>
+                            <p>云端采集云端处理，内网数据传输速度可达50Gbps。采集端与处理端均部署于云端同一高速网络环境，大幅缩短数据流转延迟，加速训练迭代效率。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">💻 任意终端即开即用</div>
+                            <p>兼容多数终端设备，同时提供无影自研硬件终端（无影魔方等）。数采操作员和数据标注师可通过PC、VR眼镜等多种设备接入云上工作站，随时随地开展数据处理工作。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🛡️ 安全防护</div>
+                            <p>用户管理与权限分配精细化管控，数据不落地确保核心资产安全。安全策略防护覆盖传输、存储、使用全链路，支持录屏审计与USB外设管控，满足企业级数据安全合规要求。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-6"><div class="scenario-icon">🛡️</div><h3>安全研发</h3><p>待更新</p></div>
+            <div class="scenario-panel" id="panel-7">
+                <div class="scenario-header">
+                    <div class="scenario-icon">💬</div>
+                    <h3>智能客服</h3>
+                </div>
+                <p class="scenario-overview">在客服场景中，人员配置通常根据业务模式灵活调整——有些需要24小时轮班，而大促时期则需要临时扩充。然而传统PC资产配比不够灵活，导致资产闲置严重。客服人员通常缺乏IT基础且流动频繁，PC的生命周期管理（分发、维护、回收）及安全管理高度依赖IT部门，增加了运维负担和管控难度。不同项目类型对使用的灵活性和可靠性要求很高，但传统PC携带不便、缺乏灵活性，故障时无法快速替换。</p>
+                <div class="scenario-detail">
+                    <div class="scenario-image">
+                        <img src="images/smart-customer-service.png" alt="智能客服架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">💰 弹性计费</div>
+                            <p>支持弹性扩容，随开随用，关机和休眠期间不收费，有效降低一次性采购成本。按使用量付费的模式完美匹配客服业务的波峰波谷特征，实现真正的按价值付费。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🔧 自动化管理与便捷运维</div>
+                            <p>IT部门通过统一的线上运维管理平台实现标准化环境的快速创建和分发，利用统一镜像模板进行一键批量部署。个性化需求通过App Center灵活管控，新员工入职即用，大幅降低IT运维压力。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🌐 灵活接入与数据保护</div>
+                            <p>客服人员可通过任意终端（PC/笔记本/平板/手机）便捷高效接入云端桌面。云端高可用架构配合自动快照备份功能，确保服务不中断且数据不丢失，保障业务安全可靠运行。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-8">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🤖</div>
+                    <h3>RPA社群运营</h3>
+                </div>
+                <p class="scenario-overview">在金融、教育以及零售等行业，通过IM工具进行社群运营以完成获客、售后服务以及多种营销活动。无影加RPA的方案可以帮助企业实现批量运营，打造个性化的企业运营平台。与传统的PC加RPA方案相比，无影具有运维简单、运行稳定、无需物理空间承载设备、支持批量部署以及节约成本等多方面的优势。</p>
+                <div class="scenario-detail">
+                    <div class="scenario-image">
+                        <img src="images/rpa-community.png" alt="RPA社群运营架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">☁️ 云网端资源优化</div>
+                            <p>云上环境无需占用物理空间和本地电脑资源，所有RPA机器人运行于云端虚拟桌面中，确保运行效率最大化同时大幅节约硬件投入成本和机房空间。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">📦 批量管理与运维</div>
+                            <p>支持云电脑的批量部署、统一管理、集中操作和远程运维。管理员可通过镜像模板一键发放预装RPA工具和业务软件的工作站，新账号分钟级上线，规模化扩容轻松应对。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🔗 灵活接入与稳定运行</div>
+                            <p>提供服务器级别的稳定运行环境，支持7×24小时长时间连续运行无中断。单台云电脑可登录多个运营环境，实现一对多运维及运营模式，显著节省人力成本。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-9">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🧑</div>
+                    <h3>数字人直播</h3>
+                </div>
+                <p class="scenario-overview">本方案致力于打造"硬件终端+云端算力+专线网络"全链路协同的高性能办公生态。通过软硬件一体化交付，将无影魔方与高性能图形云工作站（5880系列）精准适配，实现开箱即用。依托云端统一管控优势，支持渲染引擎、AI服务及直播工具的模板化批量部署与远程运维，显著实现降本增效。同时结合虚拟专线IP映射技术，保障异地灵活接入的同时实现本地IP地址稳定锚定。</p>
+
+                <!-- 行业挑战 -->
+                <div class="challenge-section">
+                    <div class="challenge-section-title">⚠️ 行业挑战</div>
+                    <div class="challenge-grid">
+                        <div class="challenge-item">
+                            <div class="challenge-item-title">💰 资产投入大</div>
+                            <ul>
+                                <li>数字人直播对算力要求较高，需配备带较高GPU的本地PC或工作站硬件设备，一次性采购成本高。技术迭代快，硬件需频繁升级以保持竞争力，持续投入大，资产折旧压力大。</li>
+                                <li>随着业务规模扩展，传统PC或工作站硬件设备扩容后，场地成本、电力成本、运维成本同步上涨。</li>
+                            </ul>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-item-title">🔧 部署难度大</div>
+                            <ul>
+                                <li>数字人直播涉及软件栈复杂（驱动引擎、渲染器、AI服务、直播工具等），安装、配置、兼容性调试耗时。传统PC需逐台配置，部署周期长。</li>
+                                <li>不同项目或团队环境可能不一致，复制和迁移困难，影响协作效率。</li>
+                            </ul>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-item-title">📉 运维成本高</div>
+                            <ul>
+                                <li>需要IT团队维护硬件、操作系统、驱动、软件环境，故障排查耗时耗力。多直播间并行时，资源调度与故障排查难度陡增。</li>
+                                <li>本地设备易受断电、网络波动、系统崩溃等影响，一旦直播中断直接影响用户体验与销售转化，缺乏高可用保障机制。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 架构图 + 核心优势 两栏 -->
+                <div class="scenario-detail" style="margin-top:30px;">
+                    <div class="scenario-image">
+                        <img src="images/digital-human-live.jpg" alt="数字人直播架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🖥️ 硬件终端+云端算力一体化</div>
+                            <p>无影魔方与高性能图形云工作站（5880系列）精准适配，软硬件一体化交付开箱即用。渲染引擎、AI服务及直播工具模板化批量部署，摆脱对传统远程工具的依赖。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🌐 虚拟专线IP映射</div>
+                            <p>创新虚拟专线IP映射技术，在保障异地灵活接入的同时实现本地IP地址稳定锚定，完美解决电商及多机位直播等场景对IP一致性与合规性的严格要求。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">☁️ 云端统一管控</div>
+                            <p>依托无影云上统一管控平台，支持多数字人环境批量创建、统一配置、分组管理、自动升级，大幅降低运维复杂度和管理成本。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 产品价值 -->
+                <div class="value-section">
+                    <div class="value-section-title">💎 产品价值</div>
+                    <div class="value-grid">
+                        <div class="value-item">
+                            <div class="value-item-title">📈 弹性扩缩容，灵活应对业务高峰</div>
+                            <p>1. 无需构建直播服务器专业机房，无须一次性大规模固定资产投入，节约电费、场地租赁等成本。云电脑资源即开即用，配置持续升级，资产无须担心折旧成本。</p>
+                            <p style="margin-top:10px;">2. 支持包年包月、按量付费等多种灵活付费方式，有效应对电商大促等高峰场景，弹性扩缩容避免资源闲置浪费。</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-item-title">🚀 模板一键部署，交付效率提升</div>
+                            <p>1. 支持无影云电脑内直播工具、AI工具等多软件一键式模板部署，无需复杂的软件安装和调试，有效提升部署效率。</p>
+                            <p style="margin-top:10px;">2. 提供丰富的API，支持Web端SDK被集成模式交付，极大提升交付速度和使用体验。</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-item-title">☁️ 云上统一管理，稳定可靠成本低</div>
+                            <p>1. 云上运行直播软件、AI工具等，摆脱本地电网波动故障影响，稳定可靠，直播不中断。</p>
+                            <p style="margin-top:10px;">2. 云电脑支持云上统一管理，远程运维便捷高效，多数字人同步管理，有效降低运维成本。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-10">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🎮</div>
+                    <h3>云游戏</h3>
+                </div>
+                <p class="scenario-overview">云游戏的核心诉求是增加用户覆盖率和提高客户粘性。在推广过程中，通常需要在便捷的用户访问路径和游戏对高性能硬件的重度依赖之间找到平衡。宣传和游戏体验都希望能够实现便捷、随时随地的访问，但要确保优质的游戏体验，充足且稳定的GPU算力又是必不可少的。无影针对这些挑战提供了成熟的解决方案。</p>
+                <div class="scenario-detail">
+                    <div class="scenario-image">
+                        <img src="images/cloud-gaming.png" alt="云游戏架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">☁️ 云资源整合交付</div>
+                            <p>无影通过互联网将云资源打包成OS+应用的方式交付给用户，依靠自主研发的ASP传输协议和全球分布的阿里云资源，确保用户在网络连接下可以随时随地访问云游戏，并享受流畅的游戏体验。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">📱 多端灵活访问</div>
+                            <p>基于无影的多端登录能力，用户可通过手机、平板、PC、WEB端灵活访问云游戏。账号信息云端同步，突破本地硬件性能限制，相当于随身携带"超级云游戏机"，持续增强用户粘性。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🎯 技术保障与用户转化</div>
+                            <p>支持云游戏工作室、3D展厅/沙盘开发商等客户，扩大云游戏的引流转化范围。确保游戏性能优异，无论是移动端大作还是PC端3A大作，均能随开随玩，画质流畅不卡顿。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">📦 标准化发布</div>
+                            <p>支持云游戏SaaS化发布，与业内领先客户合作提供标准化SDK，通过集成方式快速上线云游戏业务。资源云端调度，高并发场景下表现稳定出色，轻松应对海量玩家同时在线。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-11">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🎓</div>
+                    <h3>教育培训</h3>
+                </div>
+                <p class="scenario-overview">从最初的纯文字介绍，到图文并茂，再到视频讲解，在线教育客户不断追求更加简便直接的交互模式。然而在现有方案下，仍然存在"版本不一致、功能不匹配、学练不结合"的问题。如何像真正的线下教室一样，让学生实现边学边练，并保持环境一致，已成为在线教育场景中的重要课题。</p>
+                <div class="scenario-detail">
+                    <div class="scenario-image">
+                        <img src="images/education-training.png" alt="教育培训架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🎓 一体化教学平台</div>
+                            <p>无影通过将实训平台与云电脑相结合，帮助在线教育客户实现一体化教学。教师授课与学员实训在同一云端环境中无缝衔接，无需切换系统或工具链，真正打通"教-学-练-测"全流程闭环。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">💻 灵活接入与标准化环境</div>
+                            <p>实训环境不再依赖于学生本地PC的配置或软件版本，提供开机即用的标准化云上环境。无论学生使用PC、平板、手机还是浏览器接入，都能获得完全一致的实训体验，确保教学和练习环节形成闭环，实现真正的边学边练。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scenario-panel" id="panel-12">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🎓</div>
+                    <h3>无影AI云教育</h3>
+                </div>
+                <p class="scenario-overview">无影AI云教育是基于无影云电脑，为教师和学生打造的数字教学与学习空间。师生可通过任意终端、随时随地访问"专属电脑"，让数字教育触手可及。</p>
+
+                <!-- 产品功能 -->
+                <div class="challenge-section">
+                    <div class="challenge-section-title">✨ 产品功能</div>
+                    <div class="challenge-grid" style="grid-template-columns: 1fr 1fr;">
+                        <div class="challenge-item">
+                            <div class="challenge-item-title" style="color: var(--neon-cyan);">⚡ 流畅的性能体验</div>
+                            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.8; margin-top:8px;">传统电脑使用3年左右性能开始快速衰减，而云电脑不会因为时间而有性能衰减，长期使用始终流畅。</p>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-item-title" style="color: var(--neon-cyan);">📦 专属空间</div>
+                            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.8; margin-top:8px;">学生和老师皆可拥有专属云电脑空间，支持学习沉淀、课堂管理、课堂点评、智慧作业等功能，数据永久保存不丢失。</p>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-item-title" style="color: var(--neon-cyan);">🔧 统一教学管控</div>
+                            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.8; margin-top:8px;">支持软件、网站策略设置，支持课堂广播、作业分发等教育场景特性。软件、镜像统一管控，高效便捷。</p>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-item-title" style="color: var(--neon-cyan);">💰 利旧降低成本</div>
+                            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.8; margin-top:8px;">可基于现有显示器进行利旧搭建，配合云资源按量付费模式，大幅降低建设成本和运维投入。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 架构图 + 随处可用 两栏 -->
+                <div class="scenario-detail" style="margin-top:30px;">
+                    <div class="scenario-image">
+                        <img src="images/ai-cloud-edu-topology.png" alt="无影AI云教育架构图">
+                    </div>
+                    <div class="scenario-features">
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🌐 随处可用的专属电脑</div>
+                            <p>在办公室、家中、教室、实验室等地点随处可用，随时备课教学。AI助教实时提问反馈，提供备课素材，让教学工作更加智能高效。</p>
+                        </div>
+                        <div class="scenario-feature-item">
+                            <div class="feature-item-title">🏫 适用客户与场景</div>
+                            <p><strong>适用客户：</strong>中小学、中高职、高校、社会培训机构等各级教育机构。</p>
+                            <p style="margin-top:10px;"><strong>教室新建：</strong>采用一体机终端，开箱即用，静音省电，通过低蓝光护眼认证。</p>
+                            <p style="margin-top:10px;"><strong>教室利旧改造：</strong>采用盒式终端（无影魔方），老旧显示器只需连接一个盒子，瞬间变成高速的云电脑。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 核心优势对比 -->
+                <div class="value-section">
+                    <div class="value-section-title">🏆 核心优势对比</div>
+                    <div class="scenario-image" style="position:static; margin-top:15px;">
+                        <img src="images/ai-cloud-edu-compare.png" alt="无影AI云教育 vs 传统电脑教室对比图" style="width:100%; border-radius:12px; border:1px solid rgba(0,212,255,0.2);">
+                    </div>
+                    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:20px;">
+                        <div class="value-item" style="text-align:center; padding:20px 16px;">
+                            <div style="font-size:28px; margin-bottom:8px;">☁️</div>
+                            <div class="value-item-title" style="font-size:14px;">云上学习<br>更流畅更个性化</div>
+                        </div>
+                        <div class="value-item" style="text-align:center; padding:20px 16px;">
+                            <div style="font-size:28px; margin-bottom:8px;">🔒</div>
+                            <div class="value-item-title" style="font-size:14px;">云上运维<br>更简单更安全</div>
+                        </div>
+                        <div class="value-item" style="text-align:center; padding:20px 16px;">
+                            <div style="font-size:28px; margin-bottom:8px;">📊</div>
+                            <div class="value-item-title" style="font-size:14px;">云上管理<br>更统一更透明</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>准备体验无影云电脑？</h2>
+        <p>立即预约演示，感受云端算力带来的效率跃升</p>
+        <a href="contact.html" class="btn btn-primary">预约演示</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">智慧解决方案</div>
+                <p class="footer-desc">智慧解决方案事业部致力于为企业客户提供一站式数字化转型服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">生态产品</h4>
+                <ul class="footer-links">
+                    <li><a href="product-wuying.html">无影云电脑商业版</a></li>
+                    <li><a href="product-wuying-hardware.html">无影终端</a></li>
+                    <li><a href="product-jvs.html">无影Agent管理中心</a></li>
+                    <li><a href="product-agentbay.html">AgentBay 开发套件</a></li>
+                    <li><a href="product-meetingboard.html">音视频会议平板</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">解决方案</h4>
+                <ul class="footer-links">
+                    <li><a href="solution-ai.html">AI 应用解决方案</a></li>
+                    <li><a href="solution-communication.html">融合通信解决方案</a></li>
+                    <li><a href="solution-avintegration.html">音视频集成解决方案</a></li>
+                    <li><a href="solution-smartoffice.html">智慧办公解决方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">专业服务</h4>
+                <ul class="footer-links">
+                    <li><a href="service.html#ai-landing">AI 应用落地</a></li>
+                    <li><a href="service.html#system-integration">系统集成</a></li>
+                    <li><a href="service.html#maintenance">专业维护</a></li>
+                    <li><a href="service.html#expert">专家服务</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">联系我们</h4>
+                <ul class="footer-links">
+                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="contact.html">在线咨询</a></li>
+                    <li><a href="contact.html">服务网点</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 智慧解决方案事业部 版权所有 | 备案号：XX-XXXXX</p>
+        </div>
+    </footer>
+
+    <script>
+        /* 导航栏滚动效果 */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        /* 应用场景标签切换 — 使用事件委托，确保可靠 */
+        (function() {
+            const tabsContainer = document.getElementById('scenarioTabs');
+            if (!tabsContainer) return;
+
+            const panels = document.querySelectorAll('.scenario-panel');
+
+            tabsContainer.addEventListener('click', function(e) {
+                const tab = e.target.closest('.scenario-tab');
+                if (!tab) return;
+
+                const targetId = tab.getAttribute('data-target');
+                const targetPanel = document.getElementById(targetId);
+                if (!targetPanel) return;
+
+                /* 切换标签 active */
+                tabsContainer.querySelectorAll('.scenario-tab').forEach(function(t) {
+                    t.classList.remove('active');
+                });
+                tab.classList.add('active');
+
+                /* 切换面板显示 */
+                panels.forEach(function(p) {
+                    p.classList.remove('active');
+                });
+                targetPanel.classList.add('active');
+            });
+        })();
+    </script>
+</body>
+</html>

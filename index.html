@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧解决方案事业部</title>
+    <style>
+        * {
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep-space: #0A1628;
+            --tech-blue: #0066FF;
+            --neon-cyan: #00D4FF;
+            --purple: #7B61FF;
+            --dark-gray: #1E2A3A;
+            --light-gray: #E8ECF4;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8B8D8;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background-color: var(--deep-space);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .nav-links > li > a.has-dropdown::after {
+            content: '▾';
+            display: inline-block;
+            font-size: 10px;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links > li:hover > a.has-dropdown::after {
+            transform: rotate(180deg);
+        }
+
+        /* 二级下拉菜单 */
+        .nav-links > li {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            min-width: 220px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            padding: 8px 0;
+            margin-top: 10px;
+        }
+
+        .nav-links > li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 5px;
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: rgba(10, 22, 40, 0.95);
+            border-left: 1px solid rgba(0, 212, 255, 0.2);
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-item:hover {
+            color: var(--neon-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            padding-left: 28px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(0, 212, 255, 0.1);
+            margin: 4px 0;
+        }
+
+        .dropdown-category {
+            padding: 8px 20px 4px;
+            font-size: 12px;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Hero区域 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--deep-space) 0%, rgba(0, 102, 255, 0.1) 100%);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--tech-blue), var(--neon-cyan));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 通用段落样式 */
+        .section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            font-size: 18px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .section-subtitle.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 关于我们模块 */
+        .about-intro {
+            background: linear-gradient(180deg, var(--deep-space) 0%, rgba(30, 42, 58, 0.3) 100%);
+        }
+
+        .about-text {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .positioning-highlight {
+            max-width: 1000px;
+            margin: 60px auto 0;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            text-align: center;
+        }
+
+        .positioning-highlight h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .positioning-highlight p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        .positioning-tags {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .positioning-tag {
+            padding: 12px 24px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 24px;
+            font-size: 16px;
+            color: var(--neon-cyan);
+        }
+
+        /* 愿景使命 */
+        .vision-mission {
+            background: var(--deep-space);
+        }
+
+        .vm-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .vm-card {
+            padding: 50px;
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .vm-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .vm-card h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--neon-cyan);
+        }
+
+        .vm-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .core-values {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .value-tag {
+            padding: 10px 20px;
+            background: rgba(123, 97, 255, 0.2);
+            border: 1px solid var(--purple);
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--purple);
+        }
+
+        /* 转型契机 */
+        .transformation {
+            background: linear-gradient(180deg, rgba(30, 42, 58, 0.3) 0%, var(--deep-space) 100%);
+        }
+
+        .transform-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .transform-card {
+            padding: 40px 30px;
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .transform-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .transform-card h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--neon-cyan);
+        }
+
+        .transform-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* 战略定位 */
+        .strategy {
+            background: var(--deep-space);
+        }
+
+        .strategy-content {
+            max-width: 1000px;
+            margin: 60px auto 0;
+        }
+
+        .strategy-framework {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .framework-item {
+            padding: 40px 30px;
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .framework-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .framework-item .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .framework-item h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--neon-cyan);
+        }
+
+        .framework-item p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .strategy-path {
+            padding: 40px;
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .path-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        .path-steps::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--tech-blue), var(--neon-cyan));
+            z-index: 1;
+        }
+
+        .path-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .path-step .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--tech-blue), var(--neon-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .path-step h5 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .path-step p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* 服务能力矩阵 */
+        .service-matrix {
+            background: linear-gradient(180deg, var(--deep-space) 0%, rgba(30, 42, 58, 0.3) 100%);
+        }
+
+        .matrix-solutions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .matrix-solution {
+            padding: 40px 30px;
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .matrix-solution.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .matrix-solution h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--neon-cyan);
+        }
+
+        .matrix-solution p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .matrix-solution .label {
+            font-size: 12px;
+            color: var(--purple);
+            margin-bottom: 5px;
+        }
+
+        .matrix-products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .matrix-product-category {
+            padding: 30px;
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .matrix-product-category h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--neon-cyan);
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .matrix-product-item {
+            padding: 10px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .matrix-product-item::before {
+            content: '→';
+            color: var(--neon-cyan);
+        }
+
+        /* 服务能力矩阵 - 链接样式 */
+        a.matrix-solution-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        a.matrix-solution-link:hover .matrix-solution {
+            transform: translateY(-5px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.15);
+        }
+        a.matrix-product-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        a.matrix-product-link:hover .matrix-product-item {
+            color: var(--neon-cyan);
+            padding-left: 5px;
+        }
+        a.matrix-product-link:hover .matrix-product-item::before {
+            color: var(--neon-cyan);
+        }
+
+        /* 差异化优势 */
+        .advantages {
+            background: var(--deep-space);
+        }
+
+        .advantage-cards {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .advantage-card {
+            padding: 40px 20px;
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .advantage-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .advantage-card .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .advantage-card h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--neon-cyan);
+        }
+
+        .advantage-card p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* 解决方案模块 */
+        .solutions {
+            background: linear-gradient(180deg, var(--deep-space) 0%, rgba(30, 42, 58, 0.3) 100%);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .product-card {
+            padding: 40px 30px;
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            cursor: pointer;
+        }
+
+        .product-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.2);
+            border-color: var(--neon-cyan);
+        }
+
+        .product-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--tech-blue), var(--neon-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+        }
+
+        .product-card h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .product-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .feature-tag {
+            padding: 5px 12px;
+            background: rgba(123, 97, 255, 0.2);
+            border-radius: 12px;
+            font-size: 12px;
+            color: var(--purple);
+        }
+
+        /* 产品生态模块 */
+        .products {
+            background: var(--deep-space);
+        }
+
+        .product-category {
+            margin-bottom: 80px;
+        }
+
+        .product-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--neon-cyan);
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        /* 专业服务模块 */
+        .services {
+            background: linear-gradient(180deg, rgba(30, 42, 58, 0.3) 0%, var(--deep-space) 100%);
+        }
+
+        /* 联系我们模块 */
+        .contact {
+            background: var(--deep-space);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: var(--neon-cyan);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .contact-item .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 212, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .contact-item .text h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .contact-item .text p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .contact-form {
+            padding: 40px;
+            background: rgba(30, 42, 58, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(10, 22, 40, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group .required {
+            color: #FF4444;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 22, 40, 0.95);
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--tech-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer-title {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }/* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .vm-cards,
+            .transform-cards,
+            .strategy-framework,
+            .matrix-solutions,
+            .matrix-products,
+            .advantage-cards,
+            .product-grid,
+            .contact-content,
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .path-steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .path-steps::before {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section {
+                padding: 60px 5%;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .positioning-highlight {
+                padding: 40px 20px;
+            }
+
+            .positioning-tags {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">智慧解决方案</div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li>
+                <a href="#products" class="has-dropdown">生态产品</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-category">无影系列</div>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
+                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">亿联网络</div>
+                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
+                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
+                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
+                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">钉钉系列</div>
+                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
+                    <a href="product-wukong.html" class="dropdown-item">钉钉悟空</a>
+                    <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
+                </div>
+            </li>
+            <li>
+                <a href="#solutions" class="has-dropdown">解决方案</a>
+                <div class="dropdown-menu">
+                    <a href="solution-ai.html" class="dropdown-item">AI 应用解决方案</a>
+                    <a href="solution-communication.html" class="dropdown-item">融合通信解决方案</a>
+                    <a href="solution-avintegration.html" class="dropdown-item">音视频集成解决方案</a>
+                    <a href="solution-smartoffice.html" class="dropdown-item">智慧办公解决方案</a>
+                </div>
+            </li>
+            <li>
+                <a href="service.html" class="has-dropdown">专业服务</a>
+                <div class="dropdown-menu">
+                    <a href="service.html#ai-landing" class="dropdown-item">AI 应用落地</a>
+                    <a href="service.html#system-integration" class="dropdown-item">系统集成</a>
+                    <a href="service.html#maintenance" class="dropdown-item">专业维护</a>
+                    <a href="service.html#expert" class="dropdown-item">专家服务</a>
+                </div>
+            </li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero区域 -->
+    <section class="hero" id="home">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content">
+            <h1>智启未来 · 数驱变革</h1>
+            <p>智慧解决方案事业部 - 让 AI 与云计算成为企业增长的新引擎</p>
+            <div class="hero-buttons">
+                <a href="#solutions" class="btn btn-primary">了解解决方案</a>
+                <a href="contact.html" class="btn btn-secondary">产品咨询</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 事业部介绍 -->
+    <section class="section about-intro" id="about">
+        <h2 class="section-title">关于智慧解决方案事业部</h2>
+        <div class="about-text">
+            <p>智慧解决方案事业部是<a href="https://www.aliwork.com" style="color: var(--neon-cyan); text-decoration: none;">阿里生态</a>的核心合作伙伴，全面切入 AI 赛道，致力于为企业客户提供以 AI 为核心驱动力的综合型技术服务。</p>
+        </div>
+
+        <!-- 突出定位 -->
+        <div class="positioning-highlight">
+            <h3>以 AI 为核心驱动力的综合型技术服务商</h3>
+            <p>我们依托阿里云、钉钉、无影云电脑、通义大模型等完整的产品矩阵，构建"云 + 端 + AI"三位一体的核心能力体系，为客户提供从战略咨询、方案设计、实施交付到运维优化的端到端服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            <div class="positioning-tags">
+                <span class="positioning-tag">AI 应用落地</span>
+                <span class="positioning-tag">云计算服务</span>
+                <span class="positioning-tag">智慧办公</span>
+                <span class="positioning-tag">融合通信</span>
+                <span class="positioning-tag">专家咨询</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 愿景与使命 -->
+    <section class="section vision-mission" id="vision">
+        <h2 class="section-title">愿景与使命</h2>
+        <div class="vm-cards">
+            <div class="vm-card">
+                <h3>愿景</h3>
+                <p>智赋神州，开启人工智能驱动的创新征程。以 AI 智能为契机，智赋神州——开启智能时代新征程，共创高质量发展新价值。</p>
+                <div class="core-values">
+                    <span class="value-tag">同心聚力</span>
+                    <span class="value-tag">共筑生态</span>
+                    <span class="value-tag">共享红利</span>
+                    <span class="value-tag">价值共生</span>
+                </div>
+            </div>
+            <div class="vm-card">
+                <h3>使命</h3>
+                <p>同心聚力，共筑智能生态、共享智慧红利、实现价值共生，携手共赴万利新境。</p>
+                <p style="margin-top: 15px;">我们致力于成为客户最值得信赖的数字化转型合作伙伴，通过持续的技术创新和服务优化，为客户创造长期价值。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 转型契机 -->
+    <section class="section transformation" id="transformation">
+        <h2 class="section-title">为什么选择 AI 赛道</h2>
+        <p class="section-subtitle">四大驱动因素，助力事业部战略转型</p>
+        <div class="transform-cards">
+            <div class="transform-card">
+                <h4>🚀 AI 技术爆发</h4>
+                <p>以大语言模型（LLM）为代表的生成式 AI 技术取得突破性进展。企业级 AI 应用需求呈爆发式增长，从"可选项"变为"必选项"。</p>
+            </div>
+            <div class="transform-card">
+                <h4>☁️ 阿里生态优势</h4>
+                <p>阿里云、钉钉、通义大模型、无影云电脑等产品矩阵完整，技术领先，市场认可度高，为事业部提供坚实的产品底座。</p>
+            </div>
+            <div class="transform-card">
+                <h4>🏢 自身基础</h4>
+                <p>深厚的企业客户基础，覆盖多个行业。成熟的售前咨询、方案设计、实施交付和运维服务全流程能力。</p>
+            </div>
+            <div class="transform-card">
+                <h4>🎯 战略方向</h4>
+                <p>切入 AI 赛道，寻找突破性的产品线及业务形态。以 AI 为抓手重塑业务结构，打造具有差异化竞争力的新产品和新服务模式。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 战略定位 -->
+    <section class="section strategy" id="strategy">
+        <h2 class="section-title">战略定位</h2>
+        <p class="section-subtitle">AI + 解决方案服务商 | 「云 + 端 + AI」三位一体能力体系</p>
+        <div class="strategy-content">
+            <div class="strategy-framework">
+                <div class="framework-item">
+                    <div class="icon">☁️</div>
+                    <h4>云（Cloud）</h4>
+                    <p>以阿里云为核心基础设施平台，提供弹性计算、存储、数据库、安全等底层能力，支撑上层应用的稳定运行与弹性扩展。</p>
+                </div>
+                <div class="framework-item">
+                    <div class="icon">📱</div>
+                    <h4>端（Endpoint）</h4>
+                    <p>无影云电脑、钉钉、亿联网络等专业终端，打破硬件边界，实现多端融合，随时随地接入。</p>
+                </div>
+                <div class="framework-item">
+                    <div class="icon">🤖</div>
+                    <h4>AI（Intelligence）</h4>
+                    <p>通义大模型、钉钉悟空、行业定制化 AI 应用，将 AI 能力嵌入每一个业务环节。</p>
+                </div>
+            </div>
+            <div class="strategy-path">
+                <h3 style="color: var(--neon-cyan); margin-bottom: 20px;">发展路径</h3>
+                <div class="path-steps">
+                    <div class="path-step">
+                        <div class="step-number">1</div>
+                        <h5>能力构建</h5>
+                        <p>整合产品线<br>培养团队</p>
+                    </div>
+                    <div class="path-step">
+                        <div class="step-number">2</div>
+                        <h5>方案打磨</h5>
+                        <p>打造标杆案例<br>形成交付流程</p>
+                    </div>
+                    <div class="path-step">
+                        <div class="step-number">3</div>
+                        <h5>规模化推广</h5>
+                        <p>复制多行业<br>建立影响力</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务能力矩阵 -->
+    <section class="section service-matrix">
+        <h2 class="section-title">服务能力矩阵</h2>
+        <p class="section-subtitle">四大解决方案 + 十大核心产品，全方位赋能企业数字化转型</p>
+
+        <!-- 解决方案能力 -->
+        <div class="matrix-solutions">
+            <a href="solution-ai.html" class="matrix-solution-link">
+                <div class="matrix-solution">
+                    <h4>🤖 AI 应用解决方案</h4>
+                    <p>将 AI 能力深度融入业务场景，实现智能化升级与效率跃升</p>
+                    <div class="label">核心能力</div>
+                    <p style="font-size: 13px;">AI建模 · 智能分析 · 决策引擎 · 场景落地</p>
+                </div>
+            </a>
+            <a href="solution-communication.html" class="matrix-solution-link">
+                <div class="matrix-solution">
+                    <h4>📞 融合通信解决方案</h4>
+                    <p>统一通信平台，实现语音、视频、消息、会议的深度融合</p>
+                    <div class="label">核心能力</div>
+                    <p style="font-size: 13px;">统一通信 · 音视频融合 · 云端管理 · 跨终端协同</p>
+                </div>
+            </a>
+            <a href="solution-avintegration.html" class="matrix-solution-link">
+                <div class="matrix-solution">
+                    <h4>🎥 音视频集成解决方案</h4>
+                    <p>专业音视频系统集成，打造沉浸式远程协作体验</p>
+                    <div class="label">核心能力</div>
+                    <p style="font-size: 13px;">会议系统 · 音视频集成 · 智能控制 · 远程协作</p>
+                </div>
+            </a>
+            <a href="solution-smartoffice.html" class="matrix-solution-link">
+                <div class="matrix-solution">
+                    <h4>💼 智慧办公解决方案</h4>
+                    <p>重塑办公体验，释放组织创造力，提升运营效率</p>
+                    <div class="label">核心能力</div>
+                    <p style="font-size: 13px;">智能协同 · 远程会议 · 流程自动化 · 数据分析</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- 产品生态能力 -->
+        <div class="matrix-products">
+            <div class="matrix-product-category">
+                <h4>☁️ 无影系列</h4>
+                <a href="product-wuying.html" class="matrix-product-link"><div class="matrix-product-item">无影云电脑商业版</div></a>
+                <a href="product-wuying-hardware.html" class="matrix-product-link"><div class="matrix-product-item">无影终端</div></a>
+                <a href="product-jvs.html" class="matrix-product-link"><div class="matrix-product-item">无影Agent管理中心</div></a>
+                <a href="product-agentbay.html" class="matrix-product-link"><div class="matrix-product-item">AgentBay 开发套件</div></a>
+            </div>
+            <div class="matrix-product-category">
+                <h4>📹 亿联网络系列</h4>
+                <a href="product-meetingboard.html" class="matrix-product-link"><div class="matrix-product-item">音视频会议平板</div></a>
+                <a href="product-audiovideo.html" class="matrix-product-link"><div class="matrix-product-item">会议室音视频</div></a>
+                <a href="product-meetingsmart.html" class="matrix-product-link"><div class="matrix-product-item">会议室智能</div></a>
+                <a href="product-iphone.html" class="matrix-product-link"><div class="matrix-product-item">IP话机</div></a>
+            </div>
+            <div class="matrix-product-category">
+                <h4>📱 钉钉系列</h4>
+                <a href="product-dingtalk.html" class="matrix-product-link"><div class="matrix-product-item">钉钉底座</div></a>
+                <a href="product-wukong.html" class="matrix-product-link"><div class="matrix-product-item">钉钉悟空</div></a>
+                <a href="product-aihardware.html" class="matrix-product-link"><div class="matrix-product-item">AI 硬件</div></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 差异化优势 -->
+    <section class="section advantages">
+        <h2 class="section-title">为什么选择我们</h2>
+        <p class="section-subtitle">五大核心优势，铸就差异化竞争力</p>
+        <div class="advantage-cards">
+            <div class="advantage-card">
+                <div class="icon">🤝</div>
+                <h4>阿里生态深度绑定</h4>
+                <p>作为阿里生态的核心合作伙伴，享有优先技术支持与资源倾斜</p>
+            </div>
+            <div class="advantage-card">
+                <div class="icon">🔗</div>
+                <h4>云 + 端 + AI 全链路</h4>
+                <p>不只卖单一产品，而是提供端到端的整体解决方案</p>
+            </div>
+            <div class="advantage-card">
+                <div class="icon">🏭</div>
+                <h4>行业深耕经验</h4>
+                <p>深入理解各行业业务逻辑，避免"技术找场景"的错配</p>
+            </div>
+            <div class="advantage-card">
+                <div class="icon">👥</div>
+                <h4>本地化服务团队</h4>
+                <p>提供贴身的售前咨询、实施交付和售后运维服务</p>
+            </div>
+            <div class="advantage-card">
+                <div class="icon">📋</div>
+                <h4>成熟的方法论</h4>
+                <p>经过验证的项目实施方法论，保障交付质量和效率</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 解决方案模块 -->
+    <section class="section solutions" id="solutions">
+        <h2 class="section-title">解决方案</h2>
+        <p class="section-subtitle">四大解决方案，全方位赋能企业数字化转型</p>
+        <div class="product-grid">
+            <a href="solution-ai.html" class="product-card" style="text-decoration: none; color: inherit;">
+                <div class="product-logo">🤖</div>
+                <h4>AI 应用解决方案</h4>
+                <p>将 AI 能力深度融入业务场景，实现智能化升级与效率跃升</p>
+                <div class="product-features">
+                    <span class="feature-tag">AI建模</span>
+                    <span class="feature-tag">智能分析</span>
+                    <span class="feature-tag">决策引擎</span>
+                    <span class="feature-tag">场景落地</span>
+                </div>
+            </a>
+            <a href="solution-communication.html" class="product-card" style="text-decoration: none; color: inherit;">
+                <div class="product-logo">📞</div>
+                <h4>融合通信解决方案</h4>
+                <p>统一通信平台，实现语音、视频、消息、会议的深度融合</p>
+                <div class="product-features">
+                    <span class="feature-tag">统一通信</span>
+                    <span class="feature-tag">音视频融合</span>
+                    <span class="feature-tag">云端管理</span>
+                    <span class="feature-tag">跨终端协同</span>
+                </div>
+            </a>
+            <a href="solution-avintegration.html" class="product-card" style="text-decoration: none; color: inherit;">
+                <div class="product-logo">🎥</div>
+                <h4>音视频集成解决方案</h4>
+                <p>专业音视频系统集成，打造沉浸式远程协作体验</p>
+                <div class="product-features">
+                    <span class="feature-tag">会议系统</span>
+                    <span class="feature-tag">音视频集成</span>
+                    <span class="feature-tag">智能控制</span>
+                    <span class="feature-tag">远程协作</span>
+                </div>
+            </a>
+            <a href="solution-smartoffice.html" class="product-card" style="text-decoration: none; color: inherit;">
+                <div class="product-logo">💼</div>
+                <h4>智慧办公解决方案</h4>
+                <p>重塑办公体验，释放组织创造力，提升运营效率</p>
+                <div class="product-features">
+                    <span class="feature-tag">智能协同</span>
+                    <span class="feature-tag">远程会议</span>
+                    <span class="feature-tag">流程自动化</span>
+                    <span class="feature-tag">数据分析</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 产品生态模块 -->
+    <section class="section products" id="products">
+        <h2 class="section-title">生态产品</h2>
+        <p class="section-subtitle">十大核心产品，构建完整产品矩阵</p>
+
+        <!-- 无影系列 -->
+        <div class="product-category">
+            <h3 class="category-title">无影系列</h3>
+            <div class="product-grid">
+                <a href="product-wuying.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">☁️</div>
+                    <h4>无影云电脑商业版</h4>
+                    <p>下一代云上工作站，让高性能算力触手可及</p>
+                    <div class="product-features">
+                        <span class="feature-tag">即开即用</span>
+                        <span class="feature-tag">高性能GPU</span>
+                        <span class="feature-tag">数据安全</span>
+                    </div>
+                </a>
+                <a href="product-wuying-hardware.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">🖥️</div>
+                    <h4>无影终端</h4>
+                    <p>专为云电脑设计的瘦客户端设备，即插即用，安全高效</p>
+                    <div class="product-features">
+                        <span class="feature-tag">即插即用</span>
+                        <span class="feature-tag">安全认证</span>
+                        <span class="feature-tag">纤薄设计</span>
+                    </div>
+                </a>
+                <a href="product-jvs.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">💻</div>
+                    <h4>无影Agent管理中心</h4>
+                    <p>云桌面解决方案，灵活部署，高效运维</p>
+                    <div class="product-features">
+                        <span class="feature-tag">弹性扩展</span>
+                        <span class="feature-tag">集中管理</span>
+                        <span class="feature-tag">安全合规</span>
+                    </div>
+                </a>
+                <a href="product-agentbay.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">🛠️</div>
+                    <h4>AgentBay 开发套件</h4>
+                    <p>AI Agent 开发平台，快速构建智能应用</p>
+                    <div class="product-features">
+                        <span class="feature-tag">低代码开发</span>
+                        <span class="feature-tag">多模型支持</span>
+                        <span class="feature-tag">场景模板</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 亿联网络系列 -->
+        <div class="product-category">
+            <h3 class="category-title">亿联网络系列</h3>
+            <div class="product-grid">
+                <a href="product-meetingboard.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">📺</div>
+                    <h4>音视频会议平板</h4>
+                    <p>智能会议平板，一体化协作体验</p>
+                    <div class="product-features">
+                        <span class="feature-tag">4K高清</span>
+                        <span class="feature-tag">多点触控</span>
+                        <span class="feature-tag">无线投屏</span>
+                    </div>
+                </a>
+                <a href="product-audiovideo.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">🎥</div>
+                    <h4>会议室音视频</h4>
+                    <p>专业会议室音视频设备，极致视听体验</p>
+                    <div class="product-features">
+                        <span class="feature-tag">高清摄像</span>
+                        <span class="feature-tag">智能降噪</span>
+                        <span class="feature-tag">云端管理</span>
+                    </div>
+                </a>
+                <a href="product-meetingsmart.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">🤖</div>
+                    <h4>会议室智能</h4>
+                    <p>AI 驱动的会议室智能化解决方案</p>
+                    <div class="product-features">
+                        <span class="feature-tag">智能预约</span>
+                        <span class="feature-tag">环境控制</span>
+                        <span class="feature-tag">设备联动</span>
+                    </div>
+                </a>
+                <a href="product-iphone.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">📞</div>
+                    <h4>IP话机</h4>
+                    <p>企业级 IP 话机，清晰通话体验</p>
+                    <div class="product-features">
+                        <span class="feature-tag">高清语音</span>
+                        <span class="feature-tag">视频通话</span>
+                        <span class="feature-tag">安全加密</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 钉钉系列 -->
+        <div class="product-category">
+            <h3 class="category-title">钉钉系列</h3>
+            <div class="product-grid">
+                <a href="product-dingtalk.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">📱</div>
+                    <h4>钉钉底座</h4>
+                    <p>智能协同办公平台基础能力</p>
+                    <div class="product-features">
+                        <span class="feature-tag">组织管理</span>
+                        <span class="feature-tag">即时通讯</span>
+                        <span class="feature-tag">日程共享</span>
+                    </div>
+                </a>
+                <a href="product-wukong.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">🐒</div>
+                    <h4>钉钉悟空</h4>
+                    <p>企业级 AI 助手，工作更高效</p>
+                    <div class="product-features">
+                        <span class="feature-tag">AI对话</span>
+                        <span class="feature-tag">任务自动化</span>
+                        <span class="feature-tag">知识管理</span>
+                    </div>
+                </a>
+                <a href="product-aihardware.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">🤖</div>
+                    <h4>AI 硬件</h4>
+                    <p>钉钉生态 AI 硬件设备</p>
+                    <div class="product-features">
+                        <span class="feature-tag">智能门禁</span>
+                        <span class="feature-tag">AI考勤</span>
+                        <span class="feature-tag">会议助手</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专业服务模块 -->
+    <section class="section services" id="services">
+        <h2 class="section-title">专业服务</h2>
+        <p class="section-subtitle">四大专业服务，全程陪伴企业数字化转型</p>
+        <div class="product-grid">
+            <a href="service.html#ai-landing" class="product-card" style="text-decoration: none; color: inherit;">
+                <div class="product-logo">🚀</div>
+                <h4>AI 应用落地</h4>
+                <p>从咨询到上线，全程陪伴企业 AI 应用落地</p>
+                <div class="product-features">
+                    <span class="feature-tag">可行性评估</span>
+                    <span class="feature-tag">场景设计</span>
+                    <span class="feature-tag">模型调优</span>
+                    <span class="feature-tag">培训赋能</span>
+                </div>
+            </a>
+            <a href="service.html#system-integration" class="product-card" style="text-decoration: none; color: inherit;">
+                <div class="product-logo">🔗</div>
+                <h4>系统集成</h4>
+                <p>打通数据孤岛，实现系统互联互通</p>
+                <div class="product-features">
+                    <span class="feature-tag">架构设计</span>
+                    <span class="feature-tag">API开发</span>
+                    <span class="feature-tag">数据治理</span>
+                    <span class="feature-tag">联调测试</span>
+                </div>
+            </a>
+            <a href="service.html#maintenance" class="product-card" style="text-decoration: none; color: inherit;">
+                <div class="product-logo">🛠️</div>
+                <h4>专业维护</h4>
+                <p>7×24 专业运维，保障业务连续性</p>
+                <div class="product-features">
+                    <span class="feature-tag">系统监控</span>
+                    <span class="feature-tag">故障排查</span>
+                    <span class="feature-tag">性能优化</span>
+                    <span class="feature-tag">安全加固</span>
+                </div>
+            </a>
+            <a href="service.html#expert" class="product-card" style="text-decoration: none; color: inherit;">
+                <div class="product-logo">👨👩👧👦</div>
+                <h4>专家服务</h4>
+                <p>资深技术专家团队，提供高端技术咨询与架构设计</p>
+                <div class="product-features">
+                    <span class="feature-tag">战略咨询</span>
+                    <span class="feature-tag">架构设计</span>
+                    <span class="feature-tag">技术选型</span>
+                    <span class="feature-tag">性能优化</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 联系我们模块 -->
+    <section class="section contact" id="contact">
+        <h2 class="section-title">联系我们</h2>
+        <p class="section-subtitle">无论您有任何疑问，我们都将竭诚为您服务</p>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>联系方式</h3>
+                <div class="contact-item">
+                    <div class="icon">📞</div>
+                    <div class="text">
+                        <h4>电话</h4>
+                        <p>400-XXX-XXXX</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">📧</div>
+                    <div class="text">
+                        <h4>邮箱</h4>
+                        <p>solution@company.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">📍</div>
+                    <div class="text">
+                        <h4>地址</h4>
+                        <p>XX省XX市XX区XX路XX号XX大厦XX层</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">⏰</div>
+                    <div class="text">
+                        <h4>工作时间</h4>
+                        <p>周一至周五 9:00-18:00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form id="contactForm" action="contact.html" method="GET">
+                    <div class="form-group">
+                        <label>姓名 <span class="required">*</span></label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>公司 <span class="required">*</span></label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱 <span class="required">*</span></label>
+                        <input type="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>电话 <span class="required">*</span></label>
+                        <input type="tel" required>
+                    </div>
+                    <div class="form-group">
+                        <label>需求类型 <span class="required">*</span></label>
+                        <select required>
+                            <option value="">请选择</option>
+                            <option value="product">产品咨询</option>
+                            <option value="solution">方案咨询</option>
+                            <option value="service">服务咨询</option>
+                            <option value="cooperation">合作洽谈</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>详细需求</label>
+                        <textarea></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">提交咨询</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">智慧解决方案</div>
+                <p class="footer-desc">智慧解决方案事业部致力于为企业客户提供一站式数字化转型服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">生态产品</h4>
+                <ul class="footer-links">
+                    <li><a href="product-wuying.html">无影云电脑商业版</a></li>
+                    <li><a href="product-wuying-hardware.html">无影终端</a></li>
+                    <li><a href="product-jvs.html">无影Agent管理中心</a></li>
+                    <li><a href="product-agentbay.html">AgentBay 开发套件</a></li>
+                    <li><a href="product-meetingboard.html">音视频会议平板</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">解决方案</h4>
+                <ul class="footer-links">
+                    <li><a href="solution-ai.html">AI 应用解决方案</a></li>
+                    <li><a href="solution-communication.html">融合通信解决方案</a></li>
+                    <li><a href="solution-avintegration.html">音视频集成解决方案</a></li>
+                    <li><a href="solution-smartoffice.html">智慧办公解决方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">专业服务</h4>
+                <ul class="footer-links">
+                    <li><a href="service.html#ai-landing">AI 应用落地</a></li>
+                    <li><a href="service.html#system-integration">系统集成</a></li>
+                    <li><a href="service.html#maintenance">专业维护</a></li>
+                    <li><a href="service.html#expert">专家服务</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">联系我们</h4>
+                <ul class="footer-links">
+                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="contact.html">在线咨询</a></li>
+                    <li><a href="contact.html">服务网点</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 智慧解决方案事业部 版权所有 | 备案号：XX-XXXXX</p>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 粒子背景动画
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 100;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 212, 255, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // 绘制连线
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-title, .section-subtitle, .vm-card, .transform-card, .framework-item, .matrix-solution, .advantage-card, .product-card, .matrix-product-category, .positioning-highlight').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 表单提交（仅当表单存在时执行）
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('感谢您的咨询！我们将尽快与您联系。');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+.workbuddy/
+nul
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
