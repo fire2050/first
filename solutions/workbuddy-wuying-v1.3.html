@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkBuddy × 无影云电脑 场景化解决方案 | 客户汇报版</title>
+<style>
+  :root{
+    --navy:#0B1F3A;
+    --blue:#0A4DA6;
+    --blue-2:#1366C9;
+    --cyan:#13B5C4;
+    --cyan-soft:#E6F8FA;
+    --bg:#F4F7FB;
+    --card:#FFFFFF;
+    --ink:#1F2A37;
+    --ink-2:#5A6B7B;
+    --line:#E3E9F0;
+    --green:#16A34A;
+    --green-soft:#E8F6EE;
+    --gold:#E0A010;
+    --gold-soft:#FBF3DD;
+    --shadow:0 6px 22px rgba(11,31,58,.08);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.75;
+    font-size:15px;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue);text-decoration:none}
+
+  /* ===== Top nav ===== */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(11,31,58,.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .topbar-in{
+    max-width:1180px;margin:0 auto;padding:0 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;height:58px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;letter-spacing:.3px}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(19,181,196,.25)}
+  .nav{display:flex;gap:6px;flex-wrap:wrap}
+  .nav a{color:#C7D4E3;font-size:13px;padding:7px 11px;border-radius:8px;transition:.15s}
+  .nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:860px){.nav{display:none}}
+
+  /* ===== Layout ===== */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  section{padding:54px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+
+  /* ===== Hero ===== */
+  .hero{
+    background:radial-gradient(1200px 500px at 80% -10%,rgba(19,181,196,.35),transparent 60%),
+               linear-gradient(135deg,var(--navy),#0d2f5e 60%,var(--blue) 100%);
+    color:#fff;padding:70px 0 76px;position:relative;overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;right:-80px;top:-80px;width:360px;height:360px;border-radius:50%;
+    background:radial-gradient(circle,rgba(19,181,196,.25),transparent 70%);
+  }
+  .hero .tag{
+    display:inline-block;background:rgba(19,181,196,.18);border:1px solid rgba(19,181,196,.45);
+    color:#9FE9F0;font-size:13px;padding:6px 14px;border-radius:999px;margin-bottom:22px;letter-spacing:.5px;
+  }
+  .hero h1{font-size:40px;line-height:1.25;font-weight:800;letter-spacing:.5px;margin-bottom:14px}
+  .hero .sub{font-size:17px;color:#CBD9E8;max-width:760px}
+  .hero .proposition{
+    margin-top:30px;display:inline-flex;align-items:center;gap:14px;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+    padding:14px 22px;border-radius:12px;font-size:16px;font-weight:600;
+  }
+  .hero .proposition b{color:var(--cyan)}
+
+  /* ===== Section heading ===== */
+  .sec-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:26px}
+  .sec-num{
+    flex:0 0 auto;width:46px;height:46px;border-radius:12px;
+    background:linear-gradient(135deg,var(--blue),var(--cyan));
+    color:#fff;font-weight:800;font-size:19px;display:flex;align-items:center;justify-content:center;
+    box-shadow:var(--shadow);
+  }
+  .sec-head h2{font-size:25px;font-weight:800;color:var(--navy);line-height:1.3}
+  .sec-head .lead{color:var(--ink-2);font-size:14.5px;margin-top:4px}
+
+  /* ===== Cards & grids ===== */
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:880px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 22px;box-shadow:var(--shadow);
+  }
+  .card h3{font-size:16.5px;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .card p,.card li{color:var(--ink-2);font-size:14px}
+  .card ul{margin-left:18px}
+  .card .kbadge{
+    flex:0 0 auto;font-size:11px;font-weight:700;color:#fff;background:var(--blue);
+    padding:2px 8px;border-radius:6px;letter-spacing:.3px;
+  }
+
+  .summary-cards .card{border-top:3px solid var(--cyan)}
+  .summary-cards .card h3{font-size:17px}
+
+  /* callout */
+  .callout{
+    border-left:4px solid var(--cyan);background:var(--cyan-soft);
+    padding:16px 20px;border-radius:0 10px 10px 0;margin:22px 0;color:var(--ink);font-size:14.5px;
+  }
+  .callout b{color:var(--blue)}
+  .callout.dark{background:#EEF3FA;border-color:var(--blue)}
+
+  /* ===== Tables ===== */
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);background:#fff}
+  table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+  thead th{
+    background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;text-align:left;
+    padding:13px 16px;font-weight:600;white-space:nowrap;
+  }
+  tbody td{padding:12px 16px;border-top:1px solid var(--line);color:var(--ink)}
+  tbody tr:nth-child(even){background:#F8FBFE}
+  tbody tr:hover{background:var(--cyan-soft)}
+  td b,th b{color:var(--blue)}
+
+  /* pain matrix tags */
+  .tagline{display:inline-block;font-size:12px;padding:3px 10px;border-radius:999px;font-weight:600;margin:2px 4px 2px 0}
+  .t-cyan{background:var(--cyan-soft);color:#0E7C86}
+  .t-blue{background:#E7F0FB;color:var(--blue)}
+  .t-gold{background:var(--gold-soft);color:#9A6B05}
+  .t-green{background:var(--green-soft);color:#0F7A37}
+
+  /* ===== Architecture ===== */
+  .arch{display:flex;flex-direction:column;align-items:center;gap:0;margin:10px 0}
+  .arch-box{border-radius:12px;text-align:center;padding:12px 18px;font-weight:600;position:relative}
+  .arch-term{background:var(--navy);color:#fff;width:min(640px,92%);border:1px solid rgba(255,255,255,.15)}
+  .arch-arrow{height:26px;width:2px;background:var(--blue-2)}
+  .arch-cloud{
+    width:min(820px,96%);background:linear-gradient(135deg,#0E2C56,#12407E);color:#fff;
+    border:1px solid rgba(255,255,255,.15);padding:22px;
+  }
+  .arch-sandbox{border:1.5px dashed var(--cyan);border-radius:10px;padding:16px;background:rgba(19,181,196,.10)}
+  .arch-sandbox .ttl{color:var(--cyan);font-size:12.5px;font-weight:700;letter-spacing:.5px;margin-bottom:10px;text-align:left}
+  .arch-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .arch-item{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:10px;font-size:13px;color:#E3EDF7}
+  .arch-layer{margin-top:14px;border-top:1px dashed rgba(255,255,255,.25);padding-top:12px;font-size:13px;color:#C7D4E3;text-align:left}
+  .arch-branch{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+  .arch-leaf{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 18px;font-size:13.5px;font-weight:600;min-width:200px;box-shadow:var(--shadow)}
+  .arch-foot{margin-top:16px;color:var(--ink-2);font-size:13px;text-align:center}
+
+  /* ===== Scenario cards ===== */
+  .scn{position:relative;overflow:hidden}
+  .scn .num{position:absolute;right:14px;top:8px;font-size:34px;font-weight:800;color:rgba(10,77,166,.08)}
+  .scn .chk{display:inline-block;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;margin-bottom:8px}
+  .scn .core{display:inline-block;background:var(--gold-soft);color:#9A6B05;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;margin-bottom:8px;margin-left:6px}
+
+  /* ===== Stat ===== */
+  .stat{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow)}
+  .stat .big{font-size:32px;font-weight:800;color:#fff;line-height:1.1}
+  .stat .big small{font-size:15px;font-weight:600;color:var(--cyan)}
+  .stat .lbl{margin-top:8px;color:#C7D4E3;font-size:13px}
+
+  /* ===== Roadmap ===== */
+  .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:step}
+  @media(max-width:880px){.roadmap{grid-template-columns:1fr}}
+  .phase{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border-top:4px solid var(--cyan);position:relative}
+  .phase .ph{font-weight:800;color:var(--navy);font-size:16px}
+  .phase .tm{color:var(--cyan);font-size:13px;font-weight:600;margin:2px 0 10px}
+  .phase ul{margin-left:16px;color:var(--ink-2);font-size:13.5px}
+  .phase .out{margin-top:10px;font-size:12.5px;color:var(--ink-2);background:var(--bg);padding:8px 10px;border-radius:8px}
+
+  /* ===== Footer ===== */
+  .footer{background:var(--navy);color:#AEBED0;padding:34px 0;font-size:13px}
+  .footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer b{color:#fff}
+  .footer .ref{max-width:680px;line-height:1.7}
+
+  .pill{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--blue);padding:3px 10px;border-radius:6px;margin-right:6px}
+</style>
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+<!-- ===== TOP NAV ===== -->
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><span class="dot"></span>WorkBuddy × 无影云电脑 · 场景方案</div>
+    <nav class="nav">
+      <a href="#s0">摘要</a>
+      <a href="#s1">核心论断</a>
+      <a href="#s2">本地痛点</a>
+      <a href="#s3">无影优势</a>
+      <a href="#s4">能力映射</a>
+      <a href="#s5">目标场景</a>
+      <a href="#s6">参考架构</a>
+      <a href="#s7">安全合规</a>
+      <a href="#s8">价值量化</a>
+      <a href="#s9">落地路线</a>
+      <a href="#s10">风险</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">客户 / 合作伙伴 汇报方案 · 技术顾问版</span>
+    <h1>WorkBuddy × 无影云电脑<br>场景化解决方案</h1>
+    <p class="sub">面向企业 AI Agent 规模化落地的云端执行底座——以无影云电脑承载"执行过程"，以 WorkBuddy 承载"判断与编排"，让智能体安全、持久、可管理地运行。</p>
+    <div class="proposition">人用本地电脑，智能体用云电脑 · <b>WorkBuddy</b> 负责判断与编排，<b>无影云电脑</b> 负责承载执行</div>
+  </div>
+</header>
+
+<!-- ===== 0 摘要 ===== -->
+<section id="s0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">0</div>
+      <div><h2>摘要（结论先行）</h2>
+      <div class="lead">企业推行 AI Agent 时，智能体对承载设备的资源与持续运行要求很高——它要长期在线、要复杂软件栈、要安全边界、还要规模化管控，而个人办公电脑难以同时满足。</div></div>
+    </div>
+
+    <div class="grid g3 summary-cards">
+      <div class="card">
+        <h3>无影云电脑 = 数字执行空间</h3>
+        <p>不是"另一台电脑"，而是智能体的执行空间。普通电脑能力它都有，普通电脑没有的能力（弹性、标准化、安全沙箱、数据漫游、云生态、零本地占用、多端统一访问）它也有。</p>
+      </div>
+      <div class="card">
+        <h3>WorkBuddy = 智能体编排中枢</h3>
+        <p>运行在这片空间里的智能体编排中枢——自动化调度、三层记忆、工具链与连接器，负责"何时跑、跑什么、怎么记"。</p>
+      </div>
+      <div class="card">
+        <h3>组合 = 新 IT 标配</h3>
+        <p>二者结合落地企业 Agent 部署范式：人将机交互留在本地，把自动执行交给云电脑——安全、弹性、持久、可管理。</p>
+      </div>
+    </div>
+
+    <div class="callout dark">
+      <b>一句话定位：</b>无影给 WorkBuddy 一间"上锁且永不熄灯、用完能一键还原"的办公室；WorkBuddy 是在里面持续工作的智能员工。
+    </div>
+  </div>
+</section>
+
+<!-- ===== 1 核心论断 ===== -->
+<section id="s1">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>核心论断：智能体需要一台"云电脑"</h2>
+      <div class="lead">企业 Agent 部署已形成清晰范式——"新 IT 标配"。</div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>承担者</th><th>职责</th></tr></thead>
+        <tbody>
+          <tr><td>人机交互</td><td>本地电脑</td><td>人操作、看结果、下指令</td></tr>
+          <tr><td>自动执行</td><td>云电脑（无影）</td><td>承载 Agent 运行全过程</td></tr>
+          <tr><td>判断</td><td>大模型</td><td>推理、决策</td></tr>
+          <tr><td>运行</td><td>算力</td><td>执行、渲染</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <h3><span class="kbadge">映射</span>本方案的角色切分</h3>
+        <ul>
+          <li><b>WorkBuddy = 智能体</b>：编排、记忆、工具调用</li>
+          <li><b>无影云电脑 = 智能体的云电脑</b>：承载执行、持久化、隔离</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="kbadge">术语</span>统一约定</h3>
+        <p>"无影云电脑"与"云桌面"同义（"云桌面"为阿里云旧称），统一指阿里云无影商业版实例；"智能体"以 WorkBuddy 为典型代表。</p>
+        <p style="margin-top:8px">这也解决了"给智能体单独配一台 mac mini"式思路的根本缺陷：那仍是固资、仍要运维、仍是"负资产"。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2 痛点 ===== -->
+<section id="s2">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>智能体运行在办公电脑本地的痛点</h2>
+      <div class="lead">把 Agent 直接装在员工办公电脑上，是用"生产工具"承载"自动执行"，二者本质冲突。痛点可归为：四层结构性痛点 → 资源账本 → 典型场景 → 老旧设备放大器。</div></div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card"><h3>2.1 持续性差</h3><p>Agent 与人的作息绑定。舆情监控、客服值守等要求持续在线；Computer/Browser Use 类智能体<b>锁屏即"睁眼瞎"</b>；关机、断电、系统更新重启都会让长任务前功尽弃。</p></div>
+      <div class="card"><h3>2.2 人机资源争抢</h3><p>一台机器两个人抢。Agent 占满 CPU/内存/网络，本地跑推理、渲染、爬取致风扇狂转、降频、<b>设备发热降寿命</b>，员工体验与硬件折旧双输。同时 Agent 满负荷使本地电脑 CPU/GPU 持续高负载，<b>耗电且需额外制冷，抬高电费、碳排与硬件损耗</b>。</p></div>
+      <div class="card"><h3>2.3 软件栈不一致</h3><p>"雪花环境"导致 A 能 B 败。每台机 OS 补丁、浏览器、Python/Node 版本、驱动、权限各异，同一 Agent 在 A 机成功、B 机失败，升级回归成本高。</p></div>
+      <div class="card"><h3>2.4 安全无边界</h3><p>数据面与攻击面同时扩大。员工机常连个人微信/网盘/USB，<b>数据顺手外流难审计</b>；凭证泄露可横向移动至内网；不隔离即有"删库跑路"风险。</p></div>
+      <div class="card"><h3>2.5 规模化管理难</h3><p>从"草台班子"到失控。推广后几十个 Agent 分散在数十台办公电脑，无统一启停/监控/日志/更新；Agent 时代需像管真人一样管。</p></div>
+      <div class="card"><h3>2.6 为何不买额外电脑</h3><p>mac mini 等思路：<b>贵</b>（数十万固资）、<b>重</b>（运维成负资产）、<b>慢</b>（采购周期长、无法按需伸缩），不适合试水期。</p></div>
+    </div>
+
+    <!-- 2.7 资源账本 -->
+    <h3 style="margin:30px 0 12px;color:var(--navy);font-size:18px">2.7 资源账本：WorkBuddy 本地运行的真实资源占用</h3>
+    <p style="color:var(--ink-2);font-size:14px;margin-bottom:14px">WorkBuddy 作为桌面级智能体，其本地运行的资源消耗有可量化的基准数据，可作为容量规划参考。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>资源类别</th><th>组件</th><th>典型占用</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>内存（运行时）</td><td>WorkBuddy 主进程</td><td>~400–800MB</td><td>含本地 Agent 运行时、界面与编排进程；多 Agent 并行 / 长上下文会话时进一步上升</td></tr>
+          <tr><td>磁盘（安装到能用）</td><td>Python 运行时（3.12）</td><td>~150–200MB / 套</td><td>每套独立环境</td></tr>
+          <tr><td>磁盘</td><td>Node.js 运行时</td><td>~80–120MB / 套</td><td></td></tr>
+          <tr><td>磁盘</td><td>Electron / Chromium 内核</td><td>~150–300MB</td><td></td></tr>
+          <tr><td>磁盘</td><td>pip 依赖（numpy、torch 等）</td><td>500MB–3GB+</td><td>随工具链扩张</td></tr>
+          <tr><td>磁盘</td><td>npm 依赖（node_modules）</td><td>200MB–1GB+</td><td></td></tr>
+          <tr><td>磁盘</td><td>模型缓存（嵌入模型、词表）</td><td>200MB–2GB+</td><td></td></tr>
+          <tr><td>磁盘</td><td>对话历史与索引</td><td>100MB–500MB+</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      单实例即占内存 <b>400–800MB</b>，且随多 Agent 并行 / 长上下文会话进一步上升；在 8GB 内存机上叠加系统占用已明显吃紧。从安装到可用，C 盘少则吃 <b>1–2GB</b>、多则 <b>5GB+</b>（含模型缓存与依赖）。C 盘满 → 虚拟内存换页效率骤降 → "你以为是 AI 卡，其实是 C 盘满了在卡"。
+    </div>
+
+    <!-- 2.8 故障 & 诉求 -->
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card">
+        <h3>2.8 三类典型故障</h3>
+        <ul>
+          <li><b>锁屏即崩</b>：交代 WorkBuddy 整理 20 份客户反馈，开会被系统回收进程，回来任务全无。</li>
+          <li><b>长任务被资源拖垮</b>：本地让 WorkBuddy 跑大文件分析或长索引，内存占满后系统换页，任务超时中断，需反复重跑。</li>
+          <li><b>AI 吃完电脑</b>：AI 占满内存，打开 Excel 要 30 秒，正事反而干不了。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>2.8 企业用户的五项核心诉求</h3>
+        <ul>
+          <li>WorkBuddy 多 Agent / 多任务并行执行，互不干扰；</li>
+          <li>AI 任务后台持续执行，不依赖开着电脑；</li>
+          <li>切换工具无等待、界面流畅；</li>
+          <li>数据在一处，不用到处复制粘贴；</li>
+          <li>C 盘不被 AI 工具和配套环境吃光。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">结论：<b>你需要一台专门跑 AI 的机器</b>——这正是无影云电脑的角色。</div>
+
+    <!-- 2.9 老旧 -->
+    <div class="card" style="margin-top:18px;border-left:4px solid var(--gold)">
+      <h3>2.9 老旧电脑：所有痛点的"放大器"</h3>
+      <p>4–8GB 内存、机械硬盘、旧代 CPU、过保散热的设备，是一线岗位、外包与门店终端的真实现状，会把上述痛点数倍放大：</p>
+      <ul>
+        <li><b>内存与算力硬瓶颈</b>：单开 WorkBuddy（400–800MB）加系统占用即逼近极限，再加开一个 Agent 会话或子智能体就触发频繁换页 / 卡死；</li>
+        <li><b>机械硬盘 IO 瓶颈</b>：索引、模型缓存加载、历史检索在 HDD 上极慢，长任务更易 IO 超时中断；</li>
+        <li><b>系统 / 驱动老旧</b>：旧版 Windows 或滞后运行库，导致新版浏览器 / Electron / 运行时无法满足 Agent 工具链，轻则功能缺失、重则崩溃；</li>
+        <li><b>散热退化</b>：满载即降频甚至过热关机，AI 长任务必然中断；</li>
+        <li><b>无法升级、只能换新</b>：内存焊死或上限低，换新即回到固资 / 负资产老路。</li>
+      </ul>
+      <p style="margin-top:8px"><b>结论：</b>老旧电脑根本不具备承载智能体的物理条件。无影云电脑恰好绕过——算力在云端、终端只接收画面，一台十年老笔记本也能流畅驱动满配 Agent 环境。</p>
+    </div>
+
+    <div class="card" style="margin-top:18px;border-left:4px solid var(--cyan)">
+      <h3>2.10 通道接入与空间约束：企微 / 微信等渠道的痛点</h3>
+      <p>WorkBuddy 通过企业微信、微信、钉钉等通道对外服务时，本地承载方式会暴露新的约束：</p>
+      <ul>
+        <li><b>持续在线 vs 人的作息</b>：IM 通道以实时消息驱动，Agent 需 7×24 监听回调 / webhook / 轮询；本地锁屏、合盖、下班关机即断联，客户消息无人应答、工单堆积。</li>
+        <li><b>个人通道与 AI 工具争抢</b>：企业微信 / 微信客户端本就常驻本地，再叠加 WorkBuddy 占 CPU / 内存，前台聊天与后台 Agent 互抢；消息数据落本地、混同个人会话，难审计、易泄露。</li>
+        <li><b>受空间约束，多地接入不一致</b>：Agent 绑在某一台办公室电脑，人一离开（出差 / 居家 / 会议室）就无法一致接入同一 Agent 与会话；换设备即丢失运行环境与上下文。</li>
+        <li><b>多账号 / 多群并发吃紧</b>：多企微账号、多群消息并发时，本地算力与网络迅速见顶，响应延迟、漏消息。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3 无影优势 ===== -->
+<section id="s3">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>无影云电脑：智能体的"数字执行空间"</h2>
+      <div class="lead">普通电脑能力它都有，普通电脑没有的企业级能力它也有。</div></div>
+    </div>
+
+    <div class="grid g2">
+      <div class="card"><h3>3.1 基础能力（电脑都有的）</h3><p>CPU / 内存 / 操作系统、界面操作（浏览器 / 应用 / 终端）、代码执行（解释器 / 依赖 / 运行时）、状态持久化（磁盘 / 文件系统）。</p></div>
+      <div class="card"><h3>3.2 企业级能力（普通电脑没有的）</h3>
+        <ul>
+          <li><b>弹性订阅</b>：按需选性能与数量；</li>
+          <li><b>快速创建 / 释放</b>：外包、临时、高风险任务用完回收；</li>
+          <li><b>一键标准化</b>：统一镜像配置浏览器 / 工具 / 插件 / 依赖 / 权限；</li>
+          <li><b>安全隔离</b>：租户隔离 + 权限管控 + 审计。</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin:30px 0 12px;color:var(--navy);font-size:18px">3.3 四大独特优势（方案核心增量）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>优势</th><th>说明</th><th>对 Agent 的价值</th></tr></thead>
+        <tbody>
+          <tr><td><b>原子化子 Agent 模块</b></td><td>浏览器自动化、代码执行、深度研究做成原子模块；OS 覆盖 Windows / Linux / Android；场景覆盖 Computer / Mobile / Browser Use / Code Space</td><td>Agent 开箱即用地具备"操作界面 + 跑代码"能力</td></tr>
+          <tr><td><b>云端安全沙箱</b></td><td>数据加密传输、权限严格隔离；<b>任务完成沙箱即销毁，云电脑本地零侵入</b>，成果留下、系统干净</td><td>高风险任务可放心跑，不污染宿主</td></tr>
+          <tr><td><b>跨平台数据漫游</b></td><td>上下文状态、操作偏好、工具配置、历史路径跨任务 / 跨会话保持</td><td>Agent 不再每次开机都"重新上岗的实习生"</td></tr>
+          <tr><td><b>云上全生态打通</b></td><td>联动智算集群、Qwen 大模型、大数据、数据库等云服务</td><td>流程更连贯，接近端到端自动化</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">行业可复制案例：制造 / 建筑行业，无影 <b>GPU 实例直连云端渲染集群</b>，工业智能体、BIM 仿真智能体自动完成模型生成、碰撞测试、渲染出图——显卡资源与执行环境解耦，弹性高效。</div>
+
+    <h3 style="margin:30px 0 12px;color:var(--navy);font-size:18px">3.5 无影相对本地办公电脑的优势清单（逐条对应痛点）</h3>
+    <div style="line-height:2.1">
+      <span class="tagline t-cyan">数据不落地（服务端渲染）→ 对应 2.4</span>
+      <span class="tagline t-cyan">断网不断联 → 对应 2.1</span>
+      <span class="tagline t-cyan">弹性算力 & GPU 解耦 → 对应 2.2</span>
+      <span class="tagline t-cyan">统一镜像标准化 → 对应 2.3</span>
+      <span class="tagline t-cyan">租户 / 项目隔离 → 对应 2.4</span>
+      <span class="tagline t-cyan">安全沙箱用完即毁 → 对应 2.4</span>
+      <span class="tagline t-cyan">数据漫游 & 状态持久化 → 对应 2.1</span>
+      <span class="tagline t-cyan">集中管控 → 对应 2.5</span>
+      <span class="tagline t-cyan">成本可预测（OPEX）→ 对应 2.6</span>
+      <span class="tagline t-cyan">跨端一致体验 → 对应 2.1/2.2</span>
+      <span class="tagline t-cyan">合规底座 → 对应 2.4</span>
+      <span class="tagline t-cyan">集中能效（能耗更优）→ 对应 2.2</span>
+    </div>
+
+    <h3 style="margin:30px 0 12px;color:var(--navy);font-size:18px">3.6 本地办公电脑 vs 无影云电脑（对照表）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>本地办公电脑跑 Agent</th><th>无影云电脑跑 Agent</th></tr></thead>
+        <tbody>
+          <tr><td>持续运行</td><td>关机 / 锁屏 / 休眠 / 断电即停，长任务易中断</td><td>7×24 常驻，断网不断联，锁屏无关</td></tr>
+          <tr><td>人机关系</td><td>与员工抢 CPU / 内存 / 网络，风扇狂转、卡顿</td><td>独立执行空间，不占员工机器</td></tr>
+          <tr><td>环境一致性</td><td>雪花环境，A 能 B 败，升级回归成本高</td><td>一键标准化镜像，全量同构</td></tr>
+          <tr><td>数据安全</td><td>可读可拷，易顺手外流，难审计</td><td>数据不落地，终端零明文，加密传输</td></tr>
+          <tr><td>安全隔离</td><td>无边界，凭证泄露可横向移动</td><td>租户隔离 + 沙箱用完即毁，零侵入</td></tr>
+          <tr><td>规模化</td><td>分散难管，桌管落伍，无统一监控</td><td>集中管控，统一启停 / 升级 / 回收</td></tr>
+          <tr><td>算力</td><td>受本地 GPU / 内存限，难并发</td><td>弹性升配，GPU 直连渲染集群</td></tr>
+          <tr><td>成本</td><td>隐性高（占生产力 + 折旧 + 排查），或数十万固资</td><td>按需订阅 OPEX，用完回收</td></tr>
+          <tr><td>合规</td><td>难满足等保 / 不出域</td><td>等保 2.0 三级、国密、数据不出域</td></tr>
+          <tr><td>状态连续</td><td>重启变"实习生"</td><td>数据漫游 + 三层记忆，双层持久化</td></tr>
+          <tr><td>本地资源占用</td><td>满载即卡，老旧机直接跑不动</td><td>服务端渲染，终端仅收画面，本地零负担、零安装</td></tr>
+          <tr><td>终端形态</td><td>绑定固定设备，换机环境丢失</td><td>多类型终端（Win/Mac/移动/瘦终端/Web）统一访问，体验一致</td></tr>
+          <tr><td>能耗 / 电力</td><td>Agent 满载使单台电脑持续高功耗、发热需额外制冷，电费与碳排高</td><td>云端集中供电、按需启停、空闲降配 / 休眠，单位算力能耗更低、可统一节能</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin:30px 0 12px;color:var(--navy);font-size:18px">3.7 典型部署实例（参考配置与用法）</h3>
+    <div class="grid g3">
+      <div class="card"><h3>推荐配置</h3><p>无影云电脑 <b>8 核 CPU / 32GB 内存</b>；运行 WorkBuddy 完整工作负载（多 Agent 编排、浏览器自动化、连接器调用、长上下文会话），资源仍有充裕余量。</p></div>
+      <div class="card"><h3>本地收益</h3><p>本地电脑 C 盘干净（Python / Node / 模型缓存 / 对话历史全在无影云电脑），开机 10 秒、切换丝滑。</p></div>
+      <div class="card"><h3>核心范式</h3><p>"本地电脑负责人的工作，无影云电脑负责跑 AI——两台电脑各司其职，互不干扰。"</p></div>
+    </div>
+
+    <h3 style="margin:26px 0 12px;color:var(--navy);font-size:16px">7×24 "不眠引擎"的四种典型用法</h3>
+    <div class="grid g2">
+      <div class="card"><h3>夜间批处理</h3><p>晚 10 点把 15 份客户沟通记录丢给 WorkBuddy 分析摘要，次日到岗即得报告。</p></div>
+      <div class="card"><h3>长时间监控</h3><p>行业关键词信息源 7×24 自动汇总，本地电脑做不到。</p></div>
+      <div class="card"><h3>跨时区协作</h3><p>海外团队夜间反馈，AI 在无影云电脑自动处理生成回复草稿，次日微调即发。</p></div>
+      <div class="card"><h3>挂机式工作流</h3><p>邮件触发→自动分析→生成回复→同步文档，需 AI 始终在线，休眠即断。</p></div>
+    </div>
+    <div class="callout">一句话：<b>"本地电脑是'你在，它才在'；无影云电脑是'你不在，它也在'。"</b> AI 的价值不止于你盯着屏幕的几分钟，更在于你离开后它仍在跑。</div>
+
+    <h3 style="margin:26px 0 12px;color:var(--navy);font-size:16px">3.8 两大差异化特点：本地零资源占用 + 多类型终端访问</h3>
+    <div class="grid g2">
+      <div class="card"><h3>3.8.1 本地资源占用趋近于零</h3><p>服务端渲染：所有计算 / 渲染 / 存储在云端，本地仅接收加密视频流、回传键鼠指令，负载≈"播一段高清视频"。十年老笔记本、瘦终端、手机都能驱动满配环境，且<b>本地零安装、零 C 盘占用</b>。</p></div>
+      <div class="card"><h3>3.8.2 多类型终端统一访问</h3><p>支持 Windows / macOS / Android / iOS / Web / 瘦客户机 / 专用终端，登录即进入<b>同一无影云电脑</b>；配置、数据、运行状态在任意终端完全一致，配合锁屏无关与 7×24，实现"人在哪、终端是啥，AI 都在跑"。</p></div>
+    </div>
+
+    <h3 style="margin:30px 0 12px;color:var(--navy);font-size:18px">3.9 7×24 常驻与空间无关性（通道场景核心优势）</h3>
+    <div class="grid g2">
+      <div class="card"><h3>7×24 持续在线应答</h3><p>WorkBuddy 运行于无影常驻实例，对企微 / 微信等通道 7×24 监听；锁屏、下班、断电均不影响，客户消息即时流转为工单 / 回复草稿，无人值守也不漏接。</p></div>
+      <div class="card"><h3>空间无关</h3><p>Agent 运行在云端、不依赖任何一台本地电脑的位置。人在办公室、家里、出差，只要任一终端登录无影即接入同一 Agent 与同一会话——<b>WorkBuddy 智能体不受空间限制，随人而动、随端而在</b>。</p></div>
+      <div class="card"><h3>上下文一致</h3><p>会话上下文、回复草稿、工单状态全在云端（数据漫游 + 三层记忆），本地设备切换不影响连续性。</p></div>
+      <div class="card"><h3>通道与算力同处云内</h3><p>IM 客户端与 WorkBuddy 同置于无影，不占员工本机、不挤占个人微信 / 企微资源，且消息数据不出域。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 能力映射 ===== -->
+<section id="s4">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>WorkBuddy × 无影：能力映射与协同</h2>
+      <div class="lead">二者不是替代，而是执行层（无影）× 智能层（WorkBuddy）的垂直整合。</div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>无影云电脑能力</th><th>WorkBuddy 能力</th><th>协同价值</th></tr></thead>
+        <tbody>
+          <tr><td>云端 7×24 常驻</td><td>自动化调度（RRULE 定时/周期任务）</td><td>无人值守、断网不断联</td></tr>
+          <tr><td>云端安全沙箱（销毁零侵入）</td><td>任务级自动化执行</td><td>每个任务在隔离沙箱跑，完即毁，宿主干净</td></tr>
+          <tr><td>跨平台数据漫游</td><td>三层记忆（云 / 用户 / 工作区）</td><td><b>双层持久化</b>：无影管"环境与状态"，WorkBuddy 管"任务上下文"，Agent 跨会话不退化</td></tr>
+          <tr><td>原子子 Agent（Browser / Code / Mobile Use）</td><td>内置工具链 + MCP / 连接器</td><td>复杂操作（读屏、点网页、跑代码、连钉钉/企微）无缝衔接</td></tr>
+          <tr><td>云上全生态（Qwen / 智算 / 大数据）</td><td>外部 API / 模型调用</td><td>端到端自动化，数据云内闭环不出域</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout dark"><b>职责切分：</b>无影负责"承载执行过程"（机器、隔离、持久化）；WorkBuddy 负责"判断与编排"（何时跑、跑什么、怎么记）。</div>
+  </div>
+</section>
+
+<!-- ===== 5 目标场景 ===== -->
+<section id="s5">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>目标场景（方案核心）</h2>
+      <div class="lead">围绕"无影承载 + WorkBuddy 编排"的八大落地场景。</div></div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card scn"><div class="num">01</div><span class="chk">标准场景</span><h3>7×24 公众号内容自动生产与推送</h3><p>WorkBuddy 定时（如 08:00）在无影常驻实例启动"AI 日报"自动化；自动抓取多源动态 → 五版块生成 → 去 AI 味 → 配图 → 推送公众号草稿箱。本地锁屏/关机即断，无影常驻无此忧。</p></div>
+      <div class="card scn"><div class="num">02</div><span class="chk">标准场景</span><h3>安全合规 AI 运营中台</h3><p>运营数据 / 知识库置于无影内网，仅在该环境内被 WorkBuddy 调用；高风险分析走安全沙箱，任务完即毁、零侵入；数据漫游 + 三层记忆保障连续性；终端零明文，满足等保与行业合规。</p></div>
+      <div class="card scn"><div class="num">03</div><span class="chk">标准场景</span><h3>RPA / 电商数据采集</h3><p>采集 / 巡检 / 核对脚本部署于无影常驻实例；用一键标准化镜像批量拉起同构环境，避免设备不一致导致失败；本地断网任务照常执行，恢复后回传。</p></div>
+      <div class="card scn"><div class="num">04</div><span class="chk">标准场景</span><h3>数字人直播 / 智能客服常驻</h3><p>推流与应答服务运行于无影 GPU 实例，WorkBuddy 负责话术更新、知识库同步、异常接管；弹性算力支撑高峰并发，永不掉线。</p></div>
+      <div class="card scn"><div class="num">05</div><span class="core">核心增量</span><h3>外包 / 临时 / 高风险任务</h3><p>短期项目、外部协作、敏感操作：在无影按需创建隔离沙箱；WorkBuddy 编排执行，完成后沙箱立即销毁，系统零残留；既控制成本（用完回收），又锁死风险（不污染生产环境）。</p></div>
+      <div class="card scn"><div class="num">06</div><span class="core">核心增量</span><h3>BIM / 工业渲染</h3><p>无影 GPU 实例直连云端渲染集群；工业 / BIM 仿真智能体自动完成模型生成、碰撞测试、渲染出图；适用于制造、建筑设计、工程仿真类客户。</p></div>
+      <div class="card scn"><div class="num">07</div><span class="chk">标准场景</span><h3>跨端协同与移动指挥</h3><p>手机 / 平板 / 任意瘦终端登录无影，接入 WorkBuddy 会话；上下文全在云端（数据漫游 + 三层记忆），移动端只"看画面、下指令"。</p></div>
+      <div class="card scn"><div class="num">08</div><span class="chk">标准场景</span><h3>企微 / 微信 7×24 智能应答与工单流转</h3><p>WorkBuddy 在无影常驻实例对接企微 / 微信通道，7×24 监听客户消息；自动分类、摘要、生成回复草稿或流转工单，超时 / 高风险升级人工。人在任意地点、任意终端登录无影即可接管同一会话，本地锁屏 / 关机 / 出差均不影响——<b>智能体不受空间限制</b>。</p></div>
+    </div>
+
+    <h3 style="margin:30px 0 12px;color:var(--navy);font-size:16px">场景八 · 企微 / 微信接入架构子图</h3>
+    <div class="arch">
+      <div class="arch-box arch-term" style="width:min(820px,96%)">外部通道（消息入口）<br>企业微信：员工 / 客户群、客户联系、应用消息回调 ｜ 微信：公众号、微信客服、消息回调</div>
+      <div class="arch-arrow"></div>
+      <div class="arch-box arch-cloud">
+        <div style="text-align:center;color:#9FE9F0;font-size:13px;font-weight:700;letter-spacing:.5px;margin-bottom:12px">无影云电脑（商业版 · 常驻实例 · 7×24 在线）</div>
+        <div class="arch-sandbox">
+          <div class="ttl">WorkBuddy 智能体编排</div>
+          <div class="arch-row">
+            <div class="arch-item">通道接入层：企微 / 微信连接器（鉴权、消息收发、事件订阅）</div>
+            <div class="arch-item">理解与编排层：意图识别 → 分类 → 摘要 → 回复草稿 / 工单流转</div>
+            <div class="arch-item">三层记忆：云 / 用户 / 工作区（跨会话、跨通道上下文连续）</div>
+            <div class="arch-item">自动化引擎：定时巡检、超时升级人工、高风险告警</div>
+          </div>
+        </div>
+        <div class="arch-layer">上下文 / 草稿 / 工单 → 数据漫游层（持久化、状态可恢复）</div>
+      </div>
+      <div class="arch-arrow"></div>
+      <div class="arch-branch">
+        <div class="arch-leaf">人工坐席：任意终端登录无影接管同一会话</div>
+      </div>
+      <div class="arch-foot">关键设计：通道接入、意图编排、记忆持久化全部位于无影云电脑内，<b>与算力同在云内、不受空间限制</b>；本地终端仅用于人工接管时查看与下发指令，不承载 Agent 运行逻辑。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6 参考架构 ===== -->
+<section id="s6">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>参考架构</h2>
+      <div class="lead">终端弱终端接入、无影承载执行、WorkBuddy 编排、内外网受控互通。</div></div>
+    </div>
+
+    <div class="arch">
+      <div class="arch-box arch-term">终端层（弱终端 · 数据不落地）<br>手机 / 平板 / 笔记本 / 瘦终端：仅收加密画面</div>
+      <div class="arch-arrow"></div>
+      <div class="arch-box arch-cloud">
+        <div style="text-align:center;color:#9FE9F0;font-size:13px;font-weight:700;letter-spacing:.5px;margin-bottom:12px">无影云电脑（商业版 / GPU）</div>
+        <div class="arch-sandbox">
+          <div class="ttl">沙箱层：任务级隔离，完即毁（零侵入）</div>
+          <div style="text-align:center;color:#fff;font-weight:600;margin-bottom:10px">WorkBuddy Agent 运行环境</div>
+          <div class="arch-row">
+            <div class="arch-item">自动化调度（RRULE 无人值守）</div>
+            <div class="arch-item">三层记忆（云/用户/工作区）</div>
+            <div class="arch-item">工具链 + MCP / 连接器</div>
+            <div class="arch-item">原子子 Agent：Browser / Code / Mobile</div>
+          </div>
+        </div>
+        <div class="arch-layer">数据漫游层：跨会话状态持久化 ｜ 安全策略：防截屏 / 剪贴板 / 审计 / 权限最小化</div>
+      </div>
+      <div class="arch-branch">
+        <div class="arch-leaf">企业内网数据（不出域）<br>私网互通</div>
+        <div class="arch-leaf">公众号 / 钉钉 / 企微<br>受控公网 API</div>
+      </div>
+      <div class="arch-foot">云上全生态：Qwen / 智算集群 / 大数据 / 数据库</div>
+    </div>
+
+    <h3 style="margin:26px 0 12px;color:var(--navy);font-size:16px">部署要点</h3>
+    <div class="grid g3">
+      <div class="card"><h3>网络隔离</h3><p>实例置于企业 VPC，与内网私网互通，公网仅开必要 API。</p></div>
+      <div class="card"><h3>高可用</h3><p>WorkBuddy 以"服务账号"常驻，关键任务双可用区热备。</p></div>
+      <div class="card"><h3>分级执行</h3><p>高风险任务走沙箱，标准任务走常驻实例，按风险分级。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7 安全合规 ===== -->
+<section id="s7">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>安全与合规设计</h2>
+      <div class="lead">以"数据不落地 + 执行隔离 + 传输加密 + 权限最小化"为底座。</div></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>控制措施</th></tr></thead>
+        <tbody>
+          <tr><td>数据保密</td><td>服务端渲染零明文；剪贴板 / 外设管控</td></tr>
+          <tr><td>执行隔离</td><td><b>安全沙箱用完即毁，宿主零侵入</b></td></tr>
+          <tr><td>传输安全</td><td>全链路 TLS / 国密 SM2 / SM4</td></tr>
+          <tr><td>访问控制</td><td>最小权限、SSO、MFA、终端准入</td></tr>
+          <tr><td>持久化管控</td><td>数据漫游可审计、可回收</td></tr>
+          <tr><td>合规</td><td>等保 2.0 三级、数据不出域</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8 价值量化 ===== -->
+<section id="s8">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>价值量化</h2>
+      <div class="lead">从可用性、成本、一致性、安全、连续性到内容生产周期的整体改善。</div></div>
+    </div>
+
+    <div class="grid g4" style="margin-bottom:22px">
+      <div class="stat"><div class="big">≥99.95<small>%</small></div><div class="lbl">运行可用性（基线 ~70%）</div></div>
+      <div class="stat"><div class="big">OPEX</div><div class="lbl">资本投入转为运营支出</div></div>
+      <div class="stat"><div class="big">90<small>%+</small></div><div class="lbl">内容生产周期下降</div></div>
+      <div class="stat"><div class="big">0</div><div class="lbl">宿主侵入（沙箱用完即毁）</div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>指标</th><th>本地 / 额外电脑基线</th><th>无影 + WorkBuddy</th><th>改善</th></tr></thead>
+        <tbody>
+          <tr><td>运行可用性</td><td>~70%（关机/断网/锁屏）</td><td>≥99.95% SLA</td><td>接近翻倍</td></tr>
+          <tr><td>资本投入</td><td>数十万固资 + 运维负资产</td><td>按需订阅、用完回收</td><td>转为 OPEX</td></tr>
+          <tr><td>环境一致性</td><td>设备五花八门，A能B败</td><td>一键标准化镜像</td><td>失败率骤降</td></tr>
+          <tr><td>安全边界</td><td>无隔离，怕删库跑路</td><td>沙箱零侵入 + 租户隔离</td><td>风险可控</td></tr>
+          <tr><td>状态连续性</td><td>每次重启变"实习生"</td><td>数据漫游 + 三层记忆</td><td>双层持久化</td></tr>
+          <tr><td>内容生产周期</td><td>T+1 人工</td><td>分钟级自动</td><td>降 90%+</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--ink-2);font-size:13px;margin-top:10px">数值为行业通用基准估算，实际以客户现网压测与合规要求校准。</p>
+  </div>
+</section>
+
+<!-- ===== 9 落地路线图 ===== -->
+<section id="s9">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">9</div>
+      <div><h2>落地路线图</h2>
+      <div class="lead">从单点验证到规模化运营的四个阶段。</div></div>
+    </div>
+    <div class="roadmap">
+      <div class="phase">
+        <div class="ph">P0 验证</div><div class="tm">1–2 周</div>
+        <ul><li>单台无影 + WorkBuddy 跑通"AI 日报"自动化</li><li>验证常驻 + 锁屏无关</li></ul>
+        <div class="out">交付物：PoC 报告</div>
+      </div>
+      <div class="phase">
+        <div class="ph">P1 试点</div><div class="tm">2–4 周</div>
+        <ul><li>选 1–2 高频场景上线</li><li>用标准化镜像批量拉起</li></ul>
+        <div class="out">交付物：场景 SOP</div>
+      </div>
+      <div class="phase">
+        <div class="ph">P2 扩展</div><div class="tm">1–2 月</div>
+        <ul><li>接内网数据</li><li>数字人 / 客服常驻</li><li>高风险任务走沙箱</li></ul>
+        <div class="out">交付物：安全合规评审</div>
+      </div>
+      <div class="phase">
+        <div class="ph">P3 规模化</div><div class="tm">持续</div>
+        <ul><li>多实例弹性</li><li>双可用区</li><li>统一管控台、GPU 渲染</li></ul>
+        <div class="out">交付物：运营手册</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 风险与应对 ===== -->
+<section id="s10">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">10</div>
+      <div><h2>风险与应对</h2>
+      <div class="lead">识别四类主要风险并给出对应措施。</div></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>风险</th><th>说明</th><th>应对</th></tr></thead>
+        <tbody>
+          <tr><td>云依赖</td><td>无影停服影响 Agent</td><td>商业版 SLA + 双可用区</td></tr>
+          <tr><td>成本</td><td>GPU 常驻费用</td><td>峰谷弹性、空闲降配、用完回收</td></tr>
+          <tr><td>合规边界</td><td>跨域数据流动</td><td>数据不出域 + 沙箱隔离 + 审计</td></tr>
+          <tr><td>质量漂移</td><td>输出波动</td><td>三层记忆沉淀 + 人工抽检闭环</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11 结语 ===== -->
+<section id="s11">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">11</div>
+      <div><h2>结语</h2></div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--blue);background:#EEF3FA">
+      <p>企业部署 AI Agent 的实践表明：<b>智能体不是 App，它是要长期占着机器干活的"数字员工"</b>。将其塞入个人电脑——尤其是老旧电脑——既干扰人的正常工作、又难以稳定运行、且带来安全隐患。</p>
+      <p style="margin-top:10px">WorkBuddy 与无影云电脑的组合，正是前述部署范式的工程化实现：人留在本地交互，智能体住进云电脑——上锁、永不熄灯、用完能一键还原，且对本地设备零负担、对任意终端一致可达。对于公众号运营、电商 RPA、数字人直播、BIM 渲染等企业级 Agent 场景，这是当前最具性价比的落地路径。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="wrap">
+    <div>
+      <div><b>WorkBuddy × 无影云电脑 场景化解决方案</b></div>
+      <div style="margin-top:6px">客户 / 合作伙伴汇报版 · 技术顾问视角 · 适用：客户汇报 / 内部立项 ｜ 版本 v1.3</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

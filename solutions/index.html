@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>方案中心 · Solution Hub</title>
+  <style>
+    :root{
+      --navy:#0a1f44; --navy2:#0d2a5c; --cyan:#00d4ff; --teal:#5eead4;
+      --ink:#1f2a44; --ink-2:#5b6b8c; --line:#e2e8f4; --bg:#f4f7fc;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+         background:linear-gradient(160deg,#0a1f44 0%,#0d2a5c 45%,#10243f 100%);min-height:100vh;color:#fff;padding:48px 20px}
+    .wrap{max-width:920px;margin:0 auto}
+    .head{margin-bottom:8px}
+    .kicker{color:var(--teal);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+    h1{font-size:30px;font-weight:800;margin:6px 0 10px;letter-spacing:.5px}
+    .sub{color:#aebfdc;font-size:15px;line-height:1.7;max-width:680px}
+    .badge{display:inline-block;margin-top:14px;padding:5px 12px;border:1px solid rgba(94,234,212,.4);
+           border-radius:20px;color:var(--teal);font-size:12px;background:rgba(94,234,212,.08)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-top:34px}
+    .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:16px;
+          padding:22px;backdrop-filter:blur(6px);transition:.2s;display:flex;flex-direction:column}
+    .card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,212,255,.15)}
+    .tag{font-size:11px;color:var(--cyan);font-weight:700;letter-spacing:1px}
+    .card h3{font-size:18px;margin:8px 0 10px;line-height:1.4}
+    .meta{font-size:12.5px;color:#9fb1d4;line-height:1.7;margin-bottom:6px}
+    .meta b{color:#dfe8fb;font-weight:600}
+    .desc{font-size:13.5px;color:#c4d2ec;line-height:1.7;margin:8px 0 18px;flex:1}
+    .btn{display:inline-block;text-align:center;text-decoration:none;background:linear-gradient(90deg,var(--cyan),var(--teal));
+         color:#06203a;font-weight:700;font-size:13.5px;padding:10px 16px;border-radius:10px}
+    .note{margin-top:30px;padding:14px 18px;border-left:3px solid var(--teal);background:rgba(94,234,212,.07);
+          color:#bcd0ee;font-size:13px;line-height:1.7;border-radius:0 10px 10px 0}
+    footer{margin-top:40px;color:#7e92b8;font-size:12px;line-height:1.8}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Smart Solution · Solution Hub</div>
+      <h1>方案中心</h1>
+      <p class="sub">面向客户与合作伙伴的能力方案索引。本目录不直接挂接官网主导航，通过固定 URL 访问；内容未公开索引。</p>
+      <span class="badge">内部索引 · 纯 URL 可达 · 不进入主导航</span>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="tag">CAPABILITY SOLUTION · v1.3</div>
+        <h3>WorkBuddy × 无影云电脑<br>场景化解决方案</h3>
+        <div class="meta"><b>适用对象：</b>客户 / 合作伙伴（汇报版）</div>
+        <div class="meta"><b>更新日期：</b>2026-07-24</div>
+        <div class="meta"><b>形态：</b>HTML 可视化汇报</div>
+        <p class="desc">以"无影承载执行 + WorkBuddy 编排"为主线，覆盖本地痛点、无影优势、能力映射、七大场景、参考架构、安全合规、价值量化与落地路线图。重点论证智能体运行在云电脑、不受空间限制。</p>
+        <a class="btn" href="workbuddy-wuying-v1.3.html">查看方案 →</a>
+      </div>
+    </div>
+
+    <div class="note">
+      扩展机制：新增方案 = 复制一张卡片 + 上传对应 HTML（命名规范 <code>{方案简称}-{版本}.html</code>），主站导航与入口页其余内容无需改动。
+    </div>
+
+    <footer>
+      智慧解决方案事业部 · 方案中心 ｜ 访问策略：noindex + 无认证（纯 URL 可达）<br>
+      本页及子页已声明 <code>noindex, nofollow</code>，并通过根目录 <code>robots.txt</code> 禁止搜索引擎抓取。
+    </footer>
+  </div>
+</body>
+</html>
