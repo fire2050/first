@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>阿里无影云电脑 · GPU 需求市场商业模式深度研究</title>
+<style>
+  :root{
+    --indigo:#4F46E5;
+    --indigo-700:#4338CA;
+    --indigo-50:#EEF2FF;
+    --emerald:#10B981;
+    --emerald-700:#059669;
+    --emerald-50:#ECFDF5;
+    --ink:#0F172A;
+    --ink-soft:#475569;
+    --ink-faint:#94A3B8;
+    --line:#E2E8F0;
+    --bg:#F8FAFC;
+    --card:#FFFFFF;
+    --amber:#F59E0B;
+    --rose:#F43F5E;
+    --shadow:0 1px 3px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06);
+    --shadow-lg:0 4px 12px rgba(15,23,42,.08),0 20px 48px rgba(15,23,42,.10);
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--indigo);text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);
+    backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;gap:18px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;white-space:nowrap}
+  .brand .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--emerald))}
+  .nav-links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+  .nav-links a{
+    font-size:12.5px;color:var(--ink-soft);padding:7px 11px;border-radius:9px;white-space:nowrap;
+  }
+  .nav-links a:hover{background:var(--indigo-50);color:var(--indigo-700)}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(1200px 500px at 85% -10%,rgba(16,185,129,.14),transparent 60%),
+      radial-gradient(900px 500px at 10% 0%,rgba(79,70,229,.16),transparent 55%),
+      #0B1020;
+    color:#fff;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:48px;padding:72px 0 64px;align-items:center;
+  }
+  .tag-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+  .tag{
+    font-size:12px;font-weight:700;letter-spacing:.3px;padding:6px 12px;border-radius:999px;
+    background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);color:#C7D2FE;
+  }
+  .tag.em{color:#A7F3D0;border-color:rgba(16,185,129,.35)}
+  h1.hero-title{font-size:40px;line-height:1.18;font-weight:850;letter-spacing:-.5px;margin-bottom:18px}
+  h1.hero-title .grad{background:linear-gradient(100deg,#A5B4FC,#6EE7B7);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-sub{color:#CBD5E1;font-size:16px;max-width:560px;margin-bottom:30px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:13px 22px;border-radius:12px;
+  }
+  .btn-primary{background:linear-gradient(135deg,var(--indigo),var(--indigo-700));color:#fff;box-shadow:0 10px 30px rgba(79,70,229,.35)}
+  .btn-ghost{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.20);color:#E2E8F0}
+
+  .hero-card{
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:20px;
+    padding:26px;backdrop-filter:blur(8px);
+  }
+  .hero-card h3{font-size:14px;color:#A5B4FC;font-weight:800;letter-spacing:.4px;margin-bottom:16px;text-transform:uppercase}
+  .hstat{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px dashed rgba(255,255,255,.12)}
+  .hstat:last-child{border-bottom:none}
+  .hstat .v{font-size:24px;font-weight:850;color:#fff}
+  .hstat .v em{font-style:normal;font-size:13px;color:#6EE7B7;margin-left:4px}
+  .hstat .k{font-size:13px;color:#94A3B8}
+
+  /* ---------- SECTION ---------- */
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .sec-head{margin-bottom:34px}
+  .sec-kicker{
+    display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--indigo-700);background:var(--indigo-50);padding:6px 12px;border-radius:999px;margin-bottom:14px;
+  }
+  .sec-kicker .n{color:var(--emerald-700)}
+  h2.sec-title{font-size:30px;font-weight:850;letter-spacing:-.4px}
+  .sec-desc{margin-top:12px;color:var(--ink-soft);font-size:15.5px;max-width:820px}
+
+  /* ---------- LEVEL-1 DIRECTORY (全部章节统一为一级目录：放大目录标签"01 执行摘要"，标题文字统一 20px) ---------- */
+  .sec-head.l1{border-top:3px solid var(--indigo);padding-top:22px;margin-top:6px}
+  .sec-head.l1 .sec-kicker{
+    font-size:22px;font-weight:800;letter-spacing:.5px;text-transform:none;
+    color:var(--indigo-700);background:var(--indigo-50);padding:8px 18px;border-radius:12px;margin-bottom:16px;
+  }
+  .sec-head.l1 .sec-kicker .n{font-size:26px;color:var(--indigo);font-weight:900;margin-right:4px}
+  .sec-head.l1 .sec-title{font-size:20px;font-weight:800;letter-spacing:-.2px;margin-top:2px}
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .card .ic{
+    width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:14px;
+    background:var(--indigo-50);color:var(--indigo-700);
+  }
+  .card.em .ic{background:var(--emerald-50);color:var(--emerald-700)}
+  .card h3{font-size:17px;font-weight:800;margin-bottom:8px}
+  .card p{font-size:14px;color:var(--ink-soft)}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;margin-top:12px}
+  .pill.ind{background:var(--indigo-50);color:var(--indigo-700)}
+  .pill.em{background:var(--emerald-50);color:var(--emerald-700)}
+
+  /* KPI strip */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+  .kpi .v{font-size:28px;font-weight:850;letter-spacing:-.5px;color:var(--indigo-700)}
+  .kpi .v em{font-style:normal;font-size:14px;color:var(--emerald-700);margin-left:3px}
+  .kpi .k{font-size:13px;color:var(--ink-soft);margin-top:6px}
+  .kpi .src{font-size:11px;color:var(--ink-faint);margin-top:8px}
+
+  /* ---------- EXEC SUMMARY ---------- */
+  .exec-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:start}
+  .verdict{background:linear-gradient(135deg,#EEF2FF,#ECFDF5);border:1px solid #E0E7FF;border-radius:var(--radius);padding:26px}
+  .verdict h3{font-size:18px;font-weight:850;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .verdict ul{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .verdict li{display:flex;gap:12px;font-size:14.5px;color:var(--ink-soft)}
+  .verdict li b{color:var(--ink)}
+  .verdict .chk{flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--emerald);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:2px}
+  .takeaways{display:flex;flex-direction:column;gap:14px}
+  .take{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--indigo);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+  .take.em{border-left-color:var(--emerald)}
+  .take .t{font-size:14px;font-weight:800;margin-bottom:4px}
+  .take .d{font-size:13px;color:var(--ink-soft)}
+
+  /* ---------- CHARTS ---------- */
+  .chart-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px 24px 18px;box-shadow:var(--shadow)}
+  .chart-card h3{font-size:16px;font-weight:800;margin-bottom:4px}
+  .chart-card .cap{font-size:12.5px;color:var(--ink-faint);margin-bottom:14px}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--ink-soft)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:14px;height:4px;border-radius:2px;display:inline-block}
+  .legend i.dash{background:none;border-top:3px dashed var(--indigo);height:0}
+
+  /* ---------- QUADRANT ---------- */
+  .quad-wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:start}
+  .quad-box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+  .qlegend{display:flex;flex-direction:column;gap:12px}
+  .qitem{display:flex;gap:12px;align-items:flex-start;font-size:13px}
+  .qitem .b{width:12px;height:12px;border-radius:50%;flex:0 0 12px;margin-top:4px}
+  .qitem b{font-weight:800}
+  .qitem span{color:var(--ink-soft)}
+
+  /* ---------- TABLE ---------- */
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:760px}
+  thead th{background:var(--indigo-50);color:var(--indigo-700);text-align:left;font-weight:800;padding:13px 16px;white-space:nowrap}
+  tbody td{padding:12px 16px;border-top:1px solid var(--line);color:var(--ink-soft);vertical-align:top}
+  tbody tr:hover{background:#FBFCFE}
+  .mini-tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
+  .mini-tbl thead th{background:var(--indigo-50);color:var(--indigo-700);text-align:left;font-weight:800;padding:9px 10px;white-space:nowrap}
+  .mini-tbl tbody td{padding:8px 10px;border-top:1px solid var(--line);color:var(--ink-soft);vertical-align:middle}
+  .mini-tbl tbody tr:hover{background:#FBFCFE}
+  td b{color:var(--ink)}
+  .badge{font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .b-lead{background:#E0E7FF;color:#3730A3}
+  .b-chal{background:var(--emerald-50);color:var(--emerald-700)}
+  .b-nich{background:#FEF3C7;color:#B45309}
+  .b-foll{background:#F1F5F9;color:#475569}
+
+  /* ---------- MONETIZATION ---------- */
+  .mono{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .mono-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .mono-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--indigo)}
+  .mono-card.em::before{background:var(--emerald)}
+  .mono-card .h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .mono-card .h .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:18px;background:var(--indigo-50);color:var(--indigo-700)}
+  .mono-card.em .h .ic{background:var(--emerald-50);color:var(--emerald-700)}
+  .mono-card h3{font-size:16.5px;font-weight:850}
+  .mono-card .sub{font-size:12px;color:var(--ink-faint);margin-top:2px}
+  .mono-card p{font-size:13.5px;color:var(--ink-soft);margin-top:10px}
+  .mono-metric{display:flex;gap:18px;margin-top:14px;flex-wrap:wrap}
+  .mono-metric div{font-size:12px;color:var(--ink-faint)}
+  .mono-metric div b{display:block;font-size:17px;color:var(--ink);font-weight:850;margin-top:2px}
+  .est{font-size:11px;color:var(--amber);font-weight:700}
+
+  /* ---------- SWOT ---------- */
+  .swot{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .swot-card{border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .swot-card.s{background:linear-gradient(160deg,#ECFDF5,#fff)}
+  .swot-card.w{background:linear-gradient(160deg,#FEF2F2,#fff)}
+  .swot-card.o{background:linear-gradient(160deg,#EEF2FF,#fff)}
+  .swot-card.t{background:linear-gradient(160deg,#FFFBEB,#fff)}
+  .swot-card h3{font-size:16px;font-weight:850;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+  .swot-card ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .swot-card li{font-size:13.5px;color:var(--ink-soft);padding-left:16px;position:relative}
+  .swot-card li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%}
+  .swot-card.s li::before{background:var(--emerald)}
+  .swot-card.w li::before{background:var(--rose)}
+  .swot-card.o li::before{background:var(--indigo)}
+  .swot-card.t li::before{background:var(--amber)}
+
+  /* ---------- ROADMAP ---------- */
+  .road{position:relative;padding-left:26px;margin-top:10px}
+  .road::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--indigo),var(--emerald))}
+  .rstep{position:relative;padding:0 0 26px 0}
+  .rstep::before{content:"";position:absolute;left:-26px;top:4px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--indigo)}
+  .rstep.e::before{border-color:var(--emerald)}
+  .rstep .yr{font-size:12px;font-weight:800;color:var(--indigo-700);letter-spacing:.5px}
+  .rstep h4{font-size:15.5px;font-weight:850;margin:3px 0 5px}
+  .rstep p{font-size:13.5px;color:var(--ink-soft)}
+
+  /* ---------- CUSTOMERS ---------- */
+  .cust{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .cust-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .cust-card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+  .cust-card h4{font-size:15px;font-weight:850}
+  .cust-card .cat{font-size:11px;font-weight:700;color:var(--emerald-700);background:var(--emerald-50);padding:3px 8px;border-radius:999px;white-space:nowrap}
+  .cust-card .meta{font-size:12px;color:var(--ink-faint);margin-bottom:8px}
+  .cust-card p{font-size:12.8px;color:var(--ink-soft)}
+
+  /* ---------- TARGETS (目标客户与公海) ---------- */
+  .tier-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .tier{display:inline-block;font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;white-space:nowrap}
+  .t-green{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0}
+  .t-blue{background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE}
+  .t-red{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA}
+  .t-gray{background:#F1F5F9;color:#475569;border:1px solid #E2E8F0}
+  .tier-overview{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}
+  .tier-stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .tier-stat .v{font-size:30px;font-weight:850;letter-spacing:-.5px}
+  .tier-stat .v em{font-style:normal;font-size:14px;margin-left:3px}
+  .tier-stat .k{font-size:12.5px;color:var(--ink-soft);margin-top:6px}
+  .blk-title{font-size:19px;font-weight:850;margin:30px 0 14px;padding-left:12px;border-left:4px solid var(--indigo)}
+  .vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .vcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .vcard h4{font-size:15px;font-weight:850;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .vcard .vsub{font-size:11.5px;color:var(--ink-faint);margin-bottom:10px}
+  .vcard p{font-size:12.8px;color:var(--ink-soft);margin-bottom:8px}
+  .vcard .row{font-size:12px;color:var(--ink-soft);padding:4px 0;border-top:1px dashed var(--line)}
+  .acts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .act{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--indigo);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+  .act .n{font-size:14px;font-weight:850;color:var(--indigo-700);flex:0 0 22px}
+  .act .c{font-size:13px;color:var(--ink-soft)}
+  .act .c b{color:var(--ink)}
+  .risk{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:6px}
+  .risk-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .risk-card h4{font-size:14px;font-weight:800;margin-bottom:6px;color:var(--rose)}
+  .risk-card p{font-size:12.5px;color:var(--ink-soft)}
+  .risk-card b{color:var(--ink)}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:#0B1020;color:#CBD5E1;padding:54px 0 40px}
+  footer h3{color:#fff;font-size:16px;font-weight:800;margin-bottom:6px}
+  footer .fsub{font-size:12.5px;color:#64748B;margin-bottom:24px}
+  /* ---------- 配套资料下载卡 ---------- */
+  .dl-card{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#1E1B4B,#312E81);border:1px solid #4338CA;border-radius:14px;padding:18px 20px;margin:26px 0 10px}
+  .dl-ico{font-size:30px;line-height:1;flex:0 0 auto}
+  .dl-body{flex:1;min-width:0}
+  .dl-title{color:#fff;font-weight:800;font-size:15px}
+  .dl-sub{color:#C7D2FE;font-size:12.5px;margin-top:3px}
+  .dl-btn{display:inline-block;background:var(--emerald);color:#04231A;font-weight:800;font-size:13px;padding:10px 18px;border-radius:10px;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+  .dl-btn:hover{background:#34D399}
+  .src-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 28px}
+  .src{font-size:12px;color:#94A3B8;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;gap:8px}
+  .src .num{color:var(--emerald);font-weight:700;flex:0 0 22px}
+  .src a{color:#A5B4FC;word-break:break-all}
+  .disclaimer{margin-top:28px;font-size:11.5px;color:#475569;line-height:1.7}
+  .foot-note{margin-top:18px;font-size:11px;color:#475569}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .hero-grid,.exec-grid,.quad-wrap,.g4,.g3,.cust,.mono,.swot,.kpis,.src-grid,.tier-overview,.vgrid,.acts,.risk{grid-template-columns:1fr!important}
+    .g2,.qlegend{grid-template-columns:1fr}
+    h1.hero-title{font-size:30px}
+    .sec-head.l1 .sec-kicker{font-size:18px}
+    .sec-head.l1 .sec-kicker .n{font-size:20px}
+    .sec-head.l1 .sec-title{font-size:18px}
+    .nav-links{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="wrap nav-inner">
+    <div class="brand"><span class="dot"></span>无影 · GPU 需求市场研究</div>
+    <div class="nav-links">
+      <a href="#exec">执行摘要</a>
+      <a href="#readings">核心读数</a>
+      <a href="#market">市场曲线</a>
+      <a href="#comp">竞争象限</a>
+      <a href="#mono">变现模式</a>
+      <a href="#unit">单位经济</a>
+      <a href="#swot">SWOT</a>
+      <a href="#road">趋势展望</a>
+      <a href="#customers">客户画像</a>
+      <a href="#targets">目标客户与公海</a>
+      <a href="#sources">来源清单</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="tag-row">
+        <span class="tag">DaaS / 云桌面</span>
+        <span class="tag em">GPU 算力即服务</span>
+        <span class="tag">Agent Infra</span>
+        <span class="tag">2026.08</span>
+      </div>
+      <h1 class="hero-title">阿里无影云电脑<br><span class="grad">GPU 需求市场</span>的商业模式解构</h1>
+      <p class="hero-sub">从具身智能数据采集到 AI 科研算力，GPU 云桌面正成为无影增速最快的需求引擎。本报告基于公开财报、行业研究与客户访谈，拆解其市场规模、竞争格局与四类变现路径。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#exec">▸ 阅读核心结论</a>
+        <a class="btn btn-ghost" href="#sources">查看 28 个数据来源</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Key Readings · 2025–2026</h3>
+      <div class="hstat"><div class="v">200<em>万+</em></div><div class="k">无影累计用户（2025）</div></div>
+      <div class="hstat"><div class="v">100<em>万+</em></div><div class="k">日活云桌面（2025 云栖）</div></div>
+      <div class="hstat"><div class="v">1581<em>亿</em></div><div class="k">阿里云智能集团 FY2026 收入</div></div>
+      <div class="hstat"><div class="v">30<em>%</em></div><div class="k">阿里云 AI 相关收入占比</div></div>
+      <div class="hstat"><div class="v">36.8<em>%</em></div><div class="k">具身数据市场 CAGR</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 1. EXEC SUMMARY ============ -->
+<section id="exec">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker l1"><span class="n">01</span> 执行摘要</span>
+      <h2 class="sec-title l1">核心结论：GPU 云桌面是 DaaS 的"第二增长曲线"</h2>
+      <p class="sec-desc l1">无影已从"办公替代"切入"算力消费"赛道。在具身智能、AI 科研、设计渲染三类高 GPU 负载场景驱动下，其商业模型正从低毛利的 seat 订阅，向高附加值的按需算力 + 模型差价（MaaS）迁移。</p>
+    </div>
+
+    <div class="exec-grid">
+      <div class="verdict reveal">
+        <h3>📌 我们判断的 5 件事</h3>
+        <ul>
+          <li><span class="chk">1</span><div><b>需求结构性上移。</b>无影用户已超 200 万、日活桌面破 100 万，但真正的增量来自 GPU 场景——具身研发、数据采集、AI 科研对独占算力的需求正在爆发。<a href="#sources">[S1][S2]</a></div></li>
+          <li><span class="chk">2</span><div><b>市场被严重低估。</b>Gartner 预测 DaaS 支出 2025 年 43 亿美元→2029 年 60 亿美元（CAGR 7.9%）；但 GPU 算力子集增速远超大盘，具身数据市场 CAGR 高达 36.8%。<a href="#sources">[S7][S9]</a></div></li>
+          <li><span class="chk">3</span><div><b>变现重心迁移。</b>无影连续三年入选 Gartner 魔力象限并首进"挑战者"，商业化路径从"企业席位"升级为"订阅 + 企业席位 + API/Token 用量 + 模型差价"四轮驱动。<a href="#sources">[S7]</a></div></li>
+          <li><span class="chk">4</span><div><b>阿里云 AI 引擎加持。</b>FY2026 云智能集团收入 1581 亿（+34%），AI 占比 30%，连续 11 季度三位数增长——为无影 GPU 场景提供底层算力与百炼 MaaS 弹药。<a href="#sources">[S3][S4]</a></div></li>
+          <li><span class="chk">5</span><div><b>客户即"卖水人"。</b>银河通用、光轮智能、千寻智能等具身头部既是算力消耗方，又催生数据采集"卖水"生意（真机遥操 500–1000 元/小时），形成飞轮。<a href="#sources">[S9][S11]</a></div></li>
+        </ul>
+      </div>
+
+      <div class="takeaways reveal">
+        <div class="take"><div class="t">机会窗口</div><div class="d">未来 18 个月是 GPU 云桌面抢占具身/AI 科研客户的黄金期，先发者可锁定量产级数据闭环。</div></div>
+        <div class="take em"><div class="t">最大风险</div><div class="d">GPU 供给与电价成本波动，以及华为云 Workspace 在政企信创市场的贴身竞争。</div></div>
+        <div class="take"><div class="t">投资视角</div><div class="d">关注"无影 + 百炼 MaaS + AgentBay"组合带来的 ARPU 提升，而非单纯 seat 数量。</div></div>
+        <div class="take em"><div class="t">行动建议</div><div class="d">按场景打包"算力+数据+模型"套餐，把 GPU 桌面从成本中心卖成生产力平台。</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. CORE READINGS ============ -->
+<section id="readings">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker"><span class="n">02</span> 核心读数</span>
+      <h2 class="sec-title">四类 GPU 高负载场景，构成需求基本盘</h2>
+      <p class="sec-desc">基于无影系列产品矩阵与场景化方案梳理，以下场景对独占 GPU、低延迟与弹性扩容最为敏感，是 GPU 云桌面付费意愿最强的客群。</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="card em reveal">
+        <div class="ic">🤖</div>
+        <h3>具身智能研发</h3>
+        <p>机器人/自动驾驶团队在云端运行仿真合成、遥操采集与模型训练。无影提供独占 GPU 池与远程图形工作站，避免本地机房建设。</p>
+        <span class="pill em">客户：银河通用 / 光轮智能 / 千寻智能</span>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🗄️</div>
+        <h3>数据采集与合成</h3>
+        <p>"卖水"模式：真机遥操 500–1000 元/小时，仿真合成按量计费。数据服务公司、舆情/竞品分析商是核心买家。<a href="#sources">[S9]</a></p>
+        <span class="pill ind">客户：市场研究 / 大数据服务公司</span>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🎨</div>
+        <h3>设计渲染 / 图形</h3>
+        <p>RTX 5880 图形工作站增强型 1115 元/月；智己汽车设计团队以 457 元/周租用 GPU 桌面跑渲染，成本仅为自购 50%。<a href="#sources">[S5][S8]</a></p>
+        <span class="pill ind">客户：车企设计 / 影视动画</span>
+      </div>
+      <div class="card em reveal">
+        <div class="ic">🔬</div>
+        <h3>AI 科研 / 大模型</h3>
+        <p>Qwen 镜像社区 + 7×24 常驻 Agent；AI 云超算顶配 4×RTX 5880、2 元/小时起，可跑 671B DeepSeek。<a href="#sources">[S6][S10]</a></p>
+        <span class="pill em">客户：高校 / 科研院所</span>
+      </div>
+      <div class="card reveal">
+        <div class="ic">📞</div>
+        <h3>智能呼叫中心</h3>
+        <p>ASR/TTS 小模型可 RTX 5880 私有化，4→32 卡按并发扩容；独占算力池相比公共云 API 限流，保障低延迟。<a href="#sources">[S8]</a></p>
+        <span class="pill ind">客户：客服 BPO / 金融电销</span>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🛡️</div>
+        <h3>安全办公 / 信创</h3>
+        <p>数据不落地 + 内网隔离，满足金融、政务合规。企业版时长包较电脑租赁成本仅 70%、自购 50%。<a href="#sources">[S8]</a></p>
+        <span class="pill ind">客户：金融 / 政务 / 多分支</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. MARKET CURVE ============ -->
+<section id="market">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker"><span class="n">03</span> 市场增长曲线</span>
+      <h2 class="sec-title">大盘 7.9%，但 GPU 子集跑出 36.8%</h2>
+      <p class="sec-desc">DaaS 整体稳健增长，而具身智能数据采集、公有云算力两个 GPU 强相关市场增速数倍于行业均值。无影背靠的阿里云智能集团收入同样高速扩张。</p>
+    </div>
+
+    <div class="kpis reveal">
+      <div class="kpi"><div class="v">$43→60<em>亿</em></div><div class="k">全球 DaaS 支出 2025→2029</div><div class="src">CAGR 7.9% · Gartner [S7]</div></div>
+      <div class="kpi"><div class="v">$1018→2144<em>亿</em></div><div class="k">中国公有云支出 2025→2029</div><div class="src">CAGR 23.4% · IDC [S6]</div></div>
+      <div class="kpi"><div class="v">$5.36→49.16<em>亿</em></div><div class="k">具身数据市场 2025→2032</div><div class="src">CAGR 36.8% · QYResearch [S9]</div></div>
+      <div class="kpi"><div class="v">1581<em>亿</em></div><div class="k">阿里云智能 FY2026 收入</div><div class="src">同比 +34% [S4]</div></div>
+    </div>
+
+    <div class="grid g2" style="margin-top:22px">
+      <!-- Chart 1 -->
+      <div class="chart-card reveal">
+        <h3>具身智能数据采集市场规模（亿美元）</h3>
+        <div class="cap">实线为公开披露值，虚线为按 CAGR 36.8% 的测算区间 · 来源 [S9]</div>
+        <svg viewBox="0 0 720 360" width="100%" role="img" aria-label="具身智能数据采集市场增长曲线">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(16,185,129,.22)"/><stop offset="100%" stop-color="rgba(16,185,129,0)"/>
+            </linearGradient>
+          </defs>
+          <!-- grid (linear scale y = 300 - 5.4 * value) -->
+          <g stroke="#E2E8F0" stroke-width="1">
+            <line x1="70" y1="30" x2="690" y2="30"/>
+            <line x1="70" y1="84" x2="690" y2="84"/>
+            <line x1="70" y1="138" x2="690" y2="138"/>
+            <line x1="70" y1="192" x2="690" y2="192"/>
+            <line x1="70" y1="246" x2="690" y2="246"/>
+            <line x1="70" y1="300" x2="690" y2="300"/>
+          </g>
+          <!-- y labels -->
+          <g font-size="11" fill="#94A3B8" text-anchor="end">
+            <text x="62" y="34">50</text>
+            <text x="62" y="88">40</text>
+            <text x="62" y="142">30</text>
+            <text x="62" y="196">20</text>
+            <text x="62" y="250">10</text>
+            <text x="62" y="304">0</text>
+          </g>
+          <!-- x labels -->
+          <g font-size="11" fill="#64748B" text-anchor="middle">
+            <text x="70" y="320">2025</text>
+            <text x="158.6" y="320">2026</text>
+            <text x="247.1" y="320">2027</text>
+            <text x="335.7" y="320">2028</text>
+            <text x="424.3" y="320">2029</text>
+            <text x="512.9" y="320">2030</text>
+            <text x="601.4" y="320">2031</text>
+            <text x="690" y="320">2032</text>
+          </g>
+          <!-- area -->
+          <polygon fill="url(#g1)" points="70,271.1 158.6,259.5 247.1,244.6 335.7,224.1 424.3,196.2 512.9,157.9 601.4,105.5 690,34.5 690,300 70,300"/>
+          <!-- real line -->
+          <polyline fill="none" stroke="#059669" stroke-width="3" points="70,271.1 158.6,259.5"/>
+          <!-- projected dashed -->
+          <polyline fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="7 6" points="158.6,259.5 247.1,244.6 335.7,224.1 424.3,196.2 512.9,157.9 601.4,105.5 690,34.5"/>
+          <!-- points -->
+          <g fill="#fff" stroke="#059669" stroke-width="2.5">
+            <circle cx="70" cy="271.1" r="4.5"/><circle cx="158.6" cy="259.5" r="4.5"/>
+            <circle cx="247.1" cy="244.6" r="3.5"/><circle cx="335.7" cy="224.1" r="3.5"/>
+            <circle cx="424.3" cy="196.2" r="3.5"/><circle cx="512.9" cy="157.9" r="3.5"/>
+            <circle cx="601.4" cy="105.5" r="3.5"/><circle cx="690" cy="34.5" r="3.5"/>
+          </g>
+          <!-- value labels -->
+          <g font-size="11" font-weight="700" fill="#047857">
+            <text x="70" y="261" text-anchor="middle">5.36</text>
+            <text x="158.6" y="249" text-anchor="middle">7.50</text>
+            <text x="690" y="24" text-anchor="end">49.16</text>
+          </g>
+        </svg>
+        <div class="legend">
+          <span><i style="background:#10B981"></i> 已披露（2025–2026）</span>
+          <span><i class="dash"></i> 测算区间（2027–2032）</span>
+        </div>
+      </div>
+
+      <!-- Chart 2 -->
+      <div class="chart-card reveal">
+        <h3>中国公有云支出（亿美元）</h3>
+        <div class="cap">IDC 基线 + CAGR 23.4% 测算 · 来源 [S6]</div>
+        <svg viewBox="0 0 720 360" width="100%" role="img" aria-label="中国公有云支出柱状图">
+          <g stroke="#E2E8F0" stroke-width="1">
+            <line x1="70" y1="30" x2="690" y2="30"/>
+            <line x1="70" y1="105" x2="690" y2="105"/>
+            <line x1="70" y1="180" x2="690" y2="180"/>
+            <line x1="70" y1="255" x2="690" y2="255"/>
+            <line x1="70" y1="300" x2="690" y2="300"/>
+          </g>
+          <g font-size="11" fill="#94A3B8" text-anchor="end">
+            <text x="62" y="34">2200</text>
+            <text x="62" y="109">1700</text>
+            <text x="62" y="184">1100</text>
+            <text x="62" y="259">600</text>
+            <text x="62" y="304">0</text>
+          </g>
+          <!-- bars: 2025=1018 2026=1256 2027=1549 2028=1911 2029=2144 -->
+          <g>
+            <rect x="85" y="175.1" width="70" height="124.9" rx="6" fill="#4F46E5"/>
+            <rect x="215" y="145.9" width="70" height="154.1" rx="6" fill="#5B54E8"/>
+            <rect x="345" y="109.9" width="70" height="190.1" rx="6" fill="#6D5EF0"/>
+            <rect x="475" y="65.5" width="70" height="234.5" rx="6" fill="#7C66F2"/>
+            <rect x="605" y="36.9" width="70" height="263.1" rx="6" fill="#10B981"/>
+          </g>
+          <g font-size="12" font-weight="700" fill="#334155" text-anchor="middle">
+            <text x="120" y="167">1018</text>
+            <text x="250" y="137">1256</text>
+            <text x="380" y="101">1549</text>
+            <text x="510" y="57">1911</text>
+            <text x="640" y="28" fill="#047857">2144</text>
+          </g>
+          <g font-size="11" fill="#64748B" text-anchor="middle">
+            <text x="120" y="320">2025</text>
+            <text x="250" y="320">2026</text>
+            <text x="380" y="320">2027</text>
+            <text x="510" y="320">2028</text>
+            <text x="640" y="320">2029</text>
+          </g>
+        </svg>
+        <div class="legend">
+          <span><i style="background:#4F46E5"></i> 阿里云所在赛道总盘</span>
+          <span><i style="background:#10B981"></i> 2029 预测</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. COMPETITIVE QUADRANT ============ -->
+<section id="comp">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker"><span class="n">04</span> 竞争象限与玩家对比</span>
+      <h2 class="sec-title">无影：挑战者，AI 能力逼近领导者</h2>
+      <p class="sec-desc">以"市场份额/规模"为横轴、"AI 与生态能力"为纵轴。无影在 AI 原生（AgentBay、百炼 MaaS、Qwen 生态）上已逼近领导者，但政企份额仍落后于华为云 Workspace。据 Canalys，2025 Q1 中国云基础设施市场阿里云以 33% 份额居首，华为云 18%、腾讯云 10%。<a href="#sources">[S15]</a></p>
+    </div>
+
+    <div class="quad-wrap">
+      <div class="quad-box reveal">
+        <svg viewBox="0 0 720 480" width="100%" role="img" aria-label="竞争象限图">
+          <!-- axes -->
+          <rect x="60" y="40" width="600" height="380" fill="#F8FAFC" stroke="#E2E8F0"/>
+          <line x1="360" y1="40" x2="360" y2="420" stroke="#CBD5E1" stroke-dasharray="5 5"/>
+          <line x1="60" y1="230" x2="660" y2="230" stroke="#CBD5E1" stroke-dasharray="5 5"/>
+          <!-- quadrant labels -->
+          <g font-size="12" font-weight="800" fill="#94A3B8">
+            <text x="70" y="58">利基 / 高 AI</text>
+            <text x="600" y="58" text-anchor="end">领导者</text>
+            <text x="70" y="414">追随者</text>
+            <text x="600" y="414" text-anchor="end">挑战者</text>
+          </g>
+          <!-- axis titles -->
+          <text x="360" y="448" text-anchor="middle" font-size="12" font-weight="700" fill="#475569">市场份额 / 规模 →</text>
+          <text x="20" y="230" font-size="12" font-weight="700" fill="#475569" transform="rotate(-90 20 230)" text-anchor="middle">AI / 生态能力 ↑</text>
+
+          <!-- bubbles: cx,cy,r,color,label -->
+          <!-- Leaders -->
+          <circle cx="585" cy="95" r="20" fill="#4F46E5" opacity=".85"/><text x="585" y="99" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">华Workspace</text>
+          <circle cx="618" cy="140" r="16" fill="#4F46E5" opacity=".7"/><text x="618" y="144" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">AWS</text>
+          <circle cx="560" cy="150" r="15" fill="#4F46E5" opacity=".7"/><text x="560" y="154" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">AZ-VD</text>
+          <circle cx="635" cy="100" r="13" fill="#4F46E5" opacity=".6"/><text x="635" y="104" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">Win365</text>
+          <!-- Challenger: 无影 -->
+          <circle cx="470" cy="120" r="26" fill="#10B981" stroke="#059669" stroke-width="2"/><text x="470" y="118" text-anchor="middle" font-size="11" fill="#fff" font-weight="800">无影</text><text x="470" y="131" text-anchor="middle" font-size="8" fill="#fff">Wuying</text>
+          <!-- Niche: 腾讯START / 邦彦 -->
+          <circle cx="200" cy="105" r="15" fill="#F59E0B" opacity=".85"/><text x="200" y="109" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">腾讯START</text>
+          <circle cx="150" cy="160" r="12" fill="#F59E0B" opacity=".7"/><text x="150" y="164" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">邦彦</text>
+          <!-- Followers: 移动云 / 天翼云 -->
+          <circle cx="180" cy="330" r="14" fill="#94A3B8" opacity=".8"/><text x="180" y="334" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">移动云</text>
+          <circle cx="260" cy="350" r="13" fill="#94A3B8" opacity=".7"/><text x="260" y="354" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">天翼云</text>
+        </svg>
+      </div>
+
+      <div class="qlegend reveal">
+        <div class="qitem"><span class="b" style="background:#4F46E5"></span><div><b>领导者（高份额·高 AI）</b><br><span>华为云 Workspace、AWS WorkSpaces、Azure Virtual Desktop、微软 Windows 365——政企与全球生态壁垒深。</span></div></div>
+        <div class="qitem"><span class="b" style="background:#10B981"></span><div><b>挑战者（中高份额·高 AI）</b><br><span>无影：AI 原生能力（AgentBay/百炼）领先，规模紧随华为云。</span></div></div>
+        <div class="qitem"><span class="b" style="background:#F59E0B"></span><div><b>利基（低份额·高 AI）</b><br><span>腾讯云 START（云游戏/图形）、邦彦云 PC——单点突破。</span></div></div>
+        <div class="qitem"><span class="b" style="background:#94A3B8"></span><div><b>追随者（低份额·低 AI）</b><br><span>移动云、天翼云——以渠道与国资背景为主。</span></div></div>
+      </div>
+    </div>
+
+    <!-- comparison table -->
+    <div class="tbl-wrap reveal" style="margin-top:22px">
+      <table>
+        <thead>
+          <tr><th>玩家</th><th>定位</th><th>GPU / 图形能力</th><th>典型定价</th><th>生态抓手</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>阿里无影</b></td>
+            <td><span class="badge b-chal">挑战者</span></td>
+            <td>RTX 5880 图形工作站、AI 云超算 4×5880、AgentBay</td>
+            <td>企业版 1115 元/月（RTX5880）；AI 超算 2 元/小时起 <a href="#sources">[S5][S10]</a></td>
+            <td>百炼 MaaS、Qwen、阿里云算力池</td>
+          </tr>
+          <tr>
+            <td><b>华为云 Workspace</b></td>
+            <td><span class="badge b-lead">领导者</span></td>
+            <td>鲲鹏+昇腾 GPU 桌面，信创适配强</td>
+            <td>按规格包年/包月，政企集采为主</td>
+            <td>鲲鹏/昇腾、鸿蒙、政企渠道</td>
+          </tr>
+          <tr>
+            <td><b>腾讯云（WorkBuddy/START）</b></td>
+            <td><span class="badge b-nich">利基</span></td>
+            <td>START 云游戏 GPU、渲染型桌面</td>
+            <td>游戏/图形场景按量</td>
+            <td>微信生态、内容/游戏</td>
+          </tr>
+          <tr>
+            <td><b>微软 Windows 365</b></td>
+            <td><span class="badge b-lead">领导者</span></td>
+            <td>云 PC，GPU 需 Business/Enterprise 档</td>
+            <td>$28–162 / 用户 / 月 <a href="#sources">[S13]</a></td>
+            <td>Microsoft 365、Copilot</td>
+          </tr>
+          <tr>
+            <td><b>AWS WorkSpaces</b></td>
+            <td><span class="badge b-lead">领导者</span></td>
+            <td>Graphics/GPU 套装（NVIDIA T4/ A10G）</td>
+            <td>$25–134 / 月 <a href="#sources">[S13]</a></td>
+            <td>AWS 全域服务</td>
+          </tr>
+          <tr>
+            <td><b>移动云 / 天翼云</b></td>
+            <td><span class="badge b-foll">追随者</span></td>
+            <td>通用云桌面，GPU 能力较弱</td>
+            <td>渠道集采价</td>
+            <td>运营商国企背景</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. MONETIZATION ============ -->
+<section id="mono">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker"><span class="n">05</span> 变现模式拆解</span>
+      <h2 class="sec-title">四轮驱动：从 seat 到算力到模型差价</h2>
+      <p class="sec-desc">无影的商业化已从单一订阅演化为四类叠加的收入结构，GPU 场景主要贡献后三类的高 ARPU 增量。</p>
+    </div>
+
+    <div class="mono">
+      <div class="mono-card reveal">
+        <div class="h"><div class="ic">🔁</div><div><h3>订阅制</h3><div class="sub">个人版 / 商业版 / 企业版</div></div></div>
+        <p>个人版按"核时"计费，商业版算力包较企业版低 30%（8 核 16G / 100 小时年付 999 元），企业版按时长包。是现金流底盘，但毛利相对薄。</p>
+        <div class="mono-metric">
+          <div>基础办公型<b>59 元 / 3 月</b></div>
+          <div>商业版折扣<b>−30%</b></div>
+        </div>
+        <span class="est">定价来源 [S5]</span>
+      </div>
+
+      <div class="mono-card em reveal">
+        <div class="h"><div class="ic">👥</div><div><h3>企业席位</h3><div class="sub">Seat / 时长包 / 安全 OA</div></div></div>
+        <p>面向多分支、外包、金融政务的规模化 seat 销售。企业版图形工作站增强型（RTX 5880，16 核 32G / 8G 显存）1115.28 元/月，是 GPU seat 主收入。<a href="#sources">[S5]</a></p>
+        <div class="mono-metric">
+          <div>GPU 增强型<b>1115 元 / 月</b></div>
+          <div>成本对比自购<b>−50%</b></div>
+        </div>
+        <span class="est">成本锚点 [S8]</span>
+      </div>
+
+      <div class="mono-card reveal">
+        <div class="h"><div class="ic">⚡</div><div><h3>API / Token 用量</h3><div class="sub">AI 云超算 · 按需</div></div></div>
+        <p>AI 云超算按 GPU 小时计费，顶配 4×RTX 5880、2 元/小时起，可跑 671B DeepSeek；呼叫中心按并发卡数（4→32 卡）弹性扩容。<a href="#sources">[S6][S10]</a></p>
+        <div class="mono-metric">
+          <div>起步价<b>2 元 / 小时</b></div>
+          <div>独占算力池<b>低延迟</b></div>
+        </div>
+        <span class="est">来源 [S6][S10]</span>
+      </div>
+
+      <div class="mono-card em reveal">
+        <div class="h"><div class="ic">🧠</div><div><h3>模型差价（MaaS）</h3><div class="sub">百炼平台 · 推理 API</div></div></div>
+        <p>在 GPU 算力之上叠加百炼大模型推理服务，对 Token/调用加价。阿里云 AI 相关收入占比已达 30%，连续 11 季度三位数增长，是最高毛利层。<a href="#sources">[S3]</a></p>
+        <div class="mono-metric">
+          <div>AI 收入占比<b>30%</b></div>
+          <div>增长连续性<b>11 季度</b></div>
+        </div>
+        <span class="est">来源 [S3]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. UNIT ECONOMICS ============ -->
+<section id="unit">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker"><span class="n">06</span> 单位经济与挑战</span>
+      <h2 class="sec-title">单卡 GPU 桌面的账，怎么算才赚钱</h2>
+      <p class="sec-desc">以下为单位经济测算（标注"估算"），用于说明 GPU 云桌面的盈利敏感点；真实成本受电价、GPU 利用率与折旧周期影响。</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="card reveal">
+        <div class="ic">💰</div>
+        <h3>收入侧</h3>
+        <p>RTX 5880 增强型企业版 1115 元/月/席；若按 2 元/小时满负荷出租，单卡月收入可达 ~1440 元（估算）。叠加 MaaS 推理差价后 ARPU 进一步抬升。</p>
+        <span class="pill ind">估算 · 非公开披露</span>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🔌</div>
+        <h3>成本侧</h3>
+        <p>单卡硬件折旧（按 3 年）+ 电费 + 带宽 + 运维，约占收入 45–60%（估算）。利用率是生命线：从 40% 提升到 70%，单位毛利可改善 15–20pct。</p>
+        <span class="pill ind">估算 · 敏感性高</span>
+      </div>
+      <div class="card em reveal">
+        <div class="ic">📈</div>
+        <h3>毛利与杠杆</h3>
+        <p>GPU 桌面毛利估算 40–55%，远高于纯办公 seat；MaaS 模型差价层毛利可达 60%+（估算）。规模越大、利用率越高，单位成本越低。</p>
+        <span class="pill em">估算 · 待财报验证</span>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:20px">
+      <div class="card reveal">
+        <div class="ic">⚠️</div>
+        <h3>核心挑战</h3>
+        <p style="margin-top:6px">
+          • <b>GPU 供给与电价</b>：算力扩缩容受制于显卡采购与能耗成本波动。<br>
+          • <b>利用率管理</b>：独占算力池闲置即亏损，需调度算法提效。<br>
+          • <b>信创替代压力</b>：华为云 Workspace 在政企贴身竞争。<br>
+          • <b>客户留存</b>：中小 seat 用户黏性弱，需向"算力+模型"升舱。<br>
+          • <b>合规边界</b>：数据采集涉及隐私与跨境，需安全围栏（AgentBay）。
+        </p>
+      </div>
+      <div class="card em reveal">
+        <div class="ic">🛡️</div>
+        <h3>护城河要素</h3>
+        <p style="margin-top:6px">
+          • <b>算力池规模</b>：背靠阿里云 FY2026 收入 1581 亿的资本开支。<br>
+          • <b>模型闭环</b>：百炼 MaaS + Qwen 生态形成"算力→模型"差价。<br>
+          • <b>Agent 原生</b>：AgentBay 自进化引擎、记忆管理、安全围栏。<br>
+          • <b>场景套餐</b>：具身/数采/科研打包，提升切换成本。<br>
+          • <b>客户飞轮</b>：阿里战略投资宇树、自变量，绑定头部需求。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. SWOT ============ -->
+<section id="swot">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker"><span class="n">07</span> SWOT 分析</span>
+      <h2 class="sec-title">无影 GPU 业务的攻守势</h2>
+    </div>
+    <div class="swot">
+      <div class="swot-card s reveal">
+        <h3>💪 优势 Strengths</h3>
+        <ul>
+          <li>背靠阿里云，GPU 供给与资本开支充足</li>
+          <li>AI 原生能力领先（AgentBay、百炼、Qwen）</li>
+          <li>产品矩阵完整，从办公到 4×5880 超算全覆盖</li>
+          <li>已入选 Gartner 魔力象限"挑战者"</li>
+        </ul>
+      </div>
+      <div class="swot-card w reveal">
+        <h3>🔧 劣势 Weaknesses</h3>
+        <ul>
+          <li>政企/信创市场份额落后于华为云 Workspace</li>
+          <li>GPU 桌面单位经济依赖高利用率，波动大</li>
+          <li>中小 seat 用户黏性弱、易价格敏感</li>
+          <li>真实 GPU 毛利缺乏公开披露，透明度低</li>
+        </ul>
+      </div>
+      <div class="swot-card o reveal">
+        <h3>🚀 机会 Opportunities</h3>
+        <ul>
+          <li>具身智能数据市场 CAGR 36.8%，催生海量算力</li>
+          <li>AI 科研/大模型训练常态化，7×24 算力需求</li>
+          <li>数据采集"卖水"模式带来长尾中小企业</li>
+          <li>模型差价（MaaS）打开高毛利第二曲线</li>
+        </ul>
+      </div>
+      <div class="swot-card t reveal">
+        <h3>🌩️ 威胁 Threats</h3>
+        <ul>
+          <li>华为云在信创/政企的渠道与生态挤压</li>
+          <li>GPU 采购与电价成本上行压缩毛利</li>
+          <li>国际厂商（微软/AWS）高端云 PC 降维</li>
+          <li>数据合规与跨境监管收紧</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. ROADMAP ============ -->
+<section id="road">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker"><span class="n">08</span> 趋势展望</span>
+      <h2 class="sec-title">未来 36 个月的三波浪潮</h2>
+      <p class="sec-desc">GPU 云桌面的需求曲线将由"具身数据爆发 → Agent 原生普及 → 模型差价规模化"逐级递进。</p>
+    </div>
+    <div class="road">
+      <div class="rstep e reveal">
+        <div class="yr">2026 H2</div>
+        <h4>具身数据基础设施年</h4>
+        <p>银河通用、光轮、千寻等头部进入量产数据闭环，真机遥操 + 仿真合成拉动独占 GPU 池需求；无影"算力+数据"套餐成型。</p>
+      </div>
+      <div class="rstep reveal">
+        <div class="yr">2027</div>
+        <h4>Agent 原生云桌面普及</h4>
+        <p>AgentBay 自进化引擎成熟，7×24 常驻 Agent 成为标配，桌面从"被人用"转为"被 Agent 用"，算力消耗结构性抬升。</p>
+      </div>
+      <div class="rstep e reveal">
+        <div class="yr">2028+</div>
+        <h4>模型差价成为主收入</h4>
+        <p>百炼 MaaS 与无影桌面深度耦合，Token/推理差价占比超越 seat 订阅，ARPU 与毛利双升，打开估值想象空间。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. CUSTOMERS ============ -->
+<section id="customers">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker l1"><span class="n">09</span> 谁在用无影（客户画像）</span>
+      <h2 class="sec-title l1">谁在消耗无影的 GPU？具身与数采头部清单</h2>
+      <p class="sec-desc l1">以下为公开报道中具身智能 / 数据采集方向的代表性企业，是无影 GPU 云桌面的高价值目标客群（信息来自天眼查、证券时报、搜狐等公开渠道）。</p>
+    </div>
+
+    <div class="cust">
+      <div class="cust-card reveal">
+        <div class="top"><h4>银河通用</h4><span class="cat">具身 · 头部</span></div>
+        <div class="meta">估值约 210 亿 · 25 亿融资 · 国家大基金三期出手 [S11]</div>
+        <p>通用机器人研发，对仿真合成与模型训练算力需求巨大，是独占 GPU 池的典型消耗方。</p>
+      </div>
+      <div class="cust-card reveal">
+        <div class="top"><h4>光轮智能</h4><span class="cat">数据 · 卖水</span></div>
+        <div class="meta">估值约 150 亿 · B 轮 10 亿 · 2026 Q1 订单 5.5 亿 [S12]</div>
+        <p>合成数据服务商，真机遥操与仿真数据是核心产品，直接拉动数据采集场景 GPU 需求。</p>
+      </div>
+      <div class="cust-card reveal">
+        <div class="top"><h4>千寻智能</h4><span class="cat">具身 · 数据</span></div>
+        <div class="meta">30 亿融资 · 累计 20 万小时训练数据 [S11]</div>
+        <p>具身智能研发，海量遥操数据标注与训练，对弹性 GPU 算力与时长包需求强。</p>
+      </div>
+      <div class="cust-card reveal">
+        <div class="top"><h4>星海图</h4><span class="cat">具身 · 头部</span></div>
+        <div class="meta">A+++ 轮 · 30 亿融资 [S11]</div>
+        <p>具身基础模型公司，训练与推理双高负载，是 AI 云超算与图形工作站的目标客户。</p>
+      </div>
+      <div class="cust-card reveal">
+        <div class="top"><h4>觅蜂科技</h4><span class="cat">数据 · 分拆</span></div>
+        <div class="meta">智元机器人分拆 · 天使 + 数亿 [S12]</div>
+        <p>聚焦数据采集与标注，轻量但高频的 GPU 桌面需求，适合商业版算力包模式。</p>
+      </div>
+      <div class="cust-card reveal">
+        <div class="top"><h4>自变量 / 宇树等</h4><span class="cat">阿里系绑定</span></div>
+        <div class="meta">阿里战略投资宇树、自变量 [S14]</div>
+        <p>阿里通过战略投资锁定头部具身需求，形成"投资—算力—模型"闭环飞轮。</p>
+      </div>
+      <div class="cust-card reveal">
+        <div class="top"><h4>智己汽车</h4><span class="cat">设计 · 渲染</span></div>
+        <div class="meta">RTX 5880 桌面 457 元/周 [S5][S8]</div>
+        <p>车企设计团队以周租 GPU 桌面跑渲染，成本仅为自购 50%，是图形场景标杆案例。</p>
+      </div>
+      <div class="cust-card reveal">
+        <div class="top"><h4>华师大云机房</h4><span class="cat">科研 · 教育</span></div>
+        <div class="meta">高校云教室 / AI 科研 [S8]</div>
+        <p>高校科研与教学场景，Qwen 镜像 + 常驻 Agent，是 AI 科研算力的长尾基本盘。</p>
+      </div>
+      <div class="cust-card reveal">
+        <div class="top"><h4>市场研究 / 大数据</h4><span class="cat">数采 · 长尾</span></div>
+        <div class="meta">竞品分析 / 舆情监测 [S8]</div>
+        <p>数据采集处理场景的中小企业群，按量 API + 商业版算力包即可覆盖。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. TARGET CUSTOMERS & PUBLIC POOL ============ -->
+<section id="targets">
+  <div class="wrap">
+    <div class="sec-head reveal l1">
+      <span class="sec-kicker"><span class="n">10</span> 目标客户与公海</span>
+      <h2 class="sec-title">谁该抢、谁被锁、哪里是蓝海</h2>
+      <p class="sec-desc">基于具身智能 / 数据采集 / AI 科研 / 设计渲染 / 智能呼叫五大 GPU 高负载场景，结合华为云 CloudRobo、腾讯云 Tairos 的公开生态绑定，对目标客群做"归属分层 + 公海标注"。<b style="color:var(--ink)">🟢 已落地 · 🔵 关联可争取 · 🔴 竞品锁定 · ⚪ 正面公海</b>。</p>
+    </div>
+
+    <div class="tier-legend reveal">
+      <span class="tier t-green">🟢 无影客户（已落地）</span>
+      <span class="tier t-blue">🔵 关联可争取（阿里投资/生态）</span>
+      <span class="tier t-red">🔴 竞品锁定（华为/腾讯）</span>
+      <span class="tier t-gray">⚪ 公海（正面争取）</span>
+    </div>
+
+    <div class="tier-overview reveal">
+      <div class="tier-stat"><div class="v" style="color:#059669">14<em>家</em></div><div class="k">🟢 无影已确认客户（含 GPU 场景 6 家）</div></div>
+      <div class="tier-stat"><div class="v" style="color:#1D4ED8">2<em>家</em></div><div class="k">🔵 关联可争取（阿里战略投资）</div></div>
+      <div class="tier-stat"><div class="v" style="color:#DC2626">16<em>+</em></div><div class="k">🔴 竞品锁定（华为 9+ / 腾讯 7+）</div></div>
+      <div class="tier-stat"><div class="v" style="color:#475569">50<em>+</em></div><div class="k">⚪ 公海（具身卖水人 + 5 大垂直）</div></div>
+    </div>
+
+    <!-- ① 归属详表 -->
+    <h3 class="blk-title reveal">① 客户归属详表</h3>
+    <div class="tbl-wrap reveal" style="margin-bottom:22px">
+      <table>
+        <thead><tr><th>归属</th><th>代表客户</th><th>场景</th><th>规模信号 / 锁定证据</th><th>无影切入点</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tier t-green">🟢 无影客户</span></td>
+            <td><b>智己汽车 · 上海亦我 · 特看科技 · 美腾思 · ONG&amp;ONG · 联通山东玩具设计</b>（GPU 场景 6 家）；其余 8 家为教育/办公/客服（华东师大、新康众、网讯、帕拉卡/火星时代、妙智、数禾、Lazada、EKS）<a href="#sources">[S17]</a></td>
+            <td>设计渲染 / 数字人直播 / BIM / 安全办公</td>
+            <td>智己以 RTX 5880 跑渲染；特看/美腾思 IT 成本 −30%；ONG&amp;ONG 海外 BIM；联通山东首例 GPU 无影文创（2026-07）</td>
+            <td>land-and-expand：数据安全模块 + 图形型增配 + 百炼 MaaS Token 抬 ARPU</td>
+          </tr>
+          <tr>
+            <td><span class="tier t-blue">🔵 关联可争取</span></td>
+            <td><b>宇树科技 · 自变量机器人</b><a href="#sources">[S14]</a></td>
+            <td>具身本体研发</td>
+            <td>阿里战略投资；宇树 IPO 注册获批、发行市值约 420 亿；自变量 A 轮、204 人参保</td>
+            <td>借投资关系 + 通义/百炼生态，推"本体厂研发 GPU 桌面 + 遥操数据"打包，最高优先转化</td>
+          </tr>
+          <tr>
+            <td><span class="tier t-red">🔴 竞品锁定</span></td>
+            <td><b>华为 CloudRobo</b>：优必选、亿嘉和、信捷、麟动、五八智能、凌云光、魔芯、上交、长城/东风/长安 <a href="#sources">[S18][S19]</a></td>
+            <td>具身全栈 / 智驾云</td>
+            <td>"赛力斯模式"联合开发+销售；昇腾生态深度绑定</td>
+            <td>不硬抢本体；争"桌面层/数据安全层"补位，等替换窗口</td>
+          </tr>
+          <tr>
+            <td><span class="tier t-red">🔴 竞品锁定</span></td>
+            <td><b>腾讯 Tairos/EaaS</b>：智元、帕西尼、RoboScience、灵初、灵生、元点、艾欧（自称合作 40+ 家具身企业）<a href="#sources">[S20][S21]</a></td>
+            <td>具身数据飞轮 / 云端 EaaS</td>
+            <td>COS/GooseFS 数据湖 + RDMA 星脉；"按机器人订阅"</td>
+            <td>非腾讯系本体与卖水人；推多平台并行 + 数据不出云</td>
+          </tr>
+          <tr>
+            <td><span class="tier t-gray">⚪ 公海</span></td>
+            <td><b>光轮智能 · 觅蜂科技 · 德塔智能 · 银河通用 · 星海图 · 千寻 · 跨维 · 云深处 · 众擎 · 无问智科</b></td>
+            <td>数据基建/仿真/具身大脑</td>
+            <td>光轮估值 150 亿、Q1 订单 5.5 亿；觅蜂天使+数亿；德塔近 5 亿天使；银河 210 亿、星海 200 亿 <a href="#sources">[S11][S12]</a></td>
+            <td>AI 云超算独占池 + 仿真合成 + 数据不落地；卖水人 GPU 消耗最持续</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ② 客户分析 -->
+    <h3 class="blk-title reveal">② 客户分析：卡位、契合度与布防</h3>
+    <div class="grid g2" style="margin-bottom:20px">
+      <div class="card reveal">
+        <div class="ic">🎯</div>
+        <h3>竞争格局卡位：无影 vs 华为 vs 腾讯</h3>
+        <p style="margin-top:6px">
+          • <b>无影</b>：GPU 云桌面 + 弹性算力池 + 数据安全，绑定浅、易替换但难做深。<br>
+          • <b>华为 CloudRobo</b>：具身全栈平台（数据/模型/部署），联合研发+销售，绑定深。<br>
+          • <b>腾讯 Tairos/EaaS</b>：AI 数字基座 + 服务化交付（按机器人订阅），数据湖+训练底座。<br>
+          <b>结论</b>：无影应打"<b>最强 GPU 桌面 + 数据不落地 + 多厂商中立</b>"差异化，尤其对"不想被单一云绑定"的客户（如光轮牵手西门子）是卖点。<a href="#sources">[S18][S20][S22]</a>
+        </p>
+      </div>
+      <div class="card em reveal">
+        <div class="ic">📊</div>
+        <h3>分场景：公海浓度 × GPU 消耗 × 契合度</h3>
+        <table class="mini-tbl">
+          <thead><tr><th>场景</th><th>公海浓度</th><th>GPU 消耗</th><th>契合度</th></tr></thead>
+          <tbody>
+            <tr><td>具身数据/仿真（卖水人）</td><td>★★★★★</td><td>极高</td><td>★★★★</td></tr>
+            <tr><td>具身本体研发</td><td>★★★</td><td>高</td><td>★★★</td></tr>
+            <tr><td>AI 制药（蓝海）</td><td>★★★★★</td><td>高</td><td>★★★★</td></tr>
+            <tr><td>BIM 设计院（蓝海）</td><td>★★★★★</td><td>中高</td><td>★★★★★</td></tr>
+            <tr><td>高校科研 GPU 桌面（精准公海）</td><td>★★★★★</td><td>中高</td><td>★★★★★</td></tr>
+            <tr><td>直播 / 数字人（被集成）</td><td>★★★★</td><td>中</td><td>★★★★</td></tr>
+            <tr><td>自动驾驶仿真</td><td>★★★★</td><td>极高</td><td>★★★</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="risk reveal" style="margin-bottom:18px">
+      <div class="risk-card"><h4>⚠ 单线程风险 1</h4><p>光轮"牵手西门子"——若西门子推自有云，无影或被旁路。<b>布防</b>：做"桌面层+数据安全"独立价值，强调多厂商中立。</p></div>
+      <div class="risk-card"><h4>⚠ 单线程风险 2</h4><p>智元（腾讯）、优必选（华为）等头部本体已锁。<b>布防</b>：转攻其生态链卖水人（觅蜂=智元分拆，反成无影公海）。</p></div>
+      <div class="risk-card"><h4>⚠ 单线程风险 3</h4><p>现有 🟢 客户多在教育/办公，GPU 标杆少。<b>布防</b>：把智己/上海亦我/特看做成 GPU 样板对外讲。</p></div>
+    </div>
+
+    <div class="verdict reveal" style="margin-bottom:26px">
+      <h3>📌 四个关键判断</h3>
+      <ul>
+        <li><span class="chk">1</span><div><b>卖水人 &gt; 本体厂。</b>数据/仿真公司（光轮、觅蜂、德塔）GPU 消耗更持续、绑定更浅，是本期 ROI 最高拓客对象。</div></li>
+        <li><span class="chk">2</span><div><b>高校 + BIM 是蓝海公海。</b>中原人工智能产业技术研究院明确采购"Web 桌面式 GPU 算力服务"，需求真实且未被独占——无影可正面吃下。<a href="#sources">[S27]</a></div></li>
+        <li><span class="chk">3</span><div><b>数字人走渠道。</b>下游 MCN/产业带是被集成场景，发展数字人 SaaS 厂商（特看、美腾思已是无影客户）为渠道伙伴，而非直接抢终端。</div></li>
+        <li><span class="chk">4</span><div><b>防华为信创替代。</b>政务/国企设计院有信创刚需，无影须准备"国产 GPU（如摩尔线程）+ 麒麟/统信"适配版本，否则 BIM 公海会被华为 Workspace 吃下。<a href="#sources">[S26]</a></div></li>
+      </ul>
+    </div>
+
+    <!-- ③ 公海垂直行业 -->
+    <h3 class="blk-title reveal">③ 公海目标客户深挖：5 大垂直行业</h3>
+    <div class="vgrid reveal" style="margin-bottom:24px">
+      <div class="vcard">
+        <h4>💊 AI 制药</h4>
+        <div class="vsub">算力军备竞赛 · 蓝海 <span class="tier t-gray">⚪ 公海</span></div>
+        <p>行业从"买 GPU"升级为"建 AI 工厂"，合规（患者数据/遗传资源）适配"数据不落地"。</p>
+        <div class="row"><b>代表</b>：英矽智能、晶泰、维亚生物、成都先导、康龙化成</div>
+        <div class="row"><b>切入点</b>：科研 GPU 云桌面 + 等保合规，避开华为"全栈 AI 工厂"正面竞争 <a href="#sources">[S25]</a></div>
+      </div>
+      <div class="vcard">
+        <h4>🏗️ BIM 建筑设计院</h4>
+        <div class="vsub">存量替代 + 信创 <span class="tier t-gray">⚪ 公海</span></div>
+        <p>图纸泄密风险、本地工作站贵、多地协同难；现多用赞奇/腾创云，可直接替代。</p>
+        <div class="row"><b>代表</b>：中建三局 BIM 中心（现用赞奇）、华建/华东院、省级设计院</div>
+        <div class="row"><b>切入点</b>：无影图形型 + 定制 BIM 镜像 + 国产 GPU 信创版 <a href="#sources">[S26]</a></div>
+      </div>
+      <div class="vcard">
+        <h4>🎓 高校科研 GPU 桌面</h4>
+        <div class="vsub">精准公海 <span class="tier t-gray">⚪ 公海</span></div>
+        <p>多所高校明确采购 GPU 算力；中原研究院直接要求"Web 桌面式 GPU 算力服务访问平台"。</p>
+        <div class="row"><b>代表</b>：中原人工智能产业技术研究院（320 万）、北航、黄山学院、南科大、江西师大</div>
+        <div class="row"><b>切入点</b>："云工开物"高校普惠 + 无影科研 GPU 桌面，一个标杆辐射全省 <a href="#sources">[S27]</a></div>
+      </div>
+      <div class="vcard">
+        <h4>🎥 直播 / 数字人下游</h4>
+        <div class="vsub">被集成渠道 <span class="tier t-blue">🔵 关联</span></div>
+        <p>2026 数字人直播市场破 920 亿，终端是 MCN/品牌自播/产业带；应发展 SaaS 厂商为渠道。</p>
+        <div class="row"><b>代表</b>：特看/美腾思（已用无影 5880）、通义星尘、硅语/随幻/即梦/一知</div>
+        <div class="row"><b>切入点</b>：无影 5880 GPU 桌面被集成，发展 10+ 数字人厂商为渠道 <a href="#sources">[S28]</a></div>
+      </div>
+      <div class="vcard">
+        <h4>🚗 自动驾驶仿真</h4>
+        <div class="vsub">物理 AI 先行 <span class="tier t-gray">⚪ 公海</span></div>
+        <p>智驾列"物理 AI 先行场景"，仿真算力海量（单量产项目数百~上千节点）。</p>
+        <div class="row"><b>代表</b>：五一视界（51World）、摩尔线程×五一视界、蔚来/小鹏/理想</div>
+        <div class="row"><b>切入点</b>："国产 GPU + 无影"切入仿真国产替代，避华为车 BU <a href="#sources">[S24]</a></div>
+      </div>
+      <div class="vcard">
+        <h4>🤖 具身数据卖水人</h4>
+        <div class="vsub">本期主战场 <span class="tier t-gray">⚪ 公海</span></div>
+        <p>真机遥操 + 仿真合成拉动独占 GPU 池；数据"卖水"模式绑定浅、消耗持续。</p>
+        <div class="row"><b>代表</b>：光轮、觅蜂、德塔、银河通用、星海图、千寻</div>
+        <div class="row"><b>切入点</b>：AI 云超算独占池 + 仿真渲染 + 数据治理云端算力 <a href="#sources">[S11][S12][S22]</a></div>
+      </div>
+    </div>
+
+    <!-- ④ 拓客行动 -->
+    <h3 class="blk-title reveal">④ 拓客行动建议（Top 8）</h3>
+    <div class="acts reveal">
+      <div class="act"><div class="n">1</div><div class="c"><b>最高优先转化 🔵 关联客户</b>：宇树、自变量——借阿里投资关系 30 天内完成无影方案 POC，做成"阿里系具身研发桌面"样板。</div></div>
+      <div class="act"><div class="n">2</div><div class="c"><b>抢占具身卖水人公海</b>：光轮、觅蜂、德塔——以"AI 云超算独占池 + 数据不落地"打差异化，本季各落 1 标杆。</div></div>
+      <div class="act"><div class="n">3</div><div class="c"><b>吃下高校科研 GPU 桌面</b>：以中原研究院"Web 桌面式 GPU"为模板，复制至 5+ 高校/研究院。</div></div>
+      <div class="act"><div class="n">4</div><div class="c"><b>BIM 设计院存量替代</b>：以联通山东文创样板为矛，经运营商/集成商复制至 10+ 设计院，备国产 GPU 信创版防华为。</div></div>
+      <div class="act"><div class="n">5</div><div class="c"><b>AI 制药蓝海切入</b>：推"科研 GPU 云桌面 + 等保合规"，主攻英矽智能、晶泰、头部 CRO。</div></div>
+      <div class="act"><div class="n">6</div><div class="c"><b>数字人走渠道</b>：发展 10+ 数字人 SaaS 厂商为无影 5880 被集成伙伴，不自建前台。</div></div>
+      <div class="act"><div class="n">7</div><div class="c"><b>防单线程</b>：每个 A 类客户建 ≥3 条关系线；对光轮重点防西门子生态旁路。</div></div>
+      <div class="act"><div class="n">8</div><div class="c"><b>竞品客户补位</b>：对华为/腾讯锁定的本体厂，推"桌面层 + 数据安全层"中立补位，等替换窗口。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER / SOURCES ============ -->
+<footer id="sources">
+  <div class="wrap">
+    <h3>📚 完整来源清单</h3>
+    <div class="fsub">本报告关键数据均来自以下公开渠道；凡推算/估算部分已在正文标注。访问日期截至 2026-08。</div>
+    <div class="src-grid">
+      <div class="src"><span class="num">[S1]</span><a href="https://www.eastmoney.com" target="_blank" rel="noopener">东方财富网（eastmoney）· 无影 2025 年用户超 200 万户（2026-05-03）</a></div>
+      <div class="src"><span class="num">[S2]</span><a href="https://www.cbinews.com" target="_blank" rel="noopener">电脑商情在线（cbinews）· 2025 云栖大会：无影日活桌面超 100 万、迭代 50 版、推出 AgentBay</a></div>
+      <div class="src"><span class="num">[S3]</span><a href="https://www.alibabagroup.com" target="_blank" rel="noopener">阿里巴巴集团 2026 财年 Q4 及全年财报（2026-05-13）· 云智能收入、AI 占比、连续 11 季三位数增长</a></div>
+      <div class="src"><span class="num">[S4]</span><a href="http://www.cet.com.cn" target="_blank" rel="noopener">中国经济网（cet.com.cn）· 阿里云智能集团 FY2026 收入 1581.32 亿元（+34%）</a></div>
+      <div class="src"><span class="num">[S5]</span><a href="https://developer.aliyun.com/ask/698790" target="_blank" rel="noopener">阿里云开发者社区 · 无影企业版定价（RTX 5880 增强型 1115.28 元/月、基础办公型 59 元/3 月）</a></div>
+      <div class="src"><span class="num">[S6]</span><a href="https://www.idc.com" target="_blank" rel="noopener">IDC · 中国公有云支出 2025 年 1018 亿美元 → 2029 年 2144 亿，CAGR 23.4%</a></div>
+      <div class="src"><span class="num">[S7]</span><a href="https://www.gartner.com" target="_blank" rel="noopener">Gartner · 全球 DaaS 支出 2025 年 43 亿美元 → 2029 年 60 亿，CAGR 7.9%；无影入选魔力象限"挑战者"（经钱江晚报/百度百家号报道）</a></div>
+      <div class="src"><span class="num">[S8]</span><a href="https://www.aliyun.com" target="_blank" rel="noopener">阿里云官网 / 无影企业版应用场景资料 · 8 大场景、成本仅为租赁 70%/自购 50%、智己汽车/华师大案例</a></div>
+      <div class="src"><span class="num">[S9]</span><a href="https://www.qianzhan.com" target="_blank" rel="noopener">前瞻/搜狐/腾讯网 · QYResearch 具身智能数据市场 5.36→49.16 亿美元（CAGR 36.8%）、真机数据 500–1000 元/小时</a></div>
+      <div class="src"><span class="num">[S10]</span><a href="https://www.ces.tech" target="_blank" rel="noopener">CES 2026 媒体报道 · 无影 AI 云超算顶配 4×RTX 5880、2 元/小时起、可跑 671B DeepSeek</a></div>
+      <div class="src"><span class="num">[S11]</span><a href="https://www.stcn.com" target="_blank" rel="noopener">证券时报（stcn.com）· 银河通用/星海图/千寻智能/自变量等具身头部融资与估值</a></div>
+      <div class="src"><span class="num">[S12]</span><a href="https://www.tianyancha.com" target="_blank" rel="noopener">天眼查 / 搜狐 · 光轮智能（估值 150 亿、B 轮 10 亿、Q1 订单 5.5 亿）、觅蜂科技（智元分拆）</a></div>
+      <div class="src"><span class="num">[S13]</span><a href="https://www.apps4rent.com" target="_blank" rel="noopener">国际云桌面定价对比（apps4rent / ashertech / tsplus）· Windows 365 $28–162、AWS WorkSpaces $25–134、AVD $25–40</a></div>
+      <div class="src"><span class="num">[S14]</span><a href="https://www.bjnews.com.cn" target="_blank" rel="noopener">新京报（bjnews）/ 与非网（eefocus）· 阿里战略投资宇树、自变量；西门子+阿里云+宇树工业 AI 三角</a></div>
+      <div class="src"><span class="num">[S15]</span><a href="https://www.eet-china.com" target="_blank" rel="noopener">电子工程专辑（eet-china.com）· Canalys 2025 Q1 中国云份额：阿里云 33%、华为云 18%、腾讯云 10%</a></div>
+      <div class="src"><span class="num">[S16]</span><a href="https://www.sohu.com" target="_blank" rel="noopener">搜狐科技 · 具身智能 2026 上半年融资 935 亿、头部企业数据规模与订单披露</a></div>
+      <div class="src"><span class="num">[S17]</span><a href="https://www.aliyun.com/activity/wuying/edse" target="_blank" rel="noopener">阿里云无影官方客户案例页 · 智己/上海亦我/特看/美腾思/ONG&amp;ONG/华东师大/新康众/网讯等 14 家（另据百度百科：南方电网、人民日报、浙商证券、康众汽配亦为公开客户）</a></div>
+      <div class="src"><span class="num">[S18]</span><a href="https://www.huaweicloud.com/ai/cloudrobo.html" target="_blank" rel="noopener">华为云 CloudRobo 具身生态 · 优必选/亿嘉和/信捷/麟动/五八智能/凌云光/魔芯/上交/长城东风长安（"赛力斯模式"）</a></div>
+      <div class="src"><span class="num">[S19]</span><a href="https://news.qq.com/rain/a/20260606A06JJC00" target="_blank" rel="noopener">华为云智能驾驶云 · 长城/东风日产/长安联合实践（2026-06）</a></div>
+      <div class="src"><span class="num">[S20]</span><a href="https://www.chinaz.com/2026/0720/1765993.shtml" target="_blank" rel="noopener">腾讯云具身白皮书 / Tairos · 智元/帕西尼/RoboScience/灵初/灵生/元点/艾欧；已合作 40+ 家具身企业（2026-07）</a></div>
+      <div class="src"><span class="num">[S21]</span><a href="https://new.qq.com/rain/a/20260716A08THH00" target="_blank" rel="noopener">腾讯 × RoboScience 行业首个云端 EaaS（按机器人订阅、HAI-ECB）（2026-07）</a></div>
+      <div class="src"><span class="num">[S22]</span><a href="https://c.m.163.com/news/a/L24Q66120514A0P8.html" target="_blank" rel="noopener">光轮智能 WAIC 物理 AI 新基建（SimFoundry/EgoSuite/RoboFinals）（2026-07）</a></div>
+      <div class="src"><span class="num">[S23]</span><a href="https://wap.hznet.tv/" target="_blank" rel="noopener">具身仿真/训练数据中心厂商（商汤/蔚来/宇树/字节等物理 AI 算力布局报道）</a></div>
+      <div class="src"><span class="num">[S24]</span><a href="https://www.toutiao.com/" target="_blank" rel="noopener">五一视界 / 物理 AI（IDC 报告、智驾仿真三类玩家；国产 GPU 仿真组合）（2026-07）</a></div>
+      <div class="src"><span class="num">[S25]</span><a href="https://www.zqrb.cn/" target="_blank" rel="noopener">AI 制药算力军备竞赛（礼来/罗氏 GPU 集群；英矽智能/晶泰/维亚/成都先导；华为+首芯分子平台）（2026-07）</a></div>
+      <div class="src"><span class="num">[S26]</span><a href="https://www.zanqicloud.com/" target="_blank" rel="noopener">BIM/设计云桌面（中建三局×赞奇、腾创云 TC-Cloud 信创、联通山东 GPU 无影文创、NVIDIA Parkhill）（2026-07）</a></div>
+      <div class="src"><span class="num">[S27]</span><a href="https://zfcg.henan.gov.cn/" target="_blank" rel="noopener">高校科研 GPU 采购（中原研究院 Web 桌面式 GPU 服务 320 万、北航 180 万、黄山学院 226 万、南科大、江西师大）（2026）</a></div>
+      <div class="src"><span class="num">[S28]</span><a href="https://so.html5.qq.com/" target="_blank" rel="noopener">直播/数字人（市场规模 920 亿、硅语/随幻/即梦/一知/智狐/讯飞/硅基/腾讯智影/商汤如影/京东言犀/阿里通义星尘）（2026）</a></div>
+    </div>
+
+    <div class="disclaimer">
+      免责声明：本报告由行业趋势研究代理基于公开信息整理，仅供产品与商业分析参考，不构成任何投资建议。文中"估算"标注的单位经济数据为依据公开定价与行业常识的测算，非阿里云官方披露，实际数值以公司财报与官方口径为准。市场预测基于第三方机构（Gartner / IDC / QYResearch）公开模型，存在偏差可能。引用请注明来源。
+    </div>
+    <div class="dl-card">
+      <div class="dl-ico">📥</div>
+      <div class="dl-body">
+        <div class="dl-title">配套资料下载：目标客户与公海客户工商信息表（Excel）</div>
+        <div class="dl-sub">16 家目标 / 公海 / 竞品客户工商信息（注册全称 · 总部城市 · 注册地 · 所属行业 · 法定代表人 · 统一社会信用代码 · 成立时间 · 注册资本）</div>
+      </div>
+      <a class="dl-btn" href="wuying-gpu-customers.csv" download>下载 .xlsx</a>
+    </div>
+
+    <div class="foot-note">阿里无影云电脑 · GPU 需求市场商业模式深度研究 · 生成于 2026-08-03 · 单文件 HTML 报告（内联 CSS/SVG）</div>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.12});
+    els.forEach(function(e){io.observe(e)});
+  })();
+
+  // active nav highlight
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+    var map = {};
+    links.forEach(function(l){ var id=l.getAttribute('href').slice(1); map[id]=l; });
+    var secs = Object.keys(map).map(function(id){return document.getElementById(id)}).filter(Boolean);
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          links.forEach(function(l){l.style.background='';l.style.color='';});
+          var a = map[en.target.id];
+          if(a){ a.style.background='var(--indigo-50)'; a.style.color='var(--indigo-700)'; }
+        }
+      });
+    },{rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(function(s){io.observe(s)});
+  })();
+</script>
+</body>
+</html>
