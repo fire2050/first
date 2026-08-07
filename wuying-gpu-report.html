@@ -269,6 +269,11 @@
   footer{background:#0B1020;color:#CBD5E1;padding:54px 0 40px}
   footer h3{color:#fff;font-size:16px;font-weight:800;margin-bottom:6px}
   footer .fsub{font-size:12.5px;color:#64748B;margin-bottom:24px}
+  footer .src-details{margin-bottom:24px}
+  footer .src-details summary{display:block;cursor:pointer;color:#fff;font-size:16px;font-weight:800;margin-bottom:6px;list-style:none;user-select:none}
+  footer .src-details summary::-webkit-details-marker{display:none}
+  footer .src-details summary::before{content:"\25B8  ";color:#A5B4FC;font-weight:700}
+  footer .src-details[open] summary::before{content:"\25BE  "}
   /* ---------- 配套资料下载卡 ---------- */
   .dl-card{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#1E1B4B,#312E81);border:1px solid #4338CA;border-radius:14px;padding:18px 20px;margin:26px 0 10px}
   .dl-ico{font-size:30px;line-height:1;flex:0 0 auto}
@@ -1237,7 +1242,8 @@
 <!-- ============ FOOTER / SOURCES ============ -->
 <footer id="sources">
   <div class="wrap">
-    <h3>📚 完整来源清单</h3>
+    <details class="src-details">
+      <summary>📚 完整来源清单（共 28 个数据来源 · 点击展开）</summary>
     <div class="fsub">本报告关键数据均来自以下公开渠道；凡推算/估算部分已在正文标注。访问日期截至 2026-08。</div>
     <div class="src-grid">
       <div class="src"><span class="num">[S1]</span><a href="https://www.eastmoney.com" target="_blank" rel="noopener">东方财富网（eastmoney）· 无影 2025 年用户超 200 万户（2026-05-03）</a></div>
@@ -1269,6 +1275,7 @@
       <div class="src"><span class="num">[S27]</span><a href="https://zfcg.henan.gov.cn/" target="_blank" rel="noopener">高校科研 GPU 采购（中原研究院 Web 桌面式 GPU 服务 320 万、北航 180 万、黄山学院 226 万、南科大、江西师大）（2026）</a></div>
       <div class="src"><span class="num">[S28]</span><a href="https://so.html5.qq.com/" target="_blank" rel="noopener">直播/数字人（市场规模 920 亿、硅语/随幻/即梦/一知/智狐/讯飞/硅基/腾讯智影/商汤如影/京东言犀/阿里通义星尘）（2026）</a></div>
     </div>
+    </details>
 
     <div class="disclaimer">
       免责声明：本报告由行业趋势研究代理基于公开信息整理，仅供产品与商业分析参考，不构成任何投资建议。文中"估算"标注的单位经济数据为依据公开定价与行业常识的测算，非阿里云官方披露，实际数值以公司财报与官方口径为准。市场预测基于第三方机构（Gartner / IDC / QYResearch）公开模型，存在偏差可能。引用请注明来源。
