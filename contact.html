@@ -318,6 +318,32 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .form-tip {
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 30px;
+        }
+
+        .form-submit-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            font-size: 17px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.35);
+        }
+
+        .form-note {
+            color: var(--text-secondary);
+            font-size: 13px;
+            opacity: 0.75;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -532,7 +558,7 @@
         <div class="contact-content">
             <div class="contact-info">
                 <h2>联系方式</h2>
-                <p>我们提供7×24小时在线咨询服务，随时响应您的需求。填写右侧表单，我们的专家将在24小时内与您联系。</p>
+                <p>我们提供7×24小时在线咨询服务，随时响应您的需求。点击右侧按钮填写官方在线咨询表单，我们的专家将在24小时内与您联系。</p>
                 
                 <div class="contact-item">
                     <div class="contact-item-icon">📞</div>
@@ -569,34 +595,9 @@
             
             <div class="contact-form">
                 <h2>在线咨询</h2>
-                <form>
-                    <div class="form-group">
-                        <label>姓名 *</label>
-                        <input type="text" placeholder="请输入您的姓名">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>公司名称 *</label>
-                        <input type="text" placeholder="请输入公司名称">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>联系电话 *</label>
-                        <input type="tel" placeholder="请输入联系电话">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>电子邮箱</label>
-                        <input type="email" placeholder="请输入电子邮箱">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>咨询内容 *</label>
-                        <textarea placeholder="请描述您的需求或问题"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">提交咨询</button>
-                </form>
+                <p class="form-tip">点击下方按钮，填写官方在线咨询表单，我们的专家将在 24 小时内与您联系。</p>
+                <a href="https://alidocs.dingtalk.com/notable/share/form/v01jP2lRYjEMa3MAO8g_2zAjZUq_69FIffy?source=link" target="_blank" rel="noopener" class="btn btn-primary form-submit-btn">填写咨询表单 →</a>
+                <p class="form-note">表单将跳转至钉钉在线文档填写，请放心提交。</p>
             </div>
         </div>
     </section>
@@ -773,15 +774,6 @@
             });
         });
 
-        // 表单提交（仅当表单存在时执行）
-        const contactForm = document.getElementById('contactForm');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('感谢您的咨询！我们将尽快与您联系。');
-                this.reset();
-            });
-        }
     </script>
 </body>
 </html>
