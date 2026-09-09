@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MaaS 模型即服务 - 智慧解决方案事业部</title>
+    <title>人形机器人 - 智慧解决方案事业部</title>
     <style>
         /* CSS变量 */
         :root {
@@ -380,44 +380,39 @@
             .ai-plans-table-wrapper { overflow-x: auto; }
         }
     
-        /* ===== MaaS 页面专属样式 ===== */
-        .maas-section { margin-bottom: 70px; }
-        .maas-section-header { text-align: center; margin-bottom: 40px; }
-        .maas-section-header .maas-icon { font-size: 40px; margin-bottom: 10px; }
-        .maas-section-header h2 { font-size: 30px; margin-bottom: 10px; background: linear-gradient(135deg, #7b61ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .maas-section-header p { color: var(--text-secondary); font-size: 15px; }
-        .maas-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
-        .maas-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(123, 97, 255, 0.25); border-radius: 18px; padding: 34px 30px; transition: all 0.3s ease; }
-        .maas-card:hover { transform: translateY(-6px); border-color: rgba(123, 97, 255, 0.6); background: rgba(123, 97, 255, 0.07); }
-        .maas-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-        .maas-card-icon { font-size: 40px; }
-        .maas-card-tag { background: rgba(123, 97, 255, 0.2); color: #b8a7ff; padding: 4px 14px; border-radius: 20px; font-size: 13px; }
-        .maas-card h3 { font-size: 24px; color: #fff; margin-bottom: 12px; }
-        .maas-card > p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; margin-bottom: 18px; }
-        .maas-features { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-        .maas-features span { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: var(--text-secondary); padding: 6px 14px; border-radius: 20px; font-size: 12px; }
-        .maas-card-more { color: #7b61ff; font-size: 15px; font-weight: 600; }
-        .maas-feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .maas-feature { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(123, 97, 255, 0.2); border-radius: 16px; padding: 28px 24px; text-align: center; }
-        .maas-feature-icon { font-size: 36px; margin-bottom: 14px; }
-        .maas-feature h3 { font-size: 18px; color: #b8a7ff; margin-bottom: 10px; }
-        .maas-feature p { color: var(--text-secondary); font-size: 14px; line-height: 1.7; }
-        .maas-scenarios { display: flex; flex-direction: column; gap: 16px; max-width: 760px; margin: 0 auto; }
-        .maas-scenario { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 4px solid #7b61ff; border-radius: 12px; padding: 20px 24px; }
-        .maas-scenario strong { display: block; color: #fff; font-size: 16px; margin-bottom: 6px; }
-        .maas-scenario span { color: var(--text-secondary); font-size: 14px; }
-        .maas-cta { text-align: center; padding: 60px 40px; background: linear-gradient(135deg, rgba(123, 97, 255, 0.15), rgba(0, 102, 255, 0.1)); border: 1px solid rgba(123, 97, 255, 0.35); border-radius: 20px; }
-        .maas-cta h2 { font-size: 30px; margin-bottom: 12px; color: #fff; }
-        .maas-cta p { color: var(--text-secondary); margin-bottom: 30px; }
-        .maas-cta-btns { display: flex; justify-content: center; gap: 16px; }
-        .maas-btn { padding: 14px 36px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; }
-        .maas-btn-primary { background: linear-gradient(135deg, #7b61ff, #0066ff); color: #fff; }
-        .maas-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(123, 97, 255, 0.35); }
-        .maas-btn-ghost { border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; }
-        .maas-btn-ghost:hover { border-color: #7b61ff; color: #b8a7ff; }
+        /* ===== 具身智能系列页面专属样式 ===== */
+        .emb-section { margin-bottom: 70px; }
+        .emb-section-header { text-align: center; margin-bottom: 40px; }
+        .emb-section-header .emb-icon { font-size: 40px; margin-bottom: 10px; }
+        .emb-section-header h2 { font-size: 30px; margin-bottom: 10px; background: linear-gradient(135deg, #f1a33c, #ff7849); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .emb-section-header p { color: var(--text-secondary); font-size: 15px; }
+        .emb-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .emb-card { position: relative; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(241, 163, 60, 0.25); border-radius: 16px; padding: 30px 24px; transition: all 0.3s ease; }
+        .emb-card:hover { transform: translateY(-6px); border-color: rgba(241, 163, 60, 0.6); background: rgba(241, 163, 60, 0.06); }
+        .emb-card-icon { font-size: 38px; margin-bottom: 16px; }
+        .emb-card h3 { font-size: 19px; color: #f1a33c; margin-bottom: 12px; }
+        .emb-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+        .emb-tag { display: inline-block; background: rgba(241, 163, 60, 0.15); border: 1px solid rgba(241, 163, 60, 0.4); color: #f1a33c; padding: 4px 14px; border-radius: 20px; font-size: 12px; }
+        .emb-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .emb-link-card { display: block; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 26px 24px; text-decoration: none; transition: all 0.3s ease; }
+        .emb-link-card:hover { transform: translateY(-4px); border-color: rgba(241, 163, 60, 0.5); }
+        .emb-link-card strong { display: block; color: #fff; font-size: 17px; margin-bottom: 8px; }
+        .emb-link-card span { color: var(--text-secondary); font-size: 13px; line-height: 1.7; }
+        .emb-cta { text-align: center; padding: 60px 40px; background: linear-gradient(135deg, rgba(241, 163, 60, 0.14), rgba(255, 120, 73, 0.08)); border: 1px solid rgba(241, 163, 60, 0.35); border-radius: 20px; }
+        .emb-cta h2 { font-size: 30px; margin-bottom: 12px; color: #fff; }
+        .emb-cta p { color: var(--text-secondary); margin-bottom: 30px; }
+        .emb-cta-btns { display: flex; justify-content: center; gap: 16px; }
+        .emb-btn { padding: 14px 36px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; }
+        .emb-btn-primary { background: linear-gradient(135deg, #f1a33c, #ff7849); color: #0a1628; }
+        .emb-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(241, 163, 60, 0.35); }
+        .emb-btn-ghost { border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; }
+        .emb-btn-ghost:hover { border-color: #f1a33c; color: #f1a33c; }
         @media (max-width: 900px) {
-            .maas-cards { grid-template-columns: 1fr; }
-            .maas-feature-grid { grid-template-columns: 1fr; }
+            .emb-cards { grid-template-columns: repeat(2, 1fr); }
+            .emb-links { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .emb-cards { grid-template-columns: 1fr; }
         }
 </style>
 </head>
@@ -486,8 +481,8 @@
 
     <!-- 页面标题 -->
     <section class="page-header">
-        <h1>🧩 MaaS 模型即服务</h1>
-        <p>将领先 AI 能力以服务形式按需交付 · 千问办公 × FDE 前沿部署，开箱即用、持续进化</p>
+        <h1>🦾 人形机器人</h1>
+        <p>双足人形智能体 · 通用操作与人机交互载体 · 内容建设中，敬请期待</p>
     </section>
 
     <!-- 主内容 -->
@@ -496,103 +491,75 @@
 
         <!-- 概述 -->
         <div class="product-overview">
-            <h2>AI 能力按需交付，让智能服务开箱即用</h2>
-            <p>
-                MaaS（Model as a Service · 模型即服务）是智慧解决方案事业部面向企业推出的 AI 能力交付模式——
-                无需自建模型、训练团队与基础设施，即可通过服务订阅获得开箱即用的智能能力。
-                我们以「千问办公」提供 AI 办公平台能力，以「FDE 前沿部署」提供 AI 落地陪伴服务，
-                从工具到落地、从部署到进化，一站式覆盖企业 AI 应用的全旅程。
-            </p>
+            <h2>人形机器人 · 规划中</h2>
+            <p>人形机器人是具身智能的重要载体形态，以双足运动、灵巧操作与自然交互为核心能力，面向导览接待、巡检辅助、危险作业替代等场景。智慧解决方案事业部正规划人形机器人方向的产品与集成方案，本页面为示例占位页，详细内容持续建设中。</p>
         </div>
 
-        <!-- 核心服务模块 -->
-        <div class="maas-section">
-            <div class="maas-section-header">
-                <div class="maas-icon">⚡</div>
-                <h2>两大核心服务模块</h2>
-                <p>工具与落地并重，能力与陪伴兼得</p>
+        <!-- 内容规划区块（占位） -->
+        <div class="emb-section">
+            <div class="emb-section-header">
+                <div class="emb-icon">🚧</div>
+                <h2>内容规划</h2>
+                <p>以下板块正在建设中，将陆续更新</p>
             </div>
-            <div class="maas-cards">
-                <a href="product-qwenwork.html" class="maas-card" style="text-decoration: none; color: inherit;">
-                    <div class="maas-card-head">
-                        <div class="maas-card-icon">💼</div>
-                        <span class="maas-card-tag">AI 办公平台</span>
-                    </div>
-                    <h3>千问办公</h3>
-                    <p>面向个人与企业的 AI 办公平台：内容创作、数据分析、专业研究、文件处理与网页交付，覆盖 25 项能力，让 AI 直接参与日常办公与业务协作。</p>
-                    <div class="maas-features">
-                        <span>六大核心能力</span>
-                        <span>多端覆盖</span>
-                        <span>角色套件</span>
-                        <span>安全合规</span>
-                    </div>
-                    <div class="maas-card-more">了解千问办公 →</div>
+            <div class="emb-cards">
+                <div class="emb-card">
+                    <div class="emb-card-icon">🤖</div>
+                    <h3>整机与平台</h3>
+                    <p>人形机器人本体选型、二次开发平台与运控底座。</p>
+                    <span class="emb-tag">建设中</span>
+                </div>
+                <div class="emb-card">
+                    <div class="emb-card-icon">🦵</div>
+                    <h3>运动与控制</h3>
+                    <p>双足稳定行走、全身协调控制与复杂地形适应。</p>
+                    <span class="emb-tag">建设中</span>
+                </div>
+                <div class="emb-card">
+                    <div class="emb-card-icon">✋</div>
+                    <h3>操作与交互</h3>
+                    <p>灵巧手抓取、语音/视觉多模态交互与自然对话。</p>
+                    <span class="emb-tag">建设中</span>
+                </div>
+                <div class="emb-card">
+                    <div class="emb-card-icon">🏢</div>
+                    <h3>场景验证</h3>
+                    <p>展厅导览、园区巡检、前台接待等场景的试点验证。</p>
+                    <span class="emb-tag">建设中</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 相关能力 -->
+        <div class="emb-section">
+            <div class="emb-section-header">
+                <div class="emb-icon">🔗</div>
+                <h2>相关页面</h2>
+                <p>具身智能栏目下的其他方向</p>
+            </div>
+            <div class="emb-links">
+                <a href="embodied.html" class="emb-link-card">
+                    <strong>具身智能总览</strong>
+                    <span>感知、决策与行动一体化的整体规划</span>
                 </a>
-                <a href="fde.html" class="maas-card" style="text-decoration: none; color: inherit;">
-                    <div class="maas-card-head">
-                        <div class="maas-card-icon">🧭</div>
-                        <span class="maas-card-tag">AI 落地服务</span>
-                    </div>
-                    <h3>FDE 前沿部署</h3>
-                    <p>FDE 前沿部署工程师 × FDR 前沿部署研究员双轮驱动，场景诊断、共创试点、陪跑进化，让 AI 在您的业务中持续好用、动态进化。</p>
-                    <div class="maas-features">
-                        <span>场景诊断</span>
-                        <span>共创试点</span>
-                        <span>48h 响应</span>
-                        <span>持续迭代</span>
-                    </div>
-                    <div class="maas-card-more">了解 FDE 服务 →</div>
+                <a href="embodied-quadruped.html" class="emb-link-card">
+                    <strong>四足机器人</strong>
+                    <span>复杂地形移动与巡检作业载体</span>
                 </a>
-            </div>
-        </div>
-
-        <!-- 服务特点 -->
-        <div class="maas-section">
-            <div class="maas-section-header">
-                <div class="maas-icon">✨</div>
-                <h2>为什么选择 MaaS 模式</h2>
-                <p>按需订阅、快速交付、持续进化</p>
-            </div>
-            <div class="maas-feature-grid">
-                <div class="maas-feature">
-                    <div class="maas-feature-icon">📦</div>
-                    <h3>按需订阅</h3>
-                    <p>能力按需组合、按量订阅，无需一次性重资产投入，降低 AI 应用门槛。</p>
-                </div>
-                <div class="maas-feature">
-                    <div class="maas-feature-icon">🚀</div>
-                    <h3>快速交付</h3>
-                    <p>站在成熟 AI 平台与工具生态之上交付，试点最快数周可见真实效果。</p>
-                </div>
-                <div class="maas-feature">
-                    <div class="maas-feature-icon">🔄</div>
-                    <h3>持续进化</h3>
-                    <p>FDE × FDR 闭环机制持续迭代，模型越用越懂业务，系统越用越聪明。</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 适用场景 -->
-        <div class="maas-section">
-            <div class="maas-section-header">
-                <div class="maas-icon">🎯</div>
-                <h2>典型适用场景</h2>
-                <p>对号入座，找到您的切入点</p>
-            </div>
-            <div class="maas-scenarios">
-                <div class="maas-scenario"><strong>全员办公提效</strong><span>千问办公 AI 办公平台，覆盖日常办公与专业工作流</span></div>
-                <div class="maas-scenario"><strong>AI 业务落地</strong><span>FDE 场景诊断与共创试点，让 AI 真正跑进业务流程</span></div>
-                <div class="maas-scenario"><strong>持续运营进化</strong><span>FDR 陪跑迭代，偏差快速响应，经验沉淀复用</span></div>
+                <a href="embodied-industry.html" class="emb-link-card">
+                    <strong>行业应用方案</strong>
+                    <span>面向设施管理、巡检运维等场景的方案</span>
+                </a>
             </div>
         </div>
 
         <!-- CTA -->
-        <div class="maas-cta">
-            <h2>开启您的 MaaS 之旅</h2>
-            <p>从一次免费 AI 业务诊断开始，识别业务中最值得用 AI 撬动的场景</p>
-            <div class="maas-cta-btns">
-                <a href="https://alidocs.dingtalk.com/notable/share/form/v01jP2lRYjEMa3MAO8g_2zAjZUq_69FIffy?source=link" class="maas-btn maas-btn-primary" target="_blank" rel="noopener">联系我们</a>
-                <a href="fde.html" class="maas-btn maas-btn-ghost">预约免费诊断</a>
+        <div class="emb-cta">
+            <h2>对人形机器人方向感兴趣？</h2>
+            <p>欢迎与我们交流您的场景与需求，共同探索具身智能的落地路径</p>
+            <div class="emb-cta-btns">
+                <a href="https://alidocs.dingtalk.com/notable/share/form/v01jP2lRYjEMa3MAO8g_2zAjZUq_69FIffy?source=link" target="_blank" rel="noopener" class="emb-btn emb-btn-primary">填写咨询表单</a>
+                <a href="embodied.html" class="emb-btn emb-btn-ghost">返回具身智能总览</a>
             </div>
         </div>
 
