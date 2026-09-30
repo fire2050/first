@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /solutions/
+Sitemap: https://fire2050.github.io/first/sitemap.xml
