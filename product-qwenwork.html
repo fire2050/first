@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>千问办公 - 智慧解决方案事业部</title>
+    <meta name="description" content="千问办公（QwenWork）：基于通义千问大模型的企业办公智能体，覆盖文档撰写、会议纪要、知识库问答与流程自动化。">
+    <link rel="canonical" href="https://fire2050.github.io/first/product-qwenwork.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="智慧解决方案事业部">
+    <meta property="og:title" content="千问办公 - 智慧解决方案事业部">
+    <meta property="og:description" content="千问办公（QwenWork）：基于通义千问大模型的企业办公智能体，覆盖文档撰写、会议纪要、知识库问答与流程自动化。">
+    <meta property="og:url" content="https://fire2050.github.io/first/product-qwenwork.html">
+    <meta property="og:image" content="https://fire2050.github.io/first/images/wukong-logo.png">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="千问办公 - 智慧解决方案事业部">
+    <meta name="twitter:description" content="千问办公（QwenWork）：基于通义千问大模型的企业办公智能体，覆盖文档撰写、会议纪要、知识库问答与流程自动化。">
+    <meta name="twitter:image" content="https://fire2050.github.io/first/images/wukong-logo.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        /* CSS变量 */
+        :root {
+            --deep-space: #0A1628;
+            --tech-blue: #0066FF;
+            --neon-cyan: #00D4FF;
+            --purple: #7B61FF;
+            --ding-blue: #1677FF;
+            --ding-light: #E8F3FF;
+            --dark-gray: #1E2A3A;
+            --light-gray: #E8ECF4;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8B8D8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background-color: var(--deep-space);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .navbar { position: fixed; top: 0; width: 100%; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; }
+        .navbar.scrolled {
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .logo { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #00d4ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
+        .nav-links a { color: #a0a0a0; text-decoration: none; transition: color 0.3s; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+        .nav-links a:hover { color: #00d4ff; }
+        .nav-links > li { position: relative; }
+        .dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); min-width: 220px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1001; padding: 8px 0; margin-top: 10px; }
+        .nav-links > li:hover .dropdown-menu { opacity: 1; visibility: visible; margin-top: 5px; }
+        .dropdown-item { display: block; padding: 12px 20px; color: #a0a0a0; text-decoration: none; font-size: 14px; transition: all 0.3s ease; white-space: nowrap; }
+        .dropdown-item:hover { color: #00d4ff; background: rgba(0, 212, 255, 0.1); padding-left: 28px; }
+        .dropdown-divider { height: 1px; background: rgba(0, 212, 255, 0.1); margin: 4px 0; }
+        .dropdown-category { padding: 8px 20px 4px; font-size: 12px; color: #7b61ff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* 页面标题区 */
+        .page-header {
+            padding: 120px 5% 60px;
+            background: linear-gradient(135deg, #0a1628 0%, rgba(22, 119, 255, 0.08) 100%);
+        }
+        .page-header h1 {
+            font-size: 42px;
+            background: linear-gradient(135deg, #1677FF, #36CFC9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 17px;
+        }
+
+        /* 主内容区 */
+        .ding-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 80px 5%;
+        }
+
+        /* 产品概述 */
+        .product-overview {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        .product-overview h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        .product-overview p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* 三版本卡片 */
+        .version-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 90px;
+        }
+        .version-card {
+            background: rgba(22, 119, 255, 0.04);
+            border: 1px solid rgba(22, 119, 255, 0.18);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+        .version-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(22, 119, 255, 0.5);
+            box-shadow: 0 16px 48px rgba(22, 119, 255, 0.15);
+        }
+        .version-card-img {
+            height: 180px;
+            background: linear-gradient(135deg, #E8F3FF 0%, #D6EBFB 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .version-card-img img {
+            max-width: 85%;
+            max-height: 75%;
+            object-fit: contain;
+        }
+        .version-card-body {
+            padding: 28px 26px 30px;
+        }
+        .version-tag {
+            display: inline-block;
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+        }
+        .tag-pro { background: rgba(22, 119, 255, 0.15); color: #5CB8FF; border: 1px solid rgba(22, 119, 255, 0.25); }
+        .tag-exclusive { background: rgba(123, 97, 255, 0.15); color: #B78BFF; border: 1px solid rgba(123, 97, 255, 0.25); }
+        .tag-hybrid { background: rgba(54, 207, 201, 0.15); color: #5EDDD6; border: 1px solid rgba(54, 207, 201, 0.25); }
+
+        .version-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .version-subtitle {
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .version-features {
+            list-style: none;
+        }
+        .version-features li {
+            padding: 9px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .version-features li:last-child {
+            border-bottom: none;
+        }
+        .version-features li::before {
+            content: '✓';
+            color: #1677FF;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* AI算粒区块 */
+        .ai-grain-section {
+            margin-bottom: 80px;
+            background: linear-gradient(135deg, rgba(123, 97, 255, 0.06) 0%, rgba(22, 119, 255, 0.04) 100%);
+            border: 1px solid rgba(123, 97, 255, 0.18);
+            border-radius: 20px;
+            padding: 50px;
+        }
+        .ai-section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .ai-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #7B61FF, #A78BFA);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+        .ai-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .ai-desc {
+            color: var(--text-secondary);
+            font-size: 15.5px;
+            line-height: 1.8;
+            margin-bottom: 35px;
+        }
+
+        /* AI套餐表格 */
+        .ai-plans-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .ai-plans-table th {
+            background: rgba(123, 97, 255, 0.15);
+            color: #B78BFF;
+            padding: 16px 14px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .ai-plans-table td {
+            padding: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13.5px;
+            color: var(--text-secondary);
+        }
+        .ai-plans-table tr:last-child td {
+            border-bottom: none;
+        }
+        .ai-plans-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .plan-free { color: #5EDDD6; font-weight: 600; }
+        .plan-lite { color: #5CB8FF; font-weight: 600; }
+        .plan-basic { color: #5CB8FF; font-weight: 600; }
+        .plan-plus { color: #FFD666; font-weight: 700; }
+        .plan-pro { color: #FF85C0; font-weight: 700; }
+        .hot-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        /* 核心能力 */
+        .capabilities-section {
+            margin-bottom: 60px;
+        }
+        .section-title-main {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 45px;
+            color: var(--text-primary);
+        }
+        .section-title-main::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--ding-blue);
+            margin: 14px auto 0;
+            border-radius: 2px;
+        }
+        .cap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .cap-item {
+            background: rgba(30, 42, 58, 0.5);
+            border: 1px solid rgba(22, 119, 255, 0.12);
+            border-radius: 14px;
+            padding: 28px 24px;
+            transition: all 0.3s ease;
+        }
+        .cap-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(22, 119, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(22, 119, 255, 0.1);
+        }
+        .cap-icon {
+            font-size: 34px;
+            margin-bottom: 14px;
+        }
+        .cap-item h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .cap-item p {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 22, 40, 0.97);
+            padding: 60px 5% 30px;
+            margin-top: 0;
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .footer-column {}
+        .footer-title {
+            font-size: 17px;
+            margin-bottom: 18px;
+            color: var(--neon-cyan);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 9px;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+        }
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        @media (max-width: 1024px) {
+            .version-cards { grid-template-columns: 1fr; gap: 24px; }
+            .ai-plans-table { font-size: 12px; }
+            .ai-plans-table th, .ai-plans-table td { padding: 10px 8px; }
+        }
+        @media (max-width: 900px) {
+            .cap-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 30px; }
+            .page-header { padding: 100px 5% 40px; }
+            .footer-content { grid-template-columns: 1fr; }
+            .ai-grain-section { padding: 30px 20px; }
+            .ai-plans-table-wrapper { overflow-x: auto; }
+        }
+    
+        /* ===== 千问办公页面专属样式 ===== */
+        .qwen-section { margin-bottom: 70px; }
+        .qwen-section-header { text-align: center; margin-bottom: 40px; }
+        .qwen-section-header .qwen-icon { font-size: 40px; margin-bottom: 10px; }
+        .qwen-section-header h2 { font-size: 30px; margin-bottom: 10px; background: linear-gradient(135deg, #4ce285, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .qwen-section-header p { color: var(--text-secondary); font-size: 15px; }
+        .qwen-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .qwen-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(76, 226, 133, 0.18); border-radius: 16px; padding: 30px 26px; transition: all 0.3s ease; }
+        .qwen-card:hover { transform: translateY(-6px); border-color: rgba(76, 226, 133, 0.5); background: rgba(76, 226, 133, 0.06); }
+        .qwen-card-icon { font-size: 38px; margin-bottom: 16px; }
+        .qwen-card h3 { font-size: 20px; margin-bottom: 12px; color: #4ce285; }
+        .qwen-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
+        .qwen-flow-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .qwen-flow-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(0, 212, 255, 0.15); border-radius: 14px; padding: 24px 20px; text-align: center; }
+        .qwen-flow-card h3 { color: #00d4ff; font-size: 18px; margin-bottom: 10px; }
+        .qwen-flow-card p { color: var(--text-secondary); font-size: 13px; line-height: 1.7; }
+        .qwen-platforms { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .qwen-platform { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); padding: 16px 34px; border-radius: 12px; font-size: 16px; color: #fff; font-weight: 600; }
+        .qwen-roles { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; max-width: 960px; margin: 0 auto; }
+        .qwen-role { background: rgba(76, 226, 133, 0.1); border: 1px solid rgba(76, 226, 133, 0.3); color: #4ce285; padding: 12px 8px; border-radius: 30px; font-size: 15px; font-weight: 500; text-align: center; transition: all 0.3s ease; }
+        .qwen-role:hover { background: rgba(76, 226, 133, 0.2); transform: scale(1.05); }
+        .qwen-security { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 30px; }
+        .qwen-security-item { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 26px; }
+        .qwen-security-item h3 { color: #fff; font-size: 18px; margin-bottom: 10px; }
+        .qwen-security-item p { color: var(--text-secondary); font-size: 14px; line-height: 1.7; }
+        .qwen-cert-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+        .qwen-cert { background: rgba(123, 97, 255, 0.12); border: 1px solid rgba(123, 97, 255, 0.3); color: #b8a7ff; padding: 8px 18px; border-radius: 8px; font-size: 13px; }
+        .qwen-cta { text-align: center; padding: 60px 40px; background: linear-gradient(135deg, rgba(76, 226, 133, 0.12), rgba(0, 212, 255, 0.1)); border: 1px solid rgba(76, 226, 133, 0.3); border-radius: 20px; }
+        .qwen-cta h2 { font-size: 32px; margin-bottom: 12px; color: #fff; }
+        .qwen-cta p { color: var(--text-secondary); margin-bottom: 30px; }
+        .qwen-cta-btns { display: flex; justify-content: center; gap: 16px; }
+        .qwen-btn { padding: 14px 36px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; }
+        .qwen-btn-primary { background: linear-gradient(135deg, #4ce285, #00d4ff); color: #0a1628; }
+        .qwen-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(76, 226, 133, 0.3); }
+        .qwen-btn-ghost { border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; }
+        .qwen-btn-ghost:hover { border-color: #4ce285; color: #4ce285; }
+        @media (max-width: 900px) {
+            .qwen-cards { grid-template-columns: repeat(2, 1fr); }
+            .qwen-flow-cards { grid-template-columns: repeat(2, 1fr); }
+            .qwen-security { grid-template-columns: 1fr; }
+            .qwen-roles { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .qwen-cards { grid-template-columns: 1fr; }
+            .qwen-flow-cards { grid-template-columns: 1fr; }
+            .qwen-roles { grid-template-columns: repeat(2, 1fr); }
+        }
+</style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="logo">智慧解决方案</div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li>
+                <a href="#products" class="has-dropdown">生态产品</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-category">无影系列</div>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
+                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">亿联网络</div>
+                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
+                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
+                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
+                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">钉钉系列</div>
+                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
+                    <a href="product-wukong.html" class="dropdown-item">钉钉悟空</a>
+                    <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
+                </div>
+            </li>
+            <li>
+                <a href="maas.html" class="has-dropdown">MaaS</a>
+                <div class="dropdown-menu">
+                    <a href="product-qwenwork.html" class="dropdown-item">千问办公</a>
+                    <a href="fde.html" class="dropdown-item">FDE 前沿部署</a>
+                </div>
+            </li>
+            <li>
+                <a href="embodied.html" class="has-dropdown">具身智能</a>
+                <div class="dropdown-menu">
+                    <a href="embodied.html" class="dropdown-item">具身智能总览</a>
+                    <a href="embodied-humanoid.html" class="dropdown-item">人形机器人</a>
+                    <a href="embodied-quadruped.html" class="dropdown-item">四足机器人</a>
+                    <a href="embodied-industry.html" class="dropdown-item">行业应用方案</a>
+                </div>
+            </li>
+            <li>
+                <a href="#products" class="has-dropdown">生态产品</a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-category">无影系列</div>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
+                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
+                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">亿联网络</div>
+                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
+                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
+                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
+                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-category">钉钉系列</div>
+                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
+                                        <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
+                </div>
+            </li>
+            <li>
+                <a href="#solutions" class="has-dropdown">解决方案</a>
+                <div class="dropdown-menu">
+                    <a href="solution-ai.html" class="dropdown-item">AI 应用解决方案</a>
+                    <a href="solution-communication.html" class="dropdown-item">融合通信解决方案</a>
+                    <a href="solution-avintegration.html" class="dropdown-item">音视频集成解决方案</a>
+                    <a href="solution-smartoffice.html" class="dropdown-item">智慧办公解决方案</a>
+                </div>
+            </li>
+            <li>
+                <a href="service.html" class="has-dropdown">专业服务</a>
+                <div class="dropdown-menu">
+                    <a href="service.html#ai-landing" class="dropdown-item">AI 应用落地</a>
+                    <a href="service.html#system-integration" class="dropdown-item">系统集成</a>
+                    <a href="service.html#maintenance" class="dropdown-item">专业维护</a>
+                    <a href="service.html#expert" class="dropdown-item">专家服务</a>
+                </div>
+            </li>
+            <li><a href="contact.html">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <h1>🔗 千问办公</h1>
+        <p>面向个人与企业的 AI 办公平台 · 内容创作 · 数据分析 · 专业研究 · 文件处理 · 网页交付</p>
+    </section>
+
+    <!-- 主内容 -->
+        <!-- 主内容 -->
+    <div class="ding-container">
+
+        <!-- 产品概述 -->
+        <div class="product-overview">
+            <h2>养成你的 AI 办公新习惯，专业更进一步</h2>
+            <p>
+                千问办公是面向个人与企业的 AI 办公平台，覆盖内容创作、数据分析、专业研究、文件处理与网页交付等 25 项能力。
+                支持 Web、macOS 14+、Windows 10+、HarmonyOS 6.1+ 多端使用，让每一个任务从发起到交付，全程 AI 陪伴、多线并行、实时可追踪。
+            </p>
+        </div>
+
+        <!-- 六大核心能力 -->
+        <div class="qwen-section">
+            <div class="qwen-section-header">
+                <div class="qwen-icon">⚡</div>
+                <h2>六大核心能力</h2>
+                <p>从任务到交付，覆盖专业办公全链路</p>
+            </div>
+            <div class="qwen-cards">
+                <div class="qwen-card">
+                    <div class="qwen-card-icon">🏢</div>
+                    <h3>企业协作</h3>
+                    <p>与企业 IM 能力深度打通，覆盖消息群聊读取、考勤审批、会议日程、文档表格生成、知识库、邮件等，形成企业协作闭环。</p>
+                </div>
+                <div class="qwen-card">
+                    <div class="qwen-card-icon">📦</div>
+                    <h3>产物交付</h3>
+                    <p>支持 PPTX、Word、Excel、HTML 等 Office 类产物的生成与编辑，生成后仍可继续修改，交付即标准格式。</p>
+                </div>
+                <div class="qwen-card">
+                    <div class="qwen-card-icon">🎨</div>
+                    <h3>多模态</h3>
+                    <p>理解图片、音频、视频等内容，支持内容提炼与图文音视频创作，让专业产出不止于文字。</p>
+                </div>
+                <div class="qwen-card">
+                    <div class="qwen-card-icon">🌐</div>
+                    <h3>网页交付</h3>
+                    <p>制作带数据库与交互逻辑的免部署独立网页，设计、开发、数据接入与在线发布一站式完成。</p>
+                </div>
+                <div class="qwen-card">
+                    <div class="qwen-card-icon">📊</div>
+                    <h3>数据聚合</h3>
+                    <p>接入 1688、小红书等专业数据源，跨来源聚合经营与内容数据，实时洞察业务变化。</p>
+                </div>
+                <div class="qwen-card">
+                    <div class="qwen-card-icon">🧩</div>
+                    <h3>技能市场</h3>
+                    <p>支持自定义技能与专家套件，公开市场可直接选用，能力持续沉淀、随取随用。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 工作流亮点 -->
+        <div class="qwen-section">
+            <div class="qwen-section-header">
+                <div class="qwen-icon">🚀</div>
+                <h2>高效任务工作流</h2>
+                <p>多线并行、自动拆解，进度全程可控</p>
+            </div>
+            <div class="qwen-flow-cards">
+                <div class="qwen-flow-card">
+                    <h3>任务编排</h3>
+                    <p>多线并行、自动拆解、并行推进、进度跟踪，复杂任务交给 AI 自动拆解执行。</p>
+                </div>
+                <div class="qwen-flow-card">
+                    <h3>数据分析</h3>
+                    <p>跨数据源实时洞察，让经营与内容数据开口说话。</p>
+                </div>
+                <div class="qwen-flow-card">
+                    <h3>文件交付</h3>
+                    <p>文档、表格、演示、网页生成后仍可继续编辑，交付即用。</p>
+                </div>
+                <div class="qwen-flow-card">
+                    <h3>任务模板</h3>
+                    <p>提供大量高质量任务模板，一键复刻、快速发起任务。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 平台支持 -->
+        <div class="qwen-section">
+            <div class="qwen-section-header">
+                <div class="qwen-icon">💻</div>
+                <h2>多端覆盖</h2>
+                <p>随时随地，专业办公不间断</p>
+            </div>
+            <div class="qwen-platforms">
+                <div class="qwen-platform">Web 网页端</div>
+                <div class="qwen-platform">macOS 14+</div>
+                <div class="qwen-platform">Windows 10+</div>
+                <div class="qwen-platform">HarmonyOS 6.1+</div>
+            </div>
+        </div>
+
+        <!-- 角色套件 -->
+        <div class="qwen-section">
+            <div class="qwen-section-header">
+                <div class="qwen-icon">👥</div>
+                <h2>每个专业，自有一套</h2>
+                <p>为专业人士定制的能力套件，聚焦高频工作场景</p>
+            </div>
+            <div class="qwen-roles">
+                <span class="qwen-role">HR</span>
+                <span class="qwen-role">律师</span>
+                <span class="qwen-role">财务</span>
+                <span class="qwen-role">博主</span>
+                <span class="qwen-role">商家</span>
+                <span class="qwen-role">教师</span>
+                <span class="qwen-role">导游</span>
+                <span class="qwen-role">广告人</span>
+                <span class="qwen-role">分析师</span>
+                <span class="qwen-role">艺术家</span>
+                <span class="qwen-role">鉴定师</span>
+                <span class="qwen-role">工程师</span>
+            </div>
+        </div>
+
+        <!-- 安全合规 -->
+        <div class="qwen-section">
+            <div class="qwen-section-header">
+                <div class="qwen-icon">🛡️</div>
+                <h2>安全与合规</h2>
+                <p>身份、权限、空间分级，数据路径全程可追踪</p>
+            </div>
+            <div class="qwen-security">
+                <div class="qwen-security-item">
+                    <h3>组织边界管理</h3>
+                    <p>身份、权限、空间分级管控，企业数据不出边界。</p>
+                </div>
+                <div class="qwen-security-item">
+                    <h3>数据路径可追踪</h3>
+                    <p>传输、存储、调用全程留痕，合规审计有据可依。</p>
+                </div>
+            </div>
+            <div class="qwen-cert-badges">
+                <span class="qwen-cert">信息安全管理</span>
+                <span class="qwen-cert">公有云个人信息保护管理</span>
+                <span class="qwen-cert">个人信息管理</span>
+                <span class="qwen-cert">云安全管理</span>
+                <span class="qwen-cert">质量管理</span>
+                <span class="qwen-cert">信息技术服务管理</span>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="qwen-cta">
+            <h2>立即体验千问办公</h2>
+            <p>免费开始，养成你的 AI 办公新习惯</p>
+            <div class="qwen-cta-btns">
+                <a href="https://alidocs.dingtalk.com/notable/share/form/v01jP2lRYjEMa3MAO8g_2zAjZUq_69FIffy?source=link" class="qwen-btn qwen-btn-primary" target="_blank" rel="noopener">联系我们</a>
+                <a href="service.html" class="qwen-btn qwen-btn-ghost">了解专业服务</a>
+            </div>
+        </div>
+
+    </div><!-- end ding-container -->
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">智慧解决方案</div>
+                <p class="footer-desc">智慧解决方案事业部致力于为企业客户提供一站式数字化转型服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">生态产品</h4>
+                <ul class="footer-links">
+                    <li><a href="product-wuying.html">无影云电脑商业版</a></li>
+                    <li><a href="product-wuying-hardware.html">无影终端</a></li>
+                    <li><a href="product-jvs.html">无影Agent管理中心</a></li>
+                    <li><a href="product-agentbay.html">AgentBay 开发套件</a></li>
+                    <li><a href="product-meetingboard.html">音视频会议平板</a></li>
+                </ul>
+            </div>
+        <div class="footer-column">
+            <h4 class="footer-title">MaaS 与具身智能</h4>
+            <ul class="footer-links">
+                <li><a href="maas.html">MaaS 模型即服务</a></li>
+                <li><a href="product-qwenwork.html">千问办公</a></li>
+                <li><a href="fde.html">FDE 前沿部署</a></li>
+                <li><a href="embodied.html">具身智能总览</a></li>
+                <li><a href="embodied-humanoid.html">人形机器人</a></li>
+                <li><a href="embodied-quadruped.html">四足机器人</a></li>
+                <li><a href="embodied-industry.html">行业应用方案</a></li>
+            </ul>
+        </div>
+            <div class="footer-column">
+                <h4 class="footer-title">解决方案</h4>
+                <ul class="footer-links">
+                    <li><a href="solution-ai.html">AI 应用解决方案</a></li>
+                    <li><a href="solution-communication.html">融合通信解决方案</a></li>
+                    <li><a href="solution-avintegration.html">音视频集成解决方案</a></li>
+                    <li><a href="solution-smartoffice.html">智慧办公解决方案</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">专业服务</h4>
+                <ul class="footer-links">
+                    <li><a href="service.html#ai-landing">AI 应用落地</a></li>
+                    <li><a href="service.html#system-integration">系统集成</a></li>
+                    <li><a href="service.html#maintenance">专业维护</a></li>
+                    <li><a href="service.html#expert">专家服务</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">联系我们</h4>
+                <ul class="footer-links">
+                    <li><a href="contact.html">联系方式</a></li>
+                    <li><a href="contact.html">在线咨询</a></li>
+                    <li><a href="contact.html">服务网点</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 智慧解决方案事业部 版权所有 | 备案号：XX-XXXXX</p>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
