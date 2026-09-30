@@ -1,0 +1,32 @@
+# 智慧解决方案事业部官网
+
+> 部门官网：MaaS 模型即服务、具身智能、无影云电脑、钉钉生态产品、音视频会议与 AI 解决方案，面向企业数字化与智能化转型。
+
+## Pages
+- [联系我们 - 智慧解决方案事业部](https://fire2050.github.io/first/contact.html): 联系我们：智慧解决方案事业部业务咨询、方案定制与售后服务联系方式，支持钉钉在线表单快速提交需求。
+- [人形机器人 - 智慧解决方案事业部](https://fire2050.github.io/first/embodied-humanoid.html): 人形机器人解决方案：面向巡检、装配、科研等场景的人形机器人选型、二次开发与具身智能软件栈集成服务。
+- [行业应用方案 - 智慧解决方案事业部](https://fire2050.github.io/first/embodied-industry.html): 具身智能行业应用方案：制造、能源、物流等场景的机器人数据采集、模型训练与规模化落地实施路径。
+- [四足机器人 - 智慧解决方案事业部](https://fire2050.github.io/first/embodied-quadruped.html): 四足机器人解决方案：适用于电力巡检、园区安防、应急救援等场景的四足机器人本体选型与行业应用集成。
+- [具身智能 - 智慧解决方案事业部](https://fire2050.github.io/first/embodied.html): 具身智能业务总览：提供人形机器人、四足机器人及行业应用方案，覆盖数据采集、仿真训练到场景落地全流程。
+- [FDE 前沿部署服务 - 智慧解决方案事业部](https://fire2050.github.io/first/fde.html): FDE 前沿部署服务：由现场部署工程师团队为企业提供AI应用从POC到生产环境的落地实施、系统集成与持续优化服务。
+- [智慧解决方案事业部](https://fire2050.github.io/first/index.html): 智慧解决方案事业部官网：提供MaaS模型即服务、具身智能、无影云电脑、钉钉生态产品、音视频会议与AI应用解决方案，覆盖企业数字化与智能化转型全链路。
+- [MaaS 模型即服务 - 智慧解决方案事业部](https://fire2050.github.io/first/maas.html): MaaS 模型即服务：面向企业提供大模型选型、私有化部署、微调与推理加速的一站式模型服务，支持千问系列开源与商用模型。
+- [AgentBay 开发套件 - 智慧解决方案事业部](https://fire2050.github.io/first/product-agentbay.html): AgentBay 开发套件：智能体执行环境，为AI应用提供浏览器、代码沙箱、移动仿真等安全执行能力。
+- [AI 硬件 - 智慧解决方案事业部](https://fire2050.github.io/first/product-aihardware.html): AI 硬件：钉钉A1/A1Pro等AI助理硬件设备，覆盖会议记录、语音转写与智能问答场景。
+- [会议室音视频 - 智慧解决方案事业部](https://fire2050.github.io/first/product-audiovideo.html): 会议室音视频设备：覆盖条形音A10/A40/A50、MeetingEye系列会议摄像头、全向麦与中控，适配各类会议室建设。
+- [钉钉底座 - 智慧解决方案事业部](https://fire2050.github.io/first/product-dingtalk.html): 钉钉专属版底座：为企业提供专属App、专属安全、专属存储与专属集成能力，构建自主可控的移动办公入口。
+- [IP话机 - 智慧解决方案事业部](https://fire2050.github.io/first/product-iphone.html): 亿联IP话机：T3/T4/T5/T7/T8全系列企业IP话机与会议话筒，支持钉钉、3CX等主流IP-PBX平台。
+- [无影Agent管理中心 - 智慧解决方案事业部](https://fire2050.github.io/first/product-jvs.html): 无影Agent管理中心（JVS）：面向企业的一站式AI Agent管理与调度平台，统一纳管多模型多Agent工作流。
+- [MeetingBoard Pro - 智慧解决方案事业部](https://fire2050.github.io/first/product-meetingboard-pro.html): 音视频会议平板专业版：面向大型会议室的高配一体化终端，4K触控大屏与专业音视频采集能力。
+- [MeetingBoard - 智慧解决方案事业部](https://fire2050.github.io/first/product-meetingboard-standard.html): 音视频会议平板标准版：面向中小型会议室的高性价比会议大屏方案，快速部署即插即用。
+- [音视频会议平板 - 智慧解决方案事业部](https://fire2050.github.io/first/product-meetingboard.html): 亿联音视频会议平板：会议室一体化大屏方案，集书写、投屏、视频会议于一体，支持钉钉等主流会议平台。
+- [会议室智能 - 智慧解决方案事业部](https://fire2050.github.io/first/product-meetingsmart.html): 会议室智能设备：RoomCast投屏盒子、会议预约屏、人体存在传感器等智能化组件，打造智慧会议室生态。
+- [千问办公 - 智慧解决方案事业部](https://fire2050.github.io/first/product-qwenwork.html): 千问办公（QwenWork）：基于通义千问大模型的企业办公智能体，覆盖文档撰写、会议纪要、知识库问答与流程自动化。
+- [钉钉悟空 - 智慧解决方案事业部](https://fire2050.github.io/first/product-wukong.html): 钉钉悟空：企业级AI Agent工作助理平台，打通钉钉组织与业务流程，实现智能问答、任务编排与自动化执行。
+- [无影终端 - 智慧解决方案事业部](https://fire2050.github.io/first/product-wuying-hardware.html): 无影云终端硬件：盒式终端、笔记本、卡片机等全系列产品，一键接入无影云电脑，适合批量桌面替换。
+- [无影云电脑商业版 - 智慧解决方案事业部](https://fire2050.github.io/first/product-wuying.html): 无影云电脑商业版：企业级云桌面解决方案，支持多终端接入、统一运维与数据安全管控，适配办公、设计、开发场景。
+- [专业服务 - 智慧解决方案事业部](https://fire2050.github.io/first/service.html): 专业服务：智慧解决方案事业部提供AI应用落地、系统集成、专业维护与专家服务，端到端保障企业智能化项目交付。
+- [AI 应用解决方案 - 智慧解决方案事业部](https://fire2050.github.io/first/solution-ai.html): AI应用解决方案：覆盖智能客服、数字人、RPA、AI教育与企业知识库等场景的大模型应用落地方案。
+- [音视频集成解决方案 - 智慧解决方案事业部](https://fire2050.github.io/first/solution-avintegration.html): 音视频集成解决方案：会议室、指挥中心、报告厅等专业音视频系统的规划设计、设备集成与实施服务。
+- [融合通信解决方案 - 智慧解决方案事业部](https://fire2050.github.io/first/solution-communication.html): 融合通信解决方案：整合语音、视频、IM与会议系统，为企业构建统一通信与协作平台。
+- [智慧办公解决方案 - 智慧解决方案事业部](https://fire2050.github.io/first/solution-smartoffice.html): 智慧办公解决方案：门禁、会议、工位与能耗一体化的智能办公空间方案，提升企业管理效率。
