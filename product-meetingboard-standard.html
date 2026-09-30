@@ -248,7 +248,7 @@
         <p>音视频款会议平板 — 高效实用的中小型会议室首选方案</p>
         <p class="hero-overview">
             MeetingBoard 面向中小企业与日常办公会议室，在保持核心音视频能力的同时，
-            以高性价比和易用性为特点。高清显示、清晰摛音、智能白板、无线投屏——
+            以高性价比和易用性为特点。高清显示、清晰拾音、智能白板、无线投屏——
             满足日常会议、培训、协作等多种场景需求，开箱即用，降低企业部署成本门槛。
         </p>
         <a href="contact.html" class="btn btn-primary">立即购买</a>
@@ -273,7 +273,7 @@
                 <p class="adv-desc">高清广角摄像头，支持人脸追踪与自动取景，适配多种会议室布局。远程参会者可清晰看到现场每位参会人员。</p>
             </div>
             <div class="adv-card">
-                <div class="adv-header"><span class="adv-icon">✉️</span><span class="adv-title">协作白板</span></div>
+                <div class="adv-header"><span class="adv-icon">✍️</span><span class="adv-title">协作白板</span></div>
                 <p class="adv-desc">基础版智能白板，支持多人同时书写、标注保存、扫码分享。内置图形工具和常用模板，满足日常头脑风暴与方案讨论。</p>
             </div>
             <div class="adv-card">
@@ -392,7 +392,7 @@
             else navbar.classList.remove('scrolled');
         });
         document.querySelectorAll('a[href^="#"]').forEach(function(a){
-            a.addEventListener('click', function(e){
+            a.addEventListener('click', function(e){ e.preventDefault();
                 var t = this.getAttribute('href'); if(t && t !== '#') {
                     var el = document.querySelector(t); if(el) el.scrollIntoView({ behavior:'smooth' }); }
             });
