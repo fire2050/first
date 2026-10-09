@@ -738,6 +738,30 @@
             margin-top: 60px;
         }
 
+        .solutions .product-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .solutions .product-card,
+        .products .product-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .solutions .product-card h4,
+        .products .product-card h4 {
+            min-height: 2.8em;
+        }
+
+        .solutions .product-card p,
+        .products .product-card p {
+            flex: 1;
+        }
+
+        .product-card .product-features {
+            margin-top: auto;
+        }
+
         .product-card {
             padding: 40px 30px;
             background: rgba(30, 42, 58, 0.5);
@@ -1079,8 +1103,11 @@
             <li>
                 <a href="#products" class="has-dropdown">生态产品</a>
                 <div class="dropdown-menu">
-                    <div class="dropdown-category">无影系列</div>
-                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
+                    <div class="dropdown-category">阿里云系列</div>
+                    <a href="product-qwenwork.html" class="dropdown-item">千问办公</a>
+                    <a href="maas.html" class="dropdown-item">MaaS产品</a>
+                    <a href="product-wuying.html" class="dropdown-item">无影云电脑</a>
+                    <a href="service.html" class="dropdown-item">阿里云服务</a>
                     <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
                     <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
                     <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
@@ -1091,9 +1118,8 @@
                     <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
                     <a href="product-iphone.html" class="dropdown-item">IP话机</a>
                     <div class="dropdown-divider"></div>
-                    <div class="dropdown-category">钉钉系列</div>
+                    <div class="dropdown-category">千问办公系列</div>
                     <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
-                    <a href="product-wukong.html" class="dropdown-item">钉钉悟空</a>
                     <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
                 </div>
             </li>
@@ -1113,26 +1139,7 @@
                     <a href="embodied-industry.html" class="dropdown-item">行业应用方案</a>
                 </div>
             </li>
-            <li>
-                <a href="#products" class="has-dropdown">生态产品</a>
-                <div class="dropdown-menu">
-                    <div class="dropdown-category">无影系列</div>
-                    <a href="product-wuying.html" class="dropdown-item">无影云电脑商业版</a>
-                    <a href="product-wuying-hardware.html" class="dropdown-item">无影终端</a>
-                    <a href="product-jvs.html" class="dropdown-item">无影Agent管理中心</a>
-                    <a href="product-agentbay.html" class="dropdown-item">AgentBay 开发套件</a>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-category">亿联网络</div>
-                    <a href="product-meetingboard.html" class="dropdown-item">音视频会议平板</a>
-                    <a href="product-audiovideo.html" class="dropdown-item">会议室音视频</a>
-                    <a href="product-meetingsmart.html" class="dropdown-item">会议室智能</a>
-                    <a href="product-iphone.html" class="dropdown-item">IP话机</a>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-category">钉钉系列</div>
-                    <a href="product-dingtalk.html" class="dropdown-item">钉钉底座</a>
-                                        <a href="product-aihardware.html" class="dropdown-item">AI 硬件</a>
-                </div>
-            </li>
+
             <li>
                 <a href="#solutions" class="has-dropdown">解决方案</a>
                 <div class="dropdown-menu">
@@ -1178,7 +1185,7 @@
         <!-- 突出定位 -->
         <div class="positioning-highlight">
             <h3>以 AI 为核心驱动力的综合型技术服务商</h3>
-            <p>我们依托阿里云、钉钉、无影云电脑、通义大模型等完整的产品矩阵，构建"云 + 端 + AI"三位一体的核心能力体系，为客户提供从战略咨询、方案设计、实施交付到运维优化的端到端服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
+            <p>我们依托阿里云、钉钉、无影云电脑、千问大模型等完整的产品矩阵，构建"云 + 端 + AI"三位一体的核心能力体系，为客户提供从战略咨询、方案设计、实施交付到运维优化的端到端服务，成为客户数字化与智能化转型的首选合作伙伴。</p>
             <div class="positioning-tags">
                 <span class="positioning-tag">AI 应用落地</span>
                 <span class="positioning-tag">云计算服务</span>
@@ -1222,7 +1229,7 @@
             </div>
             <div class="transform-card">
                 <h4>☁️ 阿里生态优势</h4>
-                <p>阿里云、钉钉、通义大模型、无影云电脑等产品矩阵完整，技术领先，市场认可度高，为事业部提供坚实的产品底座。</p>
+                <p>阿里云、钉钉、千问大模型、无影云电脑等产品矩阵完整，技术领先，市场认可度高，为事业部提供坚实的产品底座。</p>
             </div>
             <div class="transform-card">
                 <h4>🏢 自身基础</h4>
@@ -1254,7 +1261,7 @@
                 <div class="framework-item">
                     <div class="icon">🤖</div>
                     <h4>AI（Intelligence）</h4>
-                    <p>通义大模型、钉钉悟空、行业定制化 AI 应用，将 AI 能力嵌入每一个业务环节。</p>
+                    <p>千问大模型、千问办公、行业定制化 AI 应用，将 AI 能力嵌入每一个业务环节。</p>
                 </div>
             </div>
             <div class="strategy-path">
@@ -1283,49 +1290,16 @@
     <!-- 服务能力矩阵 -->
     <section class="section service-matrix">
         <h2 class="section-title">服务能力矩阵</h2>
-        <p class="section-subtitle">四大解决方案 + 十大核心产品，全方位赋能企业数字化转型</p>
-
-        <!-- 解决方案能力 -->
-        <div class="matrix-solutions">
-            <a href="solution-ai.html" class="matrix-solution-link">
-                <div class="matrix-solution">
-                    <h4>🤖 AI 应用解决方案</h4>
-                    <p>将 AI 能力深度融入业务场景，实现智能化升级与效率跃升</p>
-                    <div class="label">核心能力</div>
-                    <p style="font-size: 13px;">AI建模 · 智能分析 · 决策引擎 · 场景落地</p>
-                </div>
-            </a>
-            <a href="solution-communication.html" class="matrix-solution-link">
-                <div class="matrix-solution">
-                    <h4>📞 融合通信解决方案</h4>
-                    <p>统一通信平台，实现语音、视频、消息、会议的深度融合</p>
-                    <div class="label">核心能力</div>
-                    <p style="font-size: 13px;">统一通信 · 音视频融合 · 云端管理 · 跨终端协同</p>
-                </div>
-            </a>
-            <a href="solution-avintegration.html" class="matrix-solution-link">
-                <div class="matrix-solution">
-                    <h4>🎥 音视频集成解决方案</h4>
-                    <p>专业音视频系统集成，打造沉浸式远程协作体验</p>
-                    <div class="label">核心能力</div>
-                    <p style="font-size: 13px;">会议系统 · 音视频集成 · 智能控制 · 远程协作</p>
-                </div>
-            </a>
-            <a href="solution-smartoffice.html" class="matrix-solution-link">
-                <div class="matrix-solution">
-                    <h4>💼 智慧办公解决方案</h4>
-                    <p>重塑办公体验，释放组织创造力，提升运营效率</p>
-                    <div class="label">核心能力</div>
-                    <p style="font-size: 13px;">智能协同 · 远程会议 · 流程自动化 · 数据分析</p>
-                </div>
-            </a>
-        </div>
+        <p class="section-subtitle">全栈产品生态，全方位赋能企业数字化转型</p>
 
         <!-- 产品生态能力 -->
         <div class="matrix-products">
             <div class="matrix-product-category">
-                <h4>☁️ 无影系列</h4>
-                <a href="product-wuying.html" class="matrix-product-link"><div class="matrix-product-item">无影云电脑商业版</div></a>
+                <h4>☁️ 阿里云系列</h4>
+                <a href="product-qwenwork.html" class="matrix-product-link"><div class="matrix-product-item">千问办公</div></a>
+                <a href="maas.html" class="matrix-product-link"><div class="matrix-product-item">MaaS产品</div></a>
+                <a href="product-wuying.html" class="matrix-product-link"><div class="matrix-product-item">无影云电脑</div></a>
+                <a href="service.html" class="matrix-product-link"><div class="matrix-product-item">阿里云服务</div></a>
                 <a href="product-wuying-hardware.html" class="matrix-product-link"><div class="matrix-product-item">无影终端</div></a>
                 <a href="product-jvs.html" class="matrix-product-link"><div class="matrix-product-item">无影Agent管理中心</div></a>
                 <a href="product-agentbay.html" class="matrix-product-link"><div class="matrix-product-item">AgentBay 开发套件</div></a>
@@ -1338,9 +1312,8 @@
                 <a href="product-iphone.html" class="matrix-product-link"><div class="matrix-product-item">IP话机</div></a>
             </div>
             <div class="matrix-product-category">
-                <h4>📱 钉钉系列</h4>
+                <h4>📱 千问办公系列</h4>
                 <a href="product-dingtalk.html" class="matrix-product-link"><div class="matrix-product-item">钉钉底座</div></a>
-                <a href="product-wukong.html" class="matrix-product-link"><div class="matrix-product-item">钉钉悟空</div></a>
                 <a href="product-aihardware.html" class="matrix-product-link"><div class="matrix-product-item">AI 硬件</div></a>
             </div>
         </div>
@@ -1434,15 +1407,35 @@
     <!-- 产品生态模块 -->
     <section class="section products" id="products">
         <h2 class="section-title">生态产品</h2>
-        <p class="section-subtitle">十大核心产品，构建完整产品矩阵</p>
+        <p class="section-subtitle">全栈产品矩阵，构建完整业务生态</p>
 
-        <!-- 无影系列 -->
+        <!-- 阿里云系列 -->
         <div class="product-category">
-            <h3 class="category-title">无影系列</h3>
+            <h3 class="category-title">阿里云系列</h3>
             <div class="product-grid">
+                <a href="product-qwenwork.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">🧠</div>
+                    <h4>千问办公</h4>
+                    <p>企业办公智能体：AI 对话、任务编排与自动化执行</p>
+                    <div class="product-features">
+                        <span class="feature-tag">智能问答</span>
+                        <span class="feature-tag">任务自动化</span>
+                        <span class="feature-tag">知识管理</span>
+                    </div>
+                </a>
+                <a href="maas.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">🧩</div>
+                    <h4>MaaS产品</h4>
+                    <p>模型即服务：大模型选型、私有化部署与微调加速</p>
+                    <div class="product-features">
+                        <span class="feature-tag">千问大模型</span>
+                        <span class="feature-tag">私有化部署</span>
+                        <span class="feature-tag">推理加速</span>
+                    </div>
+                </a>
                 <a href="product-wuying.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">☁️</div>
-                    <h4>无影云电脑商业版</h4>
+                    <h4>无影云电脑</h4>
                     <p>下一代云上工作站，让高性能算力触手可及</p>
                     <div class="product-features">
                         <span class="feature-tag">即开即用</span>
@@ -1478,6 +1471,16 @@
                         <span class="feature-tag">低代码开发</span>
                         <span class="feature-tag">多模型支持</span>
                         <span class="feature-tag">场景模板</span>
+                    </div>
+                </a>
+                <a href="service.html" class="product-card" style="text-decoration: none; color: inherit;">
+                    <div class="product-logo">🚀</div>
+                    <h4>阿里云服务</h4>
+                    <p>上云咨询、迁移实施与专业运维的一站式云服务</p>
+                    <div class="product-features">
+                        <span class="feature-tag">架构咨询</span>
+                        <span class="feature-tag">迁移实施</span>
+                        <span class="feature-tag">专业运维</span>
                     </div>
                 </a>
             </div>
@@ -1530,9 +1533,9 @@
             </div>
         </div>
 
-        <!-- 钉钉系列 -->
+        <!-- 千问办公系列 -->
         <div class="product-category">
-            <h3 class="category-title">钉钉系列</h3>
+            <h3 class="category-title">千问办公系列</h3>
             <div class="product-grid">
                 <a href="product-dingtalk.html" class="product-card" style="text-decoration: none; color: inherit;">
                     <div class="product-logo">📱</div>
@@ -1542,16 +1545,6 @@
                         <span class="feature-tag">组织管理</span>
                         <span class="feature-tag">即时通讯</span>
                         <span class="feature-tag">日程共享</span>
-                    </div>
-                </a>
-                <a href="product-wukong.html" class="product-card" style="text-decoration: none; color: inherit;">
-                    <div class="product-logo">🐒</div>
-                    <h4>钉钉悟空</h4>
-                    <p>企业级 AI 助手，工作更高效</p>
-                    <div class="product-features">
-                        <span class="feature-tag">AI对话</span>
-                        <span class="feature-tag">任务自动化</span>
-                        <span class="feature-tag">知识管理</span>
                     </div>
                 </a>
                 <a href="product-aihardware.html" class="product-card" style="text-decoration: none; color: inherit;">
